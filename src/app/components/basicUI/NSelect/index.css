@@ -1,0 +1,128 @@
+.custom-select-container {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select-container .ant-select,
+.custom-select-container .ant-select-selector {
+  width: 100% !important;
+}
+
+.custom-select-container .ant-select-selector {
+  border-radius: 10px;
+  border: 2px solid var(--primary-color) !important;
+}
+
+.custom-select-container .ant-select-selection-item {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+}
+
+.custom-select-container .ant-select-selection-item-content {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 20px);
+}
+
+.custom-select-container .ant-select-selection-item-remove {
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+.custom-select-container .floating-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  color: #999;
+  background: var(--white);
+  transition: all 0.2s ease-in-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.custom-select-container.focused .floating-label {
+  top: 2px;
+  left: 8px;
+  font-size: 1rem;
+  color: var(--primary-color);
+  padding: 0px 5px;
+}
+
+.custom-select-container.focused .floatingIcon {
+  top: 2px;
+  left: 30px !important;
+  font-size: 1rem;
+  color: var(--primary-color);
+  padding: 0px 5px;
+}
+
+.custom-select-container.disabled .floating-label {
+  color: #4f575e;
+  background-color: #f5f5f5;
+}
+
+.custom-select-container.disabled .ant-select-selector {
+  background-color: #f5f5f5 !important;
+  padding: 0px 15px !important;
+}
+
+.custom-select-container.disabled .custom-select {
+  background-color: #f5f5f5 !important;
+  cursor: not-allowed;
+  border-color: #d9d9d9;
+}
+
+.custom-select-container .custom-select {
+  transition: border-color 0.2s ease-in-out;
+}
+
+.custom-select-container .custom-select:focus {
+  border: 2px solid var(--primary-color) !important;
+}
+
+.custom-select-container .custom-select:focus + .floating-label {
+  top: 1px;
+  left: 8px;
+  font-size: 12px;
+  color: black;
+  padding: 0px 5px;
+}
+
+.custom-select-container.has-prefix .floating-label {
+  left: 40px;
+}
+
+
+
+/* Prefix icon styles */
+.select-prefix-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.select-prefix-icon {
+  position: absolute;
+  left: 12px;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.select-prefix-icon svg {
+  fill: var(--primary-color) !important;
+  font-size: 20px;
+}
+
+.with-prefix .ant-select-selector {
+  padding-left: 36px !important;
+  padding: 0px 33px !important;
+}
