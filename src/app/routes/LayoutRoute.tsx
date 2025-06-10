@@ -1,6 +1,6 @@
-import React, { type ReactNode } from 'react'
-import Header from '../layouts/Header';
+import { type ReactNode } from 'react';
 import Footer from '../layouts/Footer';
+import Header from '../layouts/Header';
 
 interface PrivateRouteProps {
     children: ReactNode;
