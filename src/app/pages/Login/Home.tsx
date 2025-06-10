@@ -4,14 +4,15 @@ export default function Home() {
     const nav = useNavigate();
     const moveUser = ()=>{
         localStorage.setItem('auth', 'blackpro');
-        nav('admin');
+        nav('/');
     }
     return (
         <>
             <div className="text-red-500">
-                Đây là trang Home !!
+                Đây là trang Login !!
             </div>
-            <button onClick={moveUser} className="btn cursor-pointer">Home -- Admin - Test Private Route</button>
+            <button onClick={moveUser} className="btn cursor-pointer">Login -- Home Test Private Route</button>
         </>
+
     )
 }
