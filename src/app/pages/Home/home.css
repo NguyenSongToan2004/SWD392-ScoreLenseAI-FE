@@ -1,44 +1,21 @@
-html, body {
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-/* background: linear-gradient(to right top,
-    #1a7f5a 0%,
-    #1a7f5a 30%,
-    #b5a93f 60%,
-    #f2a521 100%); */
-    background: linear-gradient(to right top, var(--primary-color) 10%, var(--secondary-color) 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .bebas-neue-regular {
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
-/* Override Input section */
-.input-field {
+.code-input-field {
   height: 60px !important;     /* h-14 */
   font-size: 30px !important; /* text-xl */
   font-weight: 700;
   padding: 10px !important;
-  /* color: rgba(2, 72, 41, 0.5) !important; */
+  border: 2px solid var(--white) !important;
+  border-radius: 10px !important;
+  transition: all 0.3s ease !important;
 }
 
-.label {
-    font-size: 30px !important; /* text-xl */
-}
-
-.active {
-  top:-5px !important;
-}
-
-.round {
-  border-radius: 10px;
+.code-input-field:focus {
+  border: 2px solid var(--primary-color) !important; 
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1) !important; 
+  outline: none !important;
 }
