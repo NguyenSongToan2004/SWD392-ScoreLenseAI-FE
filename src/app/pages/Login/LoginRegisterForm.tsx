@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "antd";
 import { FaPlay } from "react-icons/fa";
 import { motion, AnimatePresence } from "motion/react";
