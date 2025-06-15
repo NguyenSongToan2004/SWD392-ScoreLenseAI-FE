@@ -12,9 +12,11 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-size: 20px;
+  height: auto;
 }
 
-ol, ul {
+ol,
+ul {
   list-style: none;
 }
 
@@ -23,3 +25,11 @@ a {
   color: inherit;
 }
 
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.gradient-bg {
+  background: linear-gradient(to right top, var(--primary-color) 10%, var(--secondary-color) 100%);
+}

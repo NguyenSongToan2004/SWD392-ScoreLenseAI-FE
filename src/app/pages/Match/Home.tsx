@@ -17,7 +17,7 @@ export default function Match() {
     }, []);
 
     return (
-        <div className="w-screen h-screen flex flex-col gap-5 text-white font-sans px-6 py-4 ">
+        <div className="w-screen h-screen flex flex-col gap-5 text-white font-sans px-6 py-4 gradient-bg">
 
             {/* Header */}
             <section className="flex-auto">

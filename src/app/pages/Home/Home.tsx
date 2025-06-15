@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/ScoreLens-Logo.png";
-import NInputLabel from "../../components/basicUI/NInputLabel";
 import "./home.css";
 import { useState } from "react";
+import { Input } from "antd";
 
 export default function Home() {
     const nav = useNavigate();
@@ -22,7 +22,7 @@ export default function Home() {
     };
 
     return (
-        <div className="h-screen w-screen relative overflow-hidden">
+        <div className="h-screen w-screen relative overflow-hidden gradient-bg">
             {/* Logo cố định */}
             <div className="fixed top-4 left-4 z-50">
                 <img src={logo} alt="Logo" className="w-40 h-auto" />
@@ -34,9 +34,10 @@ export default function Home() {
                     Score Lens
                 </div>
                 <div className="w-[33%] relative" >
-                    <NInputLabel label="ENTER MATCH CODE"
-                        
+                    <Input
+                        placeholder="ENTER MATCH CODE"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCode(e.target.value)}
+                        className="code-input-field"
                     />
                     <button
                         onClick={moveUser}
