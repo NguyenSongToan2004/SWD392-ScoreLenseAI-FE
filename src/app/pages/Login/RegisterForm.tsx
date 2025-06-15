@@ -1,4 +1,3 @@
-import React from "react";
 import { Button, Form } from "antd";
 import { motion } from "motion/react";
 import NInputLabel from "../../components/basicUI/NInputLabel";
