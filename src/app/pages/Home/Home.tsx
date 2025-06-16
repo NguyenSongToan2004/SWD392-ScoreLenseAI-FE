@@ -1,9 +1,8 @@
+import { Input } from "antd";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/Logo_shadow.svg";
-import NInputLabel from "../../components/basicUI/NInputLabel";
 import "./home.css";
-import React, { useState } from "react";
-import { Input } from "antd";
 
 export default function Home() {
     const nav = useNavigate();

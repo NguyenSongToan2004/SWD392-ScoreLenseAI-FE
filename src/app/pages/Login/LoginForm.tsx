@@ -35,10 +35,12 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
                 >
                     <Form.Item
                         name="username"
+                        className="custom-form-item"
                         rules={[
                             {
                                 required: true,
                                 message: "Please enter your username!",
+
                             },
                         ]}
                     >
@@ -53,6 +55,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
                 >
                     <Form.Item
                         name="password"
+                        className="custom-form-item"
                         rules={[
                             {
                                 required: true,

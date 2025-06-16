@@ -61,3 +61,10 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 }
+
+/* styles.css */
+.custom-form-item .ant-form-item-explain-error {
+  color: white !important;
+  /* font-size: medium !important; */
+}
+
