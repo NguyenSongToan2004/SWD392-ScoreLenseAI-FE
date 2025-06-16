@@ -89,14 +89,13 @@ const NInputLabel: React.FC<NInputLabelProps> = ({
         )}
         <div
           className={`label
-    ${
-      hasFocus ||
-      (inputValue !== undefined && inputValue !== "") ||
-      (defaultValue !== undefined && defaultValue !== "") ||
-      disabled
-        ? "active"
-        : ""
-    }
+    ${hasFocus ||
+              (inputValue !== undefined && inputValue !== "") ||
+              (defaultValue !== undefined && defaultValue !== "") ||
+              disabled
+              ? "active"
+              : ""
+            }
     ${disabled ? "disabled" : ""}`}
         >
           {label}

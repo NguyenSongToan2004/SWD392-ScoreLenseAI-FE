@@ -1,0 +1,41 @@
+[
+    {
+        "billiard_matchid": 1,
+        "code": "612345",
+        "end_time": "2025-06-15T16:45:00.000Z",
+        "start_time": "2025-06-15T15:00:00.000Z",
+        "status": "completed",
+        "winner": "Player 1",
+        "billard_tableid": "TBL-01",
+        "by_staff": "STF001",
+        "modeid": 1,
+        "total_round": 5,
+        "by_customer": "CUS123"
+    },
+    {
+        "billiard_matchid": 2,
+        "code": "MATCH002",
+        "end_time": null,
+        "start_time": "2025-06-15T17:00:00.000Z",
+        "status": "ongoing",
+        "winner": null,
+        "billard_tableid": "TBL-02",
+        "by_staff": null,
+        "modeid": 2,
+        "total_round": 3,
+        "by_customer": "CUS456"
+    },
+    {
+        "billiard_matchid": 3,
+        "code": "MATCH003",
+        "end_time": "2025-06-14T20:15:00.000Z",
+        "start_time": "2025-06-14T19:00:00.000Z",
+        "status": "forfeited",
+        "winner": "Player 2",
+        "billard_tableid": null,
+        "by_staff": "STF009",
+        "modeid": null,
+        "total_round": 2,
+        "by_customer": null
+    }
+]

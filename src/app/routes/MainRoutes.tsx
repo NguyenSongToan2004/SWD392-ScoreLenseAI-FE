@@ -4,7 +4,9 @@ import Admin from "../pages/Admin";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Match from "../pages/Match";
+import User from "../pages/User";
 import PrivateRoute from "./PrivateRoute";
+import LayoutRoute from "./LayoutRoute";
 
 export default function MainRoutes() {
     return (
@@ -18,6 +20,11 @@ export default function MainRoutes() {
                     <Home />}
                 />
                 <Route path="/match" element={<Match />} />
+                <Route path="/user" element={
+                    <LayoutRoute >
+                        <User />
+                    </LayoutRoute>
+                } />
                 <Route path="/admin" element={
                     <PrivateRoute>
                         <Admin />

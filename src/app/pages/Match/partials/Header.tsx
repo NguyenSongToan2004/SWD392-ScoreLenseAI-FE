@@ -1,5 +1,5 @@
 
-import logo from "../../../assets/ScoreLens-Logo.png"
+import logo from "../../../assets/Logo_shadow.svg"
 import iconEdit from "../../../assets/Icon_Edit2.svg"
 import { type HeaderProps } from "../models/PartialModel"
 
@@ -16,8 +16,10 @@ const Header = ({ codeMatch }: HeaderProps) => {
             </h3>
             <div className="flex-1/3 flex justify-end">
                 <button className="flex flex-row items-center gap-3
-                         bg-green-600 cursor-pointer text-1xl px-4 py-2 rounded-[10px]
-                          font-semibold shadow hover:bg-green-700 transition">
+                         cursor-pointer text-1xl px-4 py-2 rounded-[10px]
+                          font-semibold shadow hover:bg-green-700 transition"
+                    style={{ backgroundColor: `var(--primary-color)` }}
+                >
                     <img src={iconEdit} alt="Icon Edit" className="w-6" />
                     <span className="font-bold">EDIT POINT</span>
                 </button>

@@ -1,9 +1,9 @@
 
 const BackLog = () => {
     return (
-        <div className="w-full flex justify-center">
-            <div className="rounded-md w-[600px] p-3 bg-[#d2dfb9] max-h-[200px]">
-                <div className="text-black max-h-[100%] pr-2 overflow-y-scroll scroll-auto">
+        <div className="h-full flex flex-col items-center overflow-hidden w-full">
+            <div className="flex-1 flex flex-col rounded-md w-[600px] p-3 bg-[#d2dfb9] overflow-hidden">
+                <div className="text-black pr-2 flex-1 overflow-y-auto">
                     {[
                         { time: "18:58", shot: "#27", color: "text-green-700", player: "PLAYER 1", result: "SCORED" },
                         { time: "19:00", shot: "#28", color: "text-red-600", player: "PLAYER 2", result: "MISSED" },

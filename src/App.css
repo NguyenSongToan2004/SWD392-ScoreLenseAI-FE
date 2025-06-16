@@ -1,9 +1,14 @@
 :root {
-  --primary-color: #1f7d53; /* Green */
-  --secondary-color: #f5a623; /* Yellow */
-  --white: #ffffff; /* White */
-  --black: #000000; /* Black */
-  --text-color: #333; /* Dark Gray */
+  --primary-color: #1f7d53;
+  /* Green */
+  --secondary-color: #f5a623;
+  /* Yellow */
+  --white: #ffffff;
+  /* White */
+  --black: #000000;
+  /* Black */
+  --text-color: #333;
+  /* Dark Gray */
 }
 
 body {
@@ -14,7 +19,8 @@ body {
   font-size: 20px;
 }
 
-ol, ul {
+ol,
+ul {
   list-style: none;
 }
 
@@ -22,4 +28,3 @@ a {
   text-decoration: none;
   color: inherit;
 }
-

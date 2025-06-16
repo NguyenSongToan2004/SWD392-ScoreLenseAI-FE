@@ -1,5 +1,10 @@
 
-const TableScore = () => {
+interface TableScoreProps {
+    teamID: number;
+}
+
+const TableScore = ({ teamID }: TableScoreProps) => {
+    console.log(teamID);
     return (
         <div className="flex justify-around items-center px-8">
             {/* TEAM A */}
