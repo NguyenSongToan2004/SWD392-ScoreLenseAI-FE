@@ -35,7 +35,7 @@
   text-wrap: nowrap;
   background-color: var(--white);
   transform: translateY(-50%);
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #999;
   pointer-events: none;
   transition: all 0.2s ease-in-out;
@@ -47,7 +47,7 @@
   left: 12px;
   background-color: var(--white) !important;
   padding: 0px 5px;
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: var(--primary-color);
   z-index: 1 !important;
 }

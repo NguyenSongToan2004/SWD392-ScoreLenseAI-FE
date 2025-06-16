@@ -3,6 +3,7 @@ import logo from "../../assets/Logo_shadow.svg";
 import NInputLabel from "../../components/basicUI/NInputLabel";
 import "./home.css";
 import React, { useState } from "react";
+import { Input } from "antd";
 
 export default function Home() {
     const nav = useNavigate();
@@ -29,7 +30,7 @@ export default function Home() {
     }
 
     return (
-        <div className="h-screen w-screen relative overflow-hidden">
+        <div className="h-screen w-screen relative overflow-hidden gradient-bg">
             {/* Logo cố định */}
             <div className="fixed top-4 left-4 z-50">
                 <img src={logo} alt="Logo" className="w-40 h-auto" />
@@ -40,11 +41,12 @@ export default function Home() {
                 <div className="bebas-neue-regular text-white text-8xl">
                     Score Lens
                 </div>
-                <div className="w-[33%] relative shadow-2xl shadow-gray-300 bg-white rounded-2xl z-10">
-                    <NInputLabel
-                        label="ENTER MATCH CODE"
-                        onChange={checkCode}
+                <div className="w-[33%] relative shadow-2xl shadow-gray-300 bg-white rounded-2xl z-10" >
+                    <Input
+                        placeholder="ENTER MATCH CODE"
                         type="number"
+                        onChange={checkCode}
+                        className="code-input-field"
                     />
                     <button
                         onClick={moveUser}
