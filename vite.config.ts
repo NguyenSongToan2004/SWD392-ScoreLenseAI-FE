@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
@@ -11,18 +11,10 @@ export default defineConfig({
         // Đặt tên chunk file
         chunkFileNames: 'chunks/[name]-[hash].js',
         // Manual chunks cần phải được cấu hình trong rollupOptions.output
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react')) {
-              return 'react'; // Chia thành chunk riêng cho React
-            }
-            if (id.includes('react-dom')) {
-              return 'react-dom'; // Chia thành chunk riêng cho ReactDOM
-            }
-            if (id.includes('antd')) {
-              return 'antd'; // Chia thành chunk riêng cho Ant Design
-            }
-          }
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom'],
+          antd: ['antd'],
+          motion: ['motion'],
         }
       }
     },
