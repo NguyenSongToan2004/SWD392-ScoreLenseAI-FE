@@ -2,7 +2,7 @@ import React, { Suspense, useState } from "react";
 import { Button } from "antd";
 import { FaPlay } from "react-icons/fa";
 import { AnimatePresence } from "motion/react";
-import { motion } from 'framer-motion';
+import { motion } from "motion/react";
 import type { LoginFormData, RegisterFormData } from "../../types/auth";
 
 export default function LoginRegisterForm() {

@@ -22,9 +22,6 @@ export default defineConfig({
             if (id.includes('antd')) {
               return 'antd'; // Chia thành chunk riêng cho Ant Design
             }
-            if (id.includes('motion')) {
-              return 'motion';
-            }
             if (id.includes('frame'))
               return 'vendor'; // Các thư viện khác sẽ được gộp vào 'vendor.js'
           }

@@ -1,5 +1,5 @@
 import { Button, Checkbox, Form } from "antd";
-import { motion } from 'framer-motion';
+import { motion } from "motion/react";
 import NInputLabel from "../../components/basicUI/NInputLabel";
 import { FaLock, FaUser } from "react-icons/fa";
 import { RiLoginCircleLine } from "react-icons/ri";
@@ -18,7 +18,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
     };
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div></div>}>
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
