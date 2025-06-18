@@ -1,41 +1,76 @@
-[
+{
+  "billiardMatchID": 1,
+  "billiardTableID": "B001",
+  "modeID": 1,
+  "byStaff": "Staff1",
+  "byCustomer": "Customer1",
+  "setUp": "1 vs 1",
+  "winner": "Player1",
+  "startTime": "2025-06-18T10:00:00Z",
+  "endTime": "2025-06-18T11:00:00Z",
+  "totalSet": 5,
+  "status": "completed",
+  "code": "BM001",
+  "sets": [
     {
-        "billiard_matchid": 1,
-        "code": "612345",
-        "end_time": "2025-06-15T16:45:00.000Z",
-        "start_time": "2025-06-15T15:00:00.000Z",
-        "status": "completed",
-        "winner": "Player 1",
-        "billard_tableid": "TBL-01",
-        "by_staff": "STF001",
-        "modeid": 1,
-        "total_round": 5,
-        "by_customer": "CUS123"
+      "billiardMatchID": 1,
+      "gameSetID": 1,
+      "gameSetNo": 1,
+      "raceTo": 5,
+      "winner": "Player1",
+      "startTime": "2025-06-18T10:00:00Z",
+      "endTime": "2025-06-18T10:15:00Z",
+      "status": "completed"
     },
     {
-        "billiard_matchid": 2,
-        "code": "MATCH002",
-        "end_time": null,
-        "start_time": "2025-06-15T17:00:00.000Z",
-        "status": "ongoing",
-        "winner": null,
-        "billard_tableid": "TBL-02",
-        "by_staff": null,
-        "modeid": 2,
-        "total_round": 3,
-        "by_customer": "CUS456"
+      "billiardMatchID": 1,
+      "gameSetID": 2,
+      "gameSetNo": 2,
+      "raceTo": 5,
+      "winner": "Player2",
+      "startTime": "2025-06-18T10:15:00Z",
+      "endTime": "2025-06-18T10:30:00Z",
+      "status": "completed"
     },
     {
-        "billiard_matchid": 3,
-        "code": "MATCH003",
-        "end_time": "2025-06-14T20:15:00.000Z",
-        "start_time": "2025-06-14T19:00:00.000Z",
-        "status": "forfeited",
-        "winner": "Player 2",
-        "billard_tableid": null,
-        "by_staff": "STF009",
-        "modeid": null,
-        "total_round": 2,
-        "by_customer": null
+      "billiardMatchID": 1,
+      "gameSetID": 3,
+      "gameSetNo": 3,
+      "raceTo": 5,
+      "winner": "Player1",
+      "startTime": "2025-06-18T10:30:00Z",
+      "endTime": "2025-06-18T10:45:00Z",
+      "status": "completed"
+    },
+    {
+      "billiardMatchID": 1,
+      "gameSetID": 4,
+      "gameSetNo": 4,
+      "raceTo": 5,
+      "winner": "Player1",
+      "startTime": "2025-06-18T10:45:00Z",
+      "endTime": "2025-06-18T11:00:00Z",
+      "status": "completed"
     }
-]
+  ],
+  "teams": [
+    {
+      "billiardMatchID": 1,
+      "teamID": 1,
+      "name": "Team A",
+      "totalMember": 1,
+      "totalScore": 15,
+      "createAt": "2025-06-18T09:00:00Z",
+      "status": "win"
+    },
+    {
+      "billiardMatchID": 1,
+      "teamID": 2,
+      "name": "Team B",
+      "totalMember": 1,
+      "totalScore": 10,
+      "createAt": "2025-06-18T09:05:00Z",
+      "status": "lose"
+    }
+  ]
+}

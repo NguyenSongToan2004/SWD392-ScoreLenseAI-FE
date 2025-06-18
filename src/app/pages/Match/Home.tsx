@@ -14,7 +14,7 @@ export default function Match() {
     const codeMatch = location.state?.codeMatch;
     const [showPopup, setShowPopup] = useState(false);
     const [winnerName, setWinnerName] = useState<string>("");
-    const matched: BilliardMatch = billardMatchMock.find(m => m.code === codeMatch) as BilliardMatch;
+    const matched: BilliardMatch = billardMatchMock as BilliardMatch;
 
     useEffect(() => {
         if (!codeMatch) {
@@ -37,7 +37,7 @@ export default function Match() {
 
             {/* Scoreboard */}
             <section className="flex-1/2">
-                <TableScore teamID={matched?.billiard_matchid} />
+                <TableScore teamID={matched?.billiardMatchID} />
             </section>
 
             {/* Log History */}

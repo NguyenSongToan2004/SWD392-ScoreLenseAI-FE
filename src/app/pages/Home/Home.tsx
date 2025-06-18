@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Input } from "antd/es";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/Logo_shadow.svg";
@@ -43,7 +43,6 @@ export default function Home() {
                 <div className="w-[33%] relative shadow-2xl shadow-gray-300 bg-white rounded-2xl z-10" >
                     <Input
                         placeholder="ENTER MATCH CODE"
-                        type="number"
                         onChange={checkCode}
                         className="code-input-field"
                     />

@@ -1,12 +1,15 @@
-import { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { Button } from "antd";
 import { FaPlay } from "react-icons/fa";
-import { motion, AnimatePresence } from "motion/react";
+import { AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import type { LoginFormData, RegisterFormData } from "../../types/auth";
-import LoginForm from "./LoginForm";
-import RegisterForm from "./RegisterForm";
 
 export default function LoginRegisterForm() {
+
+  const RegisterForm = React.lazy(() => import("./RegisterForm"));
+  const LoginForm = React.lazy(() => import("./LoginForm"));
+
   const [isRegister, setIsRegister] = useState(false);
 
   const handleLogin = (values: LoginFormData) => {
@@ -63,7 +66,9 @@ export default function LoginRegisterForm() {
               }}
               className="w-[80%]"
             >
-              <RegisterForm onRegister={handleRegister} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <RegisterForm onRegister={handleRegister} />
+              </Suspense>
             </motion.div>
           ) : (
             <motion.div
@@ -77,7 +82,9 @@ export default function LoginRegisterForm() {
               }}
               className="w-[80%]"
             >
-              <LoginForm onLogin={handleLogin} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <LoginForm onLogin={handleLogin} />
+              </Suspense>
             </motion.div>
           )}
         </AnimatePresence>
