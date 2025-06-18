@@ -28,7 +28,7 @@ export default function Match() {
     }, []);
 
     return (
-        <div className="w-screen h-screen flex flex-col gap-5 text-white font-sans px-6 py-4 overflow-hidden">
+        <div className="w-screen h-screen flex flex-col gap-5 text-white font-sans px-6 py-4 overflow-hidden gradient-bg">
 
             {/* Header */}
             <section className="flex-auto">
@@ -37,7 +37,7 @@ export default function Match() {
 
             {/* Scoreboard */}
             <section className="flex-1/2">
-                <TableScore teamID={matched.billiard_matchid} />
+                <TableScore teamID={matched?.billiard_matchid} />
             </section>
 
             {/* Log History */}
