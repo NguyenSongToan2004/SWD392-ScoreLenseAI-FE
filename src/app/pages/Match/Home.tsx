@@ -27,17 +27,6 @@ export default function Match() {
         }
     }, []);
 
-    const handleConfirm = () => {
-        setShowPopup(false);
-        // gọi API lưu kết quả tại đây
-        console.log('Luu ket qua thanh cong')
-    };
-
-    const handleCancel = () => {
-        setShowPopup(false);
-        console.log('luu xong tat');
-    };
-
     return (
         <div className="w-screen h-screen flex flex-col gap-5 text-white font-sans px-6 py-4 overflow-hidden">
 
@@ -60,8 +49,6 @@ export default function Match() {
             <section>
                 {showPopup && <GameResultPopup
                     winner={winnerName}
-                    onConfirm={handleConfirm}
-                    onCancel={handleCancel}
                 />}
             </section>
         </div>

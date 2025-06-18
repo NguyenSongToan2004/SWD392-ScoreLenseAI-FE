@@ -7,10 +7,12 @@ import Match from "../pages/Match";
 import User from "../pages/User";
 import PrivateRoute from "./PrivateRoute";
 import LayoutRoute from "./LayoutRoute";
+import KeepAlivePing from "../components/KeepAlivePing";
 
 export default function MainRoutes() {
     return (
         <BrowserRouter>
+            <KeepAlivePing />
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/" element={
