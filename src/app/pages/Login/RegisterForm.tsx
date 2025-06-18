@@ -1,6 +1,6 @@
 import Button from "antd/es/button/button.js"
 import Form from "antd/es/form"
-import { motion } from "motion/react";
+import { motion } from 'framer-motion';
 import NInputLabel from "../../components/basicUI/NInputLabel";
 import { FaLock, FaUser } from "react-icons/fa";
 import { RiLoginCircleLine } from "react-icons/ri";

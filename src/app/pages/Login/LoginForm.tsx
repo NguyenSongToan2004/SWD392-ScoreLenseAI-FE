@@ -1,5 +1,5 @@
 import { Button, Checkbox, Form } from "antd";
-import { motion } from "motion/react";
+import { motion } from 'framer-motion';
 import NInputLabel from "../../components/basicUI/NInputLabel";
 import { FaLock, FaUser } from "react-icons/fa";
 import { RiLoginCircleLine } from "react-icons/ri";
