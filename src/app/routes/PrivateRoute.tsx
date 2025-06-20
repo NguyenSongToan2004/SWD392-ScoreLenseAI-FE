@@ -1,18 +1,15 @@
-import type { ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
+import type React from 'react';
 
 interface PrivateRouteProps {
-    children: ReactNode; // Explicitly define the type for children
+    children: React.ReactElement[]; // hoặc ReactNode[] nếu cần
 }
 
 function PrivateRoute({ children }: PrivateRouteProps) {
-    if (!localStorage.getItem('auth')) {
-        return <Navigate to="/" />;
-    }
+    const role = localStorage.getItem('role');
 
     return (
         <div>
-            {children}
+            {children[role === "STAFF" ? 1 : 0]}
         </div>
     );
 }

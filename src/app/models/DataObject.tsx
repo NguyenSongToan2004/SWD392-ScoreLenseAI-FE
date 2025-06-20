@@ -35,3 +35,38 @@ export interface Team {
     createAt: string;
     status: 'draw' | 'lose' | 'pending' | 'win' | string;
 }
+
+interface Permission {
+    name: string;
+    description: string;
+}
+
+interface Role {
+    name: string;
+    description: string;
+    permissions: Permission[];
+}
+
+interface User {
+    staffID?: string;
+    customerID?: string;
+    name: string;
+    email: string;
+    phoneNumber: string;
+    dob: string;
+    address: string;
+    roles: Role[];
+    createAt: string;
+    updateAt: string | null;
+    status: string;
+    manager: string | null;
+}
+
+export interface AuthResponse {
+    authenticated: boolean;
+    accessToken: string;
+    refreshToken: string;
+    user: User;
+    userType: string;
+}
+

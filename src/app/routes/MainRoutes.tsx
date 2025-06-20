@@ -3,12 +3,15 @@ import PageNotFound from "../layouts/PageNotFound";
 import Admin from "../pages/Admin";
 import Home from "../pages/Home";
 // import Login from "../pages/Login";
+import React, { Suspense } from "react";
+import KeepAlivePing from "../components/KeepAlivePing";
+import Model from "../pages/Home/partials/Model";
+import Team from "../pages/Home/partials/Team";
+import TeamList from "../pages/Home/partials/TeamList";
 import Match from "../pages/Match";
 import User from "../pages/User";
-import PrivateRoute from "./PrivateRoute";
 import LayoutRoute from "./LayoutRoute";
-import KeepAlivePing from "../components/KeepAlivePing";
-import React, { Suspense } from "react";
+import PrivateRoute from "./PrivateRoute";
 
 export default function MainRoutes() {
 
@@ -20,20 +23,30 @@ export default function MainRoutes() {
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
                     <Route path="/login" element={<Login />} />
-                    <Route path="/" element={
-                        <Home />}
-                    />
+                    <Route path="/"
+                        element={
+                            <PrivateRoute>
+                                <Home />
+                                <Admin />
+                            </PrivateRoute>
+                        }
+                    >
+                        <Route path="/:id" element={<Model />} />
+                        <Route path="/team" element={<Team />} >
+                            <Route path="/team/list" element={<TeamList />} />
+                        </Route>
+                    </Route>
                     <Route path="/match" element={<Match />} />
                     <Route path="/user" element={
                         <LayoutRoute >
                             <User />
                         </LayoutRoute>
                     } />
-                    <Route path="/admin" element={
+                    {/* <Route path="/admin" element={
                         <PrivateRoute>
                             <Admin />
                         </PrivateRoute>
-                    } />
+                    } /> */}
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
             </Suspense>

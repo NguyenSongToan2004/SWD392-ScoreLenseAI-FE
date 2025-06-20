@@ -5,8 +5,10 @@
 }
 
 .code-input-field {
-  height: 60px !important;     /* h-14 */
-  font-size: 30px !important; /* text-xl */
+  height: 60px !important;
+  /* h-14 */
+  font-size: 30px !important;
+  /* text-xl */
   font-weight: 700;
   padding: 10px !important;
   border: 2px solid var(--white) !important;
@@ -15,7 +17,37 @@
 }
 
 .code-input-field:focus {
-  border: 2px solid var(--primary-color) !important; 
-  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1) !important; 
+  border: 2px solid var(--primary-color) !important;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1) !important;
   outline: none !important;
+}
+
+.green {
+  color: var(--primary-color);
+}
+
+.orange {
+  color: #f5a623;
+}
+
+.bg-button {
+  background: #888888;
+  /* transition: ease-in 0.5s; */
+}
+
+.bg-button:hover {
+  background: linear-gradient(to right, #2f2f2f, #228b50);
+}
+
+.text-button {
+  background-color: #313E47;
+  color: white;
+}
+
+.border-color {
+  border-color: var(--primary-color);
+}
+
+.border-color:focus {
+  border-color: #025325;
 }

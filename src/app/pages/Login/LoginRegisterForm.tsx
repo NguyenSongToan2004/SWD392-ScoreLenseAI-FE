@@ -3,7 +3,7 @@ import { Button } from "antd";
 import { FaPlay } from "react-icons/fa";
 import { AnimatePresence } from "motion/react";
 import { motion } from "motion/react";
-import type { LoginFormData, RegisterFormData } from "../../types/auth";
+import type { LoginFormData, RegisterFormData } from "./models/auth";
 
 export default function LoginRegisterForm() {
 
@@ -14,12 +14,10 @@ export default function LoginRegisterForm() {
 
   const handleLogin = (values: LoginFormData) => {
     console.log("Login values:", values);
-    // Add your login logic here
   };
 
   const handleRegister = (values: RegisterFormData) => {
     console.log("Register values:", values);
-    // Add your register logic here
   };
 
   return (

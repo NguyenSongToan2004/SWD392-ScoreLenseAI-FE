@@ -3,8 +3,10 @@ import { motion } from "motion/react";
 import NInputLabel from "../../components/basicUI/NInputLabel";
 import { FaLock, FaUser } from "react-icons/fa";
 import { RiLoginCircleLine } from "react-icons/ri";
-import type { LoginFormData } from "../../types/auth";
+import type { LoginFormData } from "./models/auth";
 import { Suspense } from "react";
+import loginAPI from "./services/FetchAPI";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFormProps {
     onLogin: (values: LoginFormData) => void;
@@ -12,9 +14,14 @@ interface LoginFormProps {
 
 export default function LoginForm({ onLogin }: LoginFormProps) {
     const [form] = Form.useForm();
+    const nav = useNavigate();
 
-    const handleLogin = (values: LoginFormData) => {
+    const handleLogin = async (values: LoginFormData) => {
         onLogin(values);
+        const resposne = await loginAPI(values.username, values.password);
+        if (resposne.status == 200) {
+            nav('/b80255e6-d572-498e-b348-03dfcc57e2ad');
+        }
     };
 
     return (

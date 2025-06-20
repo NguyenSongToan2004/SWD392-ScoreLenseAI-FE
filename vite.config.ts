@@ -22,6 +22,6 @@ export default defineConfig({
   server: {
     fs: {
       strict: false, // Cho phép truy cập hệ thống tệp rộng hơn
-    },
+    }
   },
 })

@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import NInputLabel from "../../components/basicUI/NInputLabel";
 import { FaLock, FaUser } from "react-icons/fa";
 import { RiLoginCircleLine } from "react-icons/ri";
-import type { RegisterFormData } from "../../types/auth";
+import type { RegisterFormData } from "./models/auth";
 import { Suspense } from "react";
 
 interface RegisterFormProps {
