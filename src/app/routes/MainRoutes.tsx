@@ -5,13 +5,14 @@ import Home from "../pages/Home";
 // import Login from "../pages/Login";
 import React, { Suspense } from "react";
 import KeepAlivePing from "../components/KeepAlivePing";
-import Model from "../pages/Home/partials/Model";
-import Team from "../pages/Home/partials/Team";
+import Model from "../pages/Home/usecases/Model";
+import Team from "../pages/Home/usecases/Team";
 import TeamList from "../pages/Home/partials/TeamList";
 import Match from "../pages/Match";
 import User from "../pages/User";
 import LayoutRoute from "./LayoutRoute";
 import PrivateRoute from "./PrivateRoute";
+import { Toaster } from "sonner";
 
 export default function MainRoutes() {
 
@@ -36,7 +37,7 @@ export default function MainRoutes() {
                             <Route path="/team/list" element={<TeamList />} />
                         </Route>
                     </Route>
-                    <Route path="/match" element={<Match />} />
+                    <Route path="/match/:id" element={<Match />} />
                     <Route path="/user" element={
                         <LayoutRoute >
                             <User />
@@ -50,6 +51,7 @@ export default function MainRoutes() {
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
             </Suspense>
+            <Toaster position="top-right" richColors closeButton />
         </BrowserRouter>
     );
 }

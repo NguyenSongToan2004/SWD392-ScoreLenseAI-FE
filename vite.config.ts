@@ -1,9 +1,10 @@
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import mkcert from 'vite-plugin-mkcert' // <-- Import
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), mkcert()],
   build: {
     outDir: 'dist', // Đặt thư mục đầu ra là 'dist'
     rollupOptions: {
@@ -20,6 +21,7 @@ export default defineConfig({
     },
   },
   server: {
+    https: true,
     fs: {
       strict: false, // Cho phép truy cập hệ thống tệp rộng hơn
     }

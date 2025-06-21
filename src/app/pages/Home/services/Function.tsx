@@ -4,11 +4,6 @@ export const setDefaultMatchSetUp = (): MatchSetup => {
     let role = localStorage.getItem('role');
     let creatorID = localStorage.getItem('userID');
 
-    // Kiểm tra nếu creatorID là null thì gán giá trị mặc định
-    if (!creatorID) {
-        creatorID = ''; // Hoặc có thể gán một giá trị mặc định hợp lý khác
-    }
-
     const matchSetUp: MatchSetup = {
         billiardTableID: "1",
         modeID: null,
@@ -19,10 +14,9 @@ export const setDefaultMatchSetUp = (): MatchSetup => {
         raceTo: 3,
         teamConfigs: []
     };
-    
+
     return matchSetUp;
 }
-
 
 export const setDefaultTeamConfig = (type: "1 VS 1" | "2 VS 2" | "SCOTCH DOUBLE" | "RESET"): TeamConfig[] => {
     const teamConfig: TeamConfig[] = [];

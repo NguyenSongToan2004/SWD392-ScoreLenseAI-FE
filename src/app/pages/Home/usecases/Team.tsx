@@ -2,13 +2,12 @@ import { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import backIcon from "../../../assets/GrBack.svg";
 import nextIcon from "../../../assets/GrNext.svg";
-import { matchSetUpStore, isOpacityStore } from "../homeStore";
-import { setDefaultTeamConfig } from '../services/Function';
-import RoundModal from './RoundModal';
 import type ResponseAPI from '../../../models/ResponseAPI';
+import { isOpacityStore, matchSetUpStore } from "../homeStore";
+import type { BilliardMatch, MatchSetup } from '../models/DataObject';
+import RoundModal from '../partials/RoundModal';
 import { createBillardMatchAPI } from '../services/FetchAPI';
-import type { BilliardMatch } from '../../../models/DataObject';
-import type { MatchSetup } from '../models/DataObject';
+import { setDefaultTeamConfig } from '../services/Function';
 
 const Team = () => {
     const nav = useNavigate();
@@ -67,8 +66,12 @@ const Team = () => {
         const createMatch = async () => {
             const response: ResponseAPI = await createBillardMatchAPI(matchSetUp as MatchSetup);
             if (response.status == 200) {
-                console.log(response.data);
-                nav("/match");
+                let createdMatch: BilliardMatch = response.data;
+                nav(`/match/${createdMatch.billiardMatchID}`, {
+                    state: {
+                        match: createdMatch
+                    }
+                });
             }
         }
         createMatch();

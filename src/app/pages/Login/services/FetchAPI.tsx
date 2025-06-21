@@ -20,10 +20,11 @@ const loginAPI = async (email: string, password: string): Promise<ResponseAPI> =
             let authResponse: AuthResponse = result.data;
             console.log('Login successful:', result.data);
             localStorage.setItem('role', authResponse.userType);
+            localStorage.setItem('isAuth', authResponse.authenticated + '');
             if (authResponse.user.customerID != null)
-                localStorage.setItem('staffID', authResponse.user.customerID);
+                localStorage.setItem('userID', authResponse.user.customerID);
             if (authResponse.user.staffID != null)
-                localStorage.setItem('customerID', authResponse.user.staffID);
+                localStorage.setItem('userID', authResponse.user.staffID);
             localStorage.setItem('customerName', authResponse.user.name);
             // localStorage.setItem('user', authResponse.user);
         } else {

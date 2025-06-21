@@ -1,18 +1,28 @@
 export interface BilliardMatch {
     billiardMatchID: number;
-    billiardTableID: string;
+    billiardTableID: string; // Sửa lỗi chính tả từ 'billard'
     modeID: number;
     byStaff: string | null;
     byCustomer: string | null;
-    setUp: 'Customize' | '1 vs 1' | 'Scotch Double' | '2 vs 2';
-    winner: string | null;
+    setUp: string;
+    winner: "TEAM A" | "TEAM B" | null;
     startTime: string;
     endTime: string | null;
     totalSet: number;
-    status: 'cancelled' | 'completed' | 'forfeited' | 'ongoing' | 'pending' | string;
+    status: "pending" | "ongoing" | "finished" | "cancelled";
     code: string;
-    sets: GameSet[];
-    teams: Team[];
+    sets: GameSet[]; // Mảng các đối tượng GameSet
+    teams: Team[];   // Mảng các đối tượng Team
+}
+
+export interface Player {
+    playerID: number;
+    name: string;
+    totalScore: number;
+    customerID: string | null;
+    status: "win" | "loss" | "draw"; // Sử dụng union type để tăng type-safety
+    createAt: string; // Có thể dùng kiểu Date nếu bạn có bước chuyển đổi
+    teamID: number | null; // Có thể null lúc khởi tạo
 }
 
 export interface GameSet {
@@ -34,6 +44,7 @@ export interface Team {
     totalScore: number;
     createAt: string;
     status: 'draw' | 'lose' | 'pending' | 'win' | string;
+    players: Player[]; // Mảng các đối tượng Player
 }
 
 interface Permission {

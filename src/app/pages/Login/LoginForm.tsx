@@ -7,6 +7,7 @@ import type { LoginFormData } from "./models/auth";
 import { Suspense } from "react";
 import loginAPI from "./services/FetchAPI";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 interface LoginFormProps {
     onLogin: (values: LoginFormData) => void;
@@ -20,6 +21,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
         onLogin(values);
         const resposne = await loginAPI(values.username, values.password);
         if (resposne.status == 200) {
+            toast.success(resposne.message);
             nav('/b80255e6-d572-498e-b348-03dfcc57e2ad');
         }
     };
