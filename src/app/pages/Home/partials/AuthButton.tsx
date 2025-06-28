@@ -1,58 +1,62 @@
-import { useNavigate } from 'react-router-dom'
-import logInIcon from "../../../assets/BiLogInCircle.svg"
-import { logoutAPI } from '../services/FetchAPI'
+import { useNavigate } from 'react-router-dom';
+import logInIcon from "../../../assets/BiLogInCircle.svg";
+import { logoutAPI } from '../services/FetchAPI';
 import { useState } from 'react';
 import { toast } from 'sonner';
+
 const AuthButton = () => {
     const nav = useNavigate();
-    const isAuthLocal = localStorage.getItem('isAuth');
-    const [isAuth, setIsAuth] = useState<string | null>(isAuthLocal as string);
+    // Đọc giá trị từ localStorage một lần khi component khởi tạo
+    const [isAuth, setIsAuth] = useState(() => localStorage.getItem('isAuth') === 'true');
+
     const handleLogin = () => {
-        nav("/login")
+        nav("/login");
     }
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        // Xóa thông tin xác thực khỏi localStorage
         localStorage.removeItem('isAuth');
         localStorage.removeItem('userID');
         localStorage.removeItem('staffID');
         localStorage.removeItem('role');
         localStorage.removeItem('customerName');
-        const logOut = async () => {
+
+        // Cập nhật trạng thái ngay lập tức để UI thay đổi
+        setIsAuth(false);
+
+        try {
+            // Gọi API logout
             const response = await logoutAPI();
-            if (response.status === 200)
+            if (response.status === 200) {
                 toast.success(response.message);
-            else
+            } else {
                 toast.error(response.message);
+            }
+        } catch (error) {
+            toast.error("An error occurred during logout.");
+        } finally {
+            // Điều hướng người dùng về trang login sau khi tất cả đã hoàn tất
+            nav("/login");
         }
-        logOut();
-        setIsAuth("false");
-        nav("/login");
     }
+    
+    // Tái cấu trúc: Xác định văn bản và hành động dựa trên trạng thái
+    const buttonText = isAuth ? 'LOGOUT' : 'LOGIN';
+    const clickHandler = isAuth ? handleLogout : handleLogin;
 
     return (
-        <>
-            {isAuth !== 'true'
-                ?
-                <button
-                    className="absolute top-5 right-5 text-button px-3 py-1 text-xl
-                 rounded-sm flex flex-row flex-nowrap gap-1 items-center cursor-pointer"
-                    onClick={handleLogin}
-                >
-                    <h5 className="text-2xl font-thin">LOGIN</h5>
-                    <img src={logInIcon} alt="Next Icon" />
-                </button>
-                :
-                <button
-                    className="absolute top-5 right-5 text-button px-3 py-1 text-xl
-                 rounded-sm flex flex-row flex-nowrap gap-1 items-center cursor-pointer"
-                    onClick={handleLogout}
-                >
-                    <h5 className="text-2xl font-thin">LOGOUT</h5>
-                    <img src={logInIcon} alt="Next Icon" />
-                </button>
-            }
-        </>
+        // Chỉ cần một cấu trúc button duy nhất
+        <button
+            className="absolute top-2 right-2 md:top-5 md:right-5 text-button
+            px-2 md:px-3 py-1 rounded-sm flex flex-row flex-nowrap gap-1 items-center cursor-pointer"
+            onClick={clickHandler}
+        >
+            {/* THAY ĐỔI: Giảm font-size cho mobile và giữ size lớn cho desktop */}
+            <h5 className="text-sm
+             md:text-2xl font-thin">{buttonText}</h5>
+            <img src={logInIcon} alt="Authentication Icon" className='h-auto w-5' />
+        </button>
     )
 }
 
-export default AuthButton
+export default AuthButton;

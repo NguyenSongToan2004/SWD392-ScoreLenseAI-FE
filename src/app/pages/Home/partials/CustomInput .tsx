@@ -41,7 +41,8 @@ const CustomInput: React.FC<CustomInputProps> = ({ type, initialLabel, onSave, o
             ? "green text-center" // TEAM: màu xanh và căn giữa
             : "orange text-left"; // PLAYER: màu cam và căn trái
 
-    const borderColor = type === "TEAM" ? "border-green-500" : "border-orange-500"; // Đường viền
+    // Biến này không được dùng trong phiên bản cuối nên có thể bỏ qua
+    // const borderColor = type === "TEAM" ? "border-green-500" : "border-orange-500"; 
 
     return (
         <div className="flex items-center justify-between">
@@ -50,30 +51,36 @@ const CustomInput: React.FC<CustomInputProps> = ({ type, initialLabel, onSave, o
                     className={`flex flex-1 items-center gap-2 relative
                                 ${type === "TEAM" ? "px-7 justify-center" : "px-0"}`}>
                     <input
-                        ref={inputRef} // Gắn ref vào input
+                        ref={inputRef}
                         type="text"
-                        value={value} // Ràng buộc giá trị của input với state value
-                        onChange={handleChange} // Cập nhật state value khi người dùng nhập vào
-                        className={`text-2xl ${textStyle} bg-transparent border-b-0 ${borderColor} focus:outline-none focus:ring-0`}
-                        style={{ textTransform: "none" }} // Đảm bảo chữ không bị chuyển thành chữ hoa
+                        value={value}
+                        onChange={handleChange}
+                        // THAY ĐỔI: Giảm font-size và bỏ border
+                        className={`text-lg md:text-2xl ${textStyle} bg-transparent focus:outline-none focus:ring-0 w-full`}
+                        style={{ textTransform: "none" }}
                     />
-                    <button onClick={handleSave} className={`${textStyle} text-xl items-end absolute right-0 cursor-pointer`}>
+                    <button onClick={handleSave} 
+                        // THAY ĐỔI: Giảm font-size cho nút Save
+                        className={`${textStyle} text-base md:text-xl items-end absolute right-0 cursor-pointer`}>
                         Save
                     </button>
                 </div>
             ) : (
                 <div className={`flex flex-1 justify-center items-center gap-2 relative
-                            ${type === "TEAM" ? "px-7" : "px-0"}
-                    `}>
-                    <span className={`text-2xl ${textStyle} flex-1 text-center`}>{value}</span>
+                                ${type === "TEAM" ? "px-7" : "px-0"}
+                            `}>
+                    {/* THAY ĐỔI: Giảm font-size cho nhãn */}
+                    <span className={`text-lg md:text-2xl ${textStyle} flex-1 text-center`}>{value}</span>
                     <button
-                        onClick={handleEditClick} // Bật chế độ chỉnh sửa khi click vào nút
-                        className={`${textStyle} text-xl cursor-pointer absolute right-0`}
+                        onClick={handleEditClick}
+                        className={`${textStyle} text-lg md:text-xl cursor-pointer absolute right-0`}
                     >
                         {type === "TEAM" ?
-                            <img src={editIconGreen} alt='Edit Icon Green' />
+                            // THAY ĐỔI: Thêm kích thước cho icon
+                            <img src={editIconGreen} alt='Edit Icon Green' className="w-5 h-5 md:w-6 md:h-6" />
                             :
-                            <img src={editIconOrange} alt='Edit Icon Orange' />
+                            // THAY ĐỔI: Thêm kích thước cho icon
+                            <img src={editIconOrange} alt='Edit Icon Orange' className="w-5 h-5 md:w-6 md:h-6" />
                         }
                     </button>
                 </div>

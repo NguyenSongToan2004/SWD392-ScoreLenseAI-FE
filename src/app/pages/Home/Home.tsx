@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import ellipseLeft from "../../assets/Home_Ellipse_Left.png";
 import ellipseRight from "../../assets/Home_Ellipse_Right.png";
@@ -14,7 +14,7 @@ import { setDefaultMatchSetUp } from "./services/Function";
 export default function Home() {
     const isOpacity = isOpacityStore.use();
     const { id } = useParams();
-
+    const [table, setTable] = useState<BilliardTable>();
     useEffect(() => {
         const getTable = async () => {
             const response: ResponseAPI = await fetchTableAPI(id as string) as ResponseAPI;
@@ -27,36 +27,39 @@ export default function Home() {
                 matchSetUpStore.set((prev) => {
                     prev.value.billiardTableID = table.billardTableID as string;
                 });
+                setTable(response.data);
             } else {
                 window.alert('Có lỗi ' + response.message);
             }
         }
 
         getTable();
-    }, []);
+    }, [id]);
 
     return (
-        <div className={`h-screen w-screen relative flex flex-col  p-5 items-center bg-[#eaf5f2] overflow-hidden
-                        ${isOpacity ? "bg-opacity-45" : "bg-opacity-100"}
+        <div className={`h-screen w-screen relative flex flex-col p-3 items-center bg-[#eaf5f2] overflow-hidden
+                         ${isOpacity ? "bg-opacity-45" : "bg-opacity-100"}
         `}>
             {isOpacity && (
                 <div className="absolute inset-0 bg-black opacity-30 z-50"></div>
             )}
 
-            <div className='z-100'>
+            {/* <div className='z-100'>
                 <matchSetUpStore.DevTool name="DevTool" />
-            </div>
+            </div> */}
 
             {/* Ellipse Decor */}
-            <img src={ellipseLeft} className="absolute top-0 left-0 w-[120px] md:w-[200px]" />
-            <img src={ellipseRight} className="absolute top-0 right-0 w-[120px] md:w-[200px]" />
+            <img src={ellipseLeft} className="absolute top-0 left-0 w-[80px] md:w-[200px] z-10" />
+            <img src={ellipseRight} className="absolute top-0 right-0 w-[80px] md:w-[200px]" />
 
             <AuthButton />
 
             {/* Table Info */}
-            <div className="flex flex-col items-center">
-                <h1 className="md:text-5xl mb-4">TABLE: 01</h1>
-                <img src={logo} alt="8ball" className="w-35 h-auto mb-2" />
+            <div className="flex flex-col items-center z-20">
+                {/* THAY ĐỔI: Thêm font-size nhỏ hơn cho mobile và giữ size lớn cho desktop */}
+                <h1 className="text-3xl md:text-5xl mb-2">TABLE: {table?.tableCode}</h1>
+                {/* THAY ĐỔI: Giảm kích thước logo trên mobile */}
+                <img src={logo} alt="8ball" className="w-25 md:w-35 h-auto mb-0 md:mb-2" />
             </div>
 
             <Outlet />

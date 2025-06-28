@@ -24,7 +24,7 @@ const TeamCard = ({ teamName, memberName, orderTeam }: TeamCardProps) => {
     };
 
     return (
-        <div className="flex-1 flex flex-col p-2 border-0 bg-white rounded-lg shadow-md">
+        <div className="flex-1 flex flex-col py-0 md:py-2 px-2 border-0 bg-white rounded-lg shadow-md">
             {/* Team Name */}
             <CustomInput initialLabel={teamName} onSave={handleSave} type="TEAM" order={null} />
             {/* Separator */}

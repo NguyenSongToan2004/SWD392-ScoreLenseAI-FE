@@ -1,148 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaFilter, FaInfoCircle } from "react-icons/fa";
 import MatchDetailModal from "../partials/MatchDetailModal";
 import { isOpacityStore } from "../homeStore";
 import type { BilliardMatch } from "../../../models/DataObject";
-
-// Mock Data updated to BilliardMatch type
-const mockData: BilliardMatch[] = [
-    {
-        billiardMatchID: 1,
-        billiardTableID: "Table-01",
-        modeID: 1, // Corresponding to "3-Cushion"
-        byStaff: "staff001",
-        byCustomer: null,
-        setUp: "Standard",
-        winner: "TEAM A",
-        startTime: "2025-05-01T18:05:00",
-        endTime: "2025-05-01T19:05:00",
-        totalSet: 3,
-        status: "completed",
-        code: "MATCH001",
-        sets: [
-            { billiardMatchID: 1, gameSetID: 1, gameSetNo: 1, raceTo: 15, winner: "TEAM A", startTime: "2025-05-01T18:05:00", endTime: "2025-05-01T18:25:00", status: 'completed' },
-            { billiardMatchID: 1, gameSetID: 2, gameSetNo: 2, raceTo: 15, winner: "TEAM B", startTime: "2025-05-01T18:30:00", endTime: "2025-05-01T18:50:00", status: 'completed' },
-            { billiardMatchID: 1, gameSetID: 3, gameSetNo: 3, raceTo: 15, winner: "TEAM A", startTime: "2025-05-01T18:55:00", endTime: "2025-05-01T19:05:00", status: 'completed' }
-        ],
-        teams: [
-            {
-                billiardMatchID: 1,
-                teamID: 1,
-                name: "Team A",
-                totalMember: 1,
-                totalScore: 40,
-                createAt: "2025-05-01T18:00:00",
-                status: 'win',
-                players: [
-                    { playerID: 1, name: "Player 1", totalScore: 40, customerID: "cust123", status: "win", createAt: "2025-05-01T18:00:00", teamID: 1 }
-                ]
-            },
-            {
-                billiardMatchID: 1,
-                teamID: 2,
-                name: "Team B",
-                totalMember: 1,
-                totalScore: 35,
-                createAt: "2025-05-01T18:00:00",
-                status: 'lose',
-                players: [
-                    { playerID: 2, name: "Player 2", totalScore: 35, customerID: "cust124", status: "loss", createAt: "2025-05-01T18:00:00", teamID: 2 }
-                ]
-            }
-        ]
-    },
-    {
-        billiardMatchID: 2,
-        billiardTableID: "Table-01",
-        modeID: 1, // Corresponding to "3-Cushion"
-        byStaff: "staff001",
-        byCustomer: null,
-        setUp: "Standard",
-        winner: "TEAM A",
-        startTime: "2025-05-01T18:05:00",
-        endTime: "2025-05-01T19:05:00",
-        totalSet: 3,
-        status: "completed",
-        code: "MATCH001",
-        sets: [
-            { billiardMatchID: 1, gameSetID: 1, gameSetNo: 1, raceTo: 15, winner: "TEAM A", startTime: "2025-05-01T18:05:00", endTime: "2025-05-01T18:25:00", status: 'completed' },
-            { billiardMatchID: 1, gameSetID: 2, gameSetNo: 2, raceTo: 15, winner: "TEAM B", startTime: "2025-05-01T18:30:00", endTime: "2025-05-01T18:50:00", status: 'completed' },
-            { billiardMatchID: 1, gameSetID: 3, gameSetNo: 3, raceTo: 15, winner: "TEAM A", startTime: "2025-05-01T18:55:00", endTime: "2025-05-01T19:05:00", status: 'completed' }
-        ],
-        teams: [
-            {
-                billiardMatchID: 1,
-                teamID: 1,
-                name: "Team A",
-                totalMember: 1,
-                totalScore: 40,
-                createAt: "2025-05-01T18:00:00",
-                status: 'win',
-                players: [
-                    { playerID: 1, name: "Player 1", totalScore: 40, customerID: "cust123", status: "win", createAt: "2025-05-01T18:00:00", teamID: 1 }
-                ]
-            },
-            {
-                billiardMatchID: 1,
-                teamID: 2,
-                name: "Team B",
-                totalMember: 1,
-                totalScore: 35,
-                createAt: "2025-05-01T18:00:00",
-                status: 'lose',
-                players: [
-                    { playerID: 2, name: "Player 2", totalScore: 35, customerID: "cust124", status: "loss", createAt: "2025-05-01T18:00:00", teamID: 2 }
-                ]
-            }
-        ]
-    },
-    {
-        billiardMatchID: 3,
-        billiardTableID: "Table-01",
-        modeID: 1, // Corresponding to "3-Cushion"
-        byStaff: "staff001",
-        byCustomer: null,
-        setUp: "Standard",
-        winner: "TEAM A",
-        startTime: "2025-05-01T18:05:00",
-        endTime: "2025-05-01T19:05:00",
-        totalSet: 3,
-        status: "completed",
-        code: "MATCH001",
-        sets: [
-            { billiardMatchID: 1, gameSetID: 1, gameSetNo: 1, raceTo: 15, winner: "TEAM A", startTime: "2025-05-01T18:05:00", endTime: "2025-05-01T18:25:00", status: 'completed' },
-            { billiardMatchID: 1, gameSetID: 2, gameSetNo: 2, raceTo: 15, winner: "TEAM B", startTime: "2025-05-01T18:30:00", endTime: "2025-05-01T18:50:00", status: 'completed' },
-            { billiardMatchID: 1, gameSetID: 3, gameSetNo: 3, raceTo: 15, winner: "TEAM A", startTime: "2025-05-01T18:55:00", endTime: "2025-05-01T19:05:00", status: 'completed' }
-        ],
-        teams: [
-            {
-                billiardMatchID: 1,
-                teamID: 1,
-                name: "Team A",
-                totalMember: 1,
-                totalScore: 40,
-                createAt: "2025-05-01T18:00:00",
-                status: 'win',
-                players: [
-                    { playerID: 1, name: "Player 1", totalScore: 40, customerID: "cust123", status: "win", createAt: "2025-05-01T18:00:00", teamID: 1 }
-                ]
-            },
-            {
-                billiardMatchID: 1,
-                teamID: 2,
-                name: "Team B",
-                totalMember: 1,
-                totalScore: 35,
-                createAt: "2025-05-01T18:00:00",
-                status: 'lose',
-                players: [
-                    { playerID: 2, name: "Player 2", totalScore: 35, customerID: "cust124", status: "loss", createAt: "2025-05-01T18:00:00", teamID: 2 }
-                ]
-            }
-        ]
-    }
-];
-
+import { fetchHistoryMatchAPI } from "../services/FetchAPI";
+import { toast } from "sonner";
 
 export default function HistoryTable() {
     const [fromDate, setFromDate] = useState("");
@@ -150,6 +12,7 @@ export default function HistoryTable() {
     // State để quản lý modal
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedMatch, setSelectedMatch] = useState<BilliardMatch | null>(null);
+    const [historyMatchs, setHistoryMatchs] = useState<BilliardMatch[]>([]);
 
     // Hàm để mở modal
     const handleOpenModal = (match: BilliardMatch) => {
@@ -169,6 +32,20 @@ export default function HistoryTable() {
         })
     };
 
+    useEffect(() => {
+        const fetchHistoryMatch = async () => {
+            const response = await fetchHistoryMatchAPI(`6e0c2c33-5fc7-4fac-a6ae-f31f04b77521`);
+            if (response.status === 200) {
+                setHistoryMatchs(response.data);
+                toast.success(response.message);
+            } else {
+                toast.warning(response.message);
+            }
+        }
+
+        fetchHistoryMatch();
+    }, [])
+
     // A helper function to format data for the table
     const formatMatchForDisplay = (match: BilliardMatch) => ({
         id: match.billiardMatchID,
@@ -180,7 +57,7 @@ export default function HistoryTable() {
     });
 
     // In a real scenario, you'd filter the data based on fromDate and toDate
-    const filteredData = mockData;
+    const filteredData = historyMatchs;
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-200 h-full flex flex-col z-10">

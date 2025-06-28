@@ -43,25 +43,23 @@ const Model = () => {
 
     return (
         <>
-            <div>
-                <h2 className="text-6xl green mt-2 mb-6">SELECT GAME MODE</h2>
+            <div className="w-4/5 max-w-md flex flex-col items-center"> {/* Thêm container để giới hạn chiều rộng */}
+                {/* THAY ĐỔI: Giảm font-size cho mobile */}
+                <h2 className="text-4xl md:text-6xl green mt-2 mb-6 text-center">SELECT GAME MODE</h2>
                 {/* Buttons */}
-                <div className="flex flex-col gap-3 w-full">
+                <div className="flex flex-col gap-3 w-full z-20">
                     {modeList.map((mode) => (
                         <button
                             key={mode.modeID}
                             onClick={() => handleSelectGame(mode.modeID)}
-                            // className="bg-button text-white py-3 text-3xl border-1
-                            //  border-green-200 rounded-md cursor-pointer font-light
-                            //  "
                             className={`
-                                        py-3 text-3xl border-1 border-green-200 rounded-md 
-                                        cursor-pointer font-light text-white bg-button 
-                                        ${matchSetUp.modeID === mode.modeID
+                                py-2 md:py-3 text-xl md:text-3xl border-1 border-green-200 rounded-md 
+                                cursor-pointer font-light text-white bg-button 
+                                ${matchSetUp.modeID === mode.modeID
                                     ? 'selected' // Chỉ thêm class 'selected'
-                                    : ''         // Không thêm gì cả
+                                    : ''       // Không thêm gì cả
                                 }
-`}
+                            `}
                         >
                             {mode.name}
                         </button>
@@ -70,15 +68,16 @@ const Model = () => {
             </div>
 
             {/* Bottom Left Icon */}
-            <div className="absolute left-0 bottom-0">
-                <div className="relative w-50 h-auto">
-                    <img src={iconCorner} alt="corner" className="w-50 h-auto" />
+            {/* THAY ĐỔI: Giảm kích thước icon và số cho mobile */}
+            <div className="absolute left-0 bottom-0 z-10">
+                <div className="relative w-30 md:w-50 h-auto">
+                    <img src={iconCorner} alt="corner" className="w-full h-auto" />
                     <span className="absolute top-2/3 right-1/3 transform -translate-x-1/2 -translate-y-1/2
-                     text-black text-9xl font-bold z-10">
+                       text-black text-7xl md:text-9xl font-bold z-10">
                         8
                     </span>
                     <img src={iconCornerDecor} alt="Icon Corner Decor"
-                        className="w-8 h-auto absolute top-1/3 right-3"
+                        className="w-6 md:w-8 h-auto absolute top-1/3 right-3"
                     />
                 </div>
             </div>
@@ -87,10 +86,11 @@ const Model = () => {
             <div className="absolute bottom-2 right-2">
                 <button
                     className="text-button px-3 py-1 text-xl
-                 rounded-sm flex flex-row flex-nowrap gap-1 items-center cursor-pointer"
+                  rounded-sm flex flex-row flex-nowrap gap-1 items-center cursor-pointer"
                     onClick={handleNext}
                 >
-                    <h5 className="text-2xl font-thin">NEXT</h5>
+                    {/* THAY ĐỔI: Giảm font-size cho mobile */}
+                    <h5 className="text-sm md:text-2xl font-thin">NEXT</h5>
                     <img src={nextIcon} alt="Next Icon" />
                 </button>
             </div>
@@ -98,4 +98,4 @@ const Model = () => {
     )
 }
 
-export default Model
+export default Model;

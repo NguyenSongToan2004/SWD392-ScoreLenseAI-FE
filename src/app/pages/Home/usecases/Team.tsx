@@ -12,10 +12,12 @@ import { toast } from 'sonner';
 
 const Team = () => {
     const nav = useNavigate();
-    const [selectedMode, setSelectedMode] = useState<string | null>(null);  // State to track selected mode
+    const [selectedMode, setSelectedMode] = useState<string | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const matchSetUp = matchSetUpStore.use();
-    const handleSelectGame = (mode: string | "1 VS 1" | "2 VS 2" | "SCOTCH DOUBLE" | "CUSTOME") => {
+
+    const handleSelectGame = (mode: string) => {
+        // ... (logic của bạn không thay đổi)
         const resetTeam = () => {
             matchSetUpStore.set((prev) => {
                 prev.value.setUp = "1vs1";
@@ -23,14 +25,13 @@ const Team = () => {
             });
         };
         resetTeam();
-        // Xử lý hành động dựa trên chế độ được chọn
         switch (mode) {
             case "1 VS 1":
                 matchSetUpStore.set((prev) => {
                     prev.value.setUp = "1 VS 1";
                     prev.value.teamConfigs = setDefaultTeamConfig(mode);
                 });
-                setSelectedMode(mode);  // Update selectedMode
+                setSelectedMode(mode);
                 nav("/team/list");
                 break;
             case "2 VS 2":
@@ -38,7 +39,7 @@ const Team = () => {
                     prev.value.setUp = "2 VS 2";
                     prev.value.teamConfigs = setDefaultTeamConfig(mode);
                 });
-                setSelectedMode(mode);  // Update selectedMode
+                setSelectedMode(mode);
                 nav("/team/list");
                 break;
             case "SCOTCH DOUBLE":
@@ -46,47 +47,20 @@ const Team = () => {
                     prev.value.setUp = "SCOTCH DOUBLE";
                     prev.value.teamConfigs = setDefaultTeamConfig(mode);
                 });
-                setSelectedMode(mode);  // Update selectedMode
+                setSelectedMode(mode);
                 nav("/team/list");
                 break;
             case "CUSTOME":
                 console.log("Selected: CUSTOM");
                 toast.info('This function is upgrading !');
-                // nav("/custom") // Ví dụ điều hướng trang khác
                 break;
             default:
                 break;
         }
     };
 
-    // const handleStart = (round: number, raceTo: number) => {
-    //     matchSetUpStore.set((prev) => {
-    //         prev.value.raceTo = raceTo,
-    //             prev.value.totalSet = round
-    //     })
-    //     console.log(matchSetUp);
-
-    //     const createMatch = async () => {
-    //         const response: ResponseAPI = await createBillardMatchAPI(matchSetUp as MatchSetup);
-    //         if (response.status == 200) {
-    //             let createdMatch: BilliardMatch = response.data;
-    //             // nav(`/match/${createdMatch.billiardMatchID}`, {
-    //             //     state: {
-    //             //         match: createdMatch
-    //             //     }
-    //             // });
-    //         }
-    //     }
-    //     createMatch();
-    // };
-
     const handleStart = () => {
-        // matchSetUpStore.set((prev) => {
-        //     prev.value.raceTo = raceTo,
-        //         prev.value.totalSet = round
-        // })
-        // console.log(matchSetUp);
-
+        // ... (logic của bạn không thay đổi)
         const createMatch = async () => {
             const response: ResponseAPI = await createBillardMatchAPI(matchSetUp as MatchSetup);
             if (response.status == 200) {
@@ -102,47 +76,37 @@ const Team = () => {
     };
 
     const handleNext = () => {
-        isOpacityStore.set((prev) => {
-            prev.value = true;
-        })
+        isOpacityStore.set((prev) => { prev.value = true; });
         setIsModalOpen(true);
     };
 
     const handleClose = () => {
-        isOpacityStore.set((prev) => {
-            prev.value = false;
-        })
+        isOpacityStore.set((prev) => { prev.value = false; });
         setIsModalOpen(false);
     };
 
-
     const handleBack = () => {
-        matchSetUpStore.set((prev) => {
-            prev.value.modeID = null;
-        });
-        nav("/match");
+        matchSetUpStore.set((prev) => { prev.value.modeID = null; });
+        nav(-1); // Quay lại trang trước đó
     };
 
     return (
         <>
-            <div className="w-1/2">
-                <h2 className="text-6xl text-center green mt-2 mb-6">CREATE TEAM</h2>
+            {/* THAY ĐỔI: Container chính chiếm toàn bộ chiều rộng trên mobile và giới hạn lại trên desktop */}
+            <div className="w-full md:w-3/4 lg:w-1/2 flex flex-col items-center">
+                {/* THAY ĐỔI: Giảm font-size cho mobile */}
+                <h2 className="text-3xl md:text-6xl text-center green mt-2 mb-3 md:mb-6">CREATE TEAM</h2>
 
-                {/* Buttons */}
-                <div className="flex flex-row gap-3 w-full">
-                    {["1 VS 1", "2 VS 2", "SCOTCH DOUBLE", "CUSTOME"].map((mode, index) => (
+                {/* THAY ĐỔI: Thêm flex-wrap và giảm font-size các nút cho mobile */}
+                <div className="flex flex-row flex-wrap gap-2 w-full">
+                    {["1 VS 1", "2 VS 2", "SCOTCH DOUBLE"].map((mode, index) => (
                         <button
                             key={index}
                             onClick={() => handleSelectGame(mode)}
-                            // className="bg-button text-white py-1 text-3xl border-1
-                            //  border-green-200 rounded-md cursor-pointer font-light flex-1"
-                            className={`bg-button text-white py-1 text-3xl border-1
-                             border-green-200 rounded-md cursor-pointer font-light flex-1
-                                ${matchSetUp.setUp === mode
-                                    ? 'selected'
-                                    : ''
-                                }
-                             `}
+                            className={`text-white py-1 md:py-2 border-1 border-green-200 rounded-md cursor-pointer font-light flex-1
+                                 text-sm md:text-2xl lg:text-3xl bg-button
+                                 ${matchSetUp.setUp === mode ? 'selected' : ''}
+                              `}
                         >
                             {mode}
                         </button>
@@ -150,32 +114,32 @@ const Team = () => {
                 </div>
             </div>
 
-            <div className="w-1/2 flex justify-between">
-                {/* Set dynamic key for Outlet to trigger re-render */}
+            {/* THAY ĐỔI: Container cho Outlet chiếm toàn bộ chiều rộng */}
+            <div className="w-full md:w-3/4 lg:w-1/2 flex justify-between">
                 <Outlet key={selectedMode} />
             </div>
 
             {/* Bottom Left Icon */}
             <div className="absolute bottom-2 left-2">
                 <button
-                    className="text-button px-3 py-1 text-xl
-                 rounded-sm flex flex-row flex-nowrap gap-1 items-center cursor-pointer"
+                    className="text-button px-3 py-1 rounded-sm flex flex-row flex-nowrap gap-1 items-center cursor-pointer"
                     onClick={handleBack}
                 >
-                    <img src={backIcon} alt="Next Icon" />
-                    <h5 className="text-2xl font-thin">BACK</h5>
+                    <img src={backIcon} className='h-auto w-5' alt="Back Icon" />
+                    {/* THAY ĐỔI: Giảm font-size cho mobile */}
+                    <h5 className="text-sm md:text-2xl font-thin">BACK</h5>
                 </button>
             </div>
 
             {/* Bottom Right Next Button */}
             <div className="absolute bottom-2 right-2">
                 <button
-                    className="text-button px-3 py-1 text-xl
-                 rounded-sm flex flex-row flex-nowrap gap-1 items-center cursor-pointer"
+                    className="text-button px-3 py-1 rounded-sm flex flex-row flex-nowrap gap-1 items-center cursor-pointer"
                     onClick={handleNext}
                 >
-                    <h5 className="text-2xl font-thin">NEXT</h5>
-                    <img src={nextIcon} alt="Next Icon" />
+                    {/* THAY ĐỔI: Giảm font-size cho mobile */}
+                    <h5 className="text-sm md:text-2xl font-thin">NEXT</h5>
+                    <img src={nextIcon} className='h-auto w-5' alt="Next Icon" />
                 </button>
             </div>
 

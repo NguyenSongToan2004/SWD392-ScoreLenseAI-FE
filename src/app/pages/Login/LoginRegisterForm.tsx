@@ -26,7 +26,7 @@ export default function LoginRegisterForm() {
         <div className="flex flex-col items-center justify-start h-full">
           {/* Animated Logo */}
           <motion.img
-            className="select-none w-55 h-55"
+            className="select-none w-35 h-35 md:w-55 md:h-55"
             src="login-logo.png"
             initial={{ scale: 0, rotate: -180, opacity: 0 }}
             animate={{ scale: 1, rotate: 0, opacity: 1 }}
@@ -100,7 +100,11 @@ export default function LoginRegisterForm() {
             delay: 1.2
           }}
         >
-          <img className="pointer-events-none select-none" src="login-art1.png" />
+          {/* <img className="pointer-events-none select-none" src="login-art1.png" /> */}
+          <img
+            className="pointer-events-none select-none w-40 lg:w-auto"
+            src="login-art1.png"
+          />
         </motion.div>
 
         <motion.div
@@ -113,7 +117,11 @@ export default function LoginRegisterForm() {
             delay: 1.4
           }}
         >
-          <img className="pointer-events-none select-none" src="login-art2.png" />
+          {/* <img className="pointer-events-none select-none" src="login-art2.png" /> */}
+          <img
+            className="pointer-events-none select-none w-40 lg:w-auto"
+            src="login-art2.png"
+          />
         </motion.div>
 
         {/* Animated Toggle Button */}
