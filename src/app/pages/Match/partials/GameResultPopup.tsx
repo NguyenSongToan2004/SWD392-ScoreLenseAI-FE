@@ -16,6 +16,7 @@ const GameResultPopup: React.FC<GameResultPopupProps> = ({ winner }) => {
         }
         nav("/");
     }
+    
     return (
         <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
             <div className="bg-white flex flex-col gap-5 rounded-xl shadow-lg p-5 text-center max-w-5xl overflow-hidden">

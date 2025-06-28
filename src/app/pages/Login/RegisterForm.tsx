@@ -6,6 +6,9 @@ import { FaLock, FaUser } from "react-icons/fa";
 import { RiLoginCircleLine } from "react-icons/ri";
 import type { RegisterFormData } from "./models/auth";
 import { Suspense } from "react";
+import { registerAPI } from "./services/FetchAPI";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 interface RegisterFormProps {
     onRegister: (values: RegisterFormData) => void;
@@ -13,9 +16,20 @@ interface RegisterFormProps {
 
 export default function RegisterForm({ onRegister }: RegisterFormProps) {
     const [form] = Form.useForm();
-
+    const nav = useNavigate();
     const handleRegister = (values: RegisterFormData) => {
         onRegister(values);
+        const register = async () => {
+            const response = await registerAPI(values.username, values.password);
+            if (response.status === 200) {
+                toast.success(response.message);
+                nav("/login");
+            } else {
+                toast.error(response.message);
+            }
+        }
+
+        register();
     };
 
     return (

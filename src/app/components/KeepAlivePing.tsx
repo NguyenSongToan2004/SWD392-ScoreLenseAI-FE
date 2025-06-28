@@ -7,7 +7,6 @@ export default function KeepAlivePing() {
             fetch(`${apiUrl}/v1/ping`)
                 .then((res) => {
                     if (!res.ok) throw new Error('Ping failed');
-                    console.log('Pinged backend to keep alive');
                 })
                 .catch((err) => {
                     console.error('Error pinging backend:', err);

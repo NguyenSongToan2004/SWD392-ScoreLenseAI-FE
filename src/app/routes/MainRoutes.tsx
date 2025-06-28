@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PageNotFound from "../layouts/PageNotFound";
-import Admin from "../pages/Admin";
 import Home from "../pages/Home";
 // import Login from "../pages/Login";
 import React, { Suspense } from "react";
@@ -13,10 +12,13 @@ import User from "../pages/User";
 import LayoutRoute from "./LayoutRoute";
 import PrivateRoute from "./PrivateRoute";
 import { Toaster } from "sonner";
+import TableDetails from "../pages/Admin/usecases/TableDetails";
+import DashBoard from "../pages/Admin/usecases/DashBoard";
 
 export default function MainRoutes() {
 
     const Login = React.lazy(() => import('../pages/Login'));
+    const Admin = React.lazy(() => import('../pages/Admin'))
 
     return (
         <BrowserRouter>
@@ -28,7 +30,7 @@ export default function MainRoutes() {
                         element={
                             <PrivateRoute>
                                 <Home />
-                                <Admin />
+                                <Login />
                             </PrivateRoute>
                         }
                     >
@@ -43,11 +45,26 @@ export default function MainRoutes() {
                             <User />
                         </LayoutRoute>
                     } />
-                    {/* <Route path="/admin" element={
+                    <Route path="/admin" element={
                         <PrivateRoute>
-                            <Admin />
+                            <LayoutRoute>
+                                <Admin />
+                            </LayoutRoute>
                         </PrivateRoute>
-                    } /> */}
+                    } >
+                        <Route path="/admin/table" element={
+                            <PrivateRoute>
+                                <TableDetails />
+                            </PrivateRoute>
+                        } />
+
+                        <Route path="/admin/dashboard" element={
+                            <PrivateRoute>
+                                <DashBoard />
+                            </PrivateRoute>
+                        } />
+
+                    </Route>
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
             </Suspense>

@@ -1,66 +1,15 @@
-
-// import { useEffect, useState } from "react";
-// import { useLocation, useParams } from "react-router-dom";
-// import { type BilliardMatch } from "../../models/DataObject";
-// import "./home.css";
-// import BackLog from "./partials/BackLog";
-// import GameResultPopup from "./partials/GameResultPopup";
-// import Header from "./partials/Header";
-// import TableScore from "./partials/TableScore";
-// import { fetchMatchAPI } from "./services/FetchAPI";
-// export default function Match() {
-//     const location = useLocation();
-//     const { id } = useParams();
-//     const [showPopup, setShowPopup] = useState(false);
-//     const [match, setMatch] = useState<BilliardMatch | null>(location.state.match ?? null);
-
-//     useEffect(() => {
-//         if (!match) {
-//             const getMatch = async () => {
-//                 const response = await fetchMatchAPI(id as string);
-//                 if (response.status === 200) {
-//                     setMatch(response.data);
-//                 }
-//             }
-//         }
-//     }, [match]);
-
-//     return (
-//         <div className="w-screen h-screen flex flex-col gap-5 text-white font-sans px-6 py-4 overflow-hidden gradient-bg">
-
-//             {/* Header */}
-//             <section className="flex-auto">
-//                 <Header setArray={match.sets} />
-//             </section>
-
-//             {/* Scoreboard */}
-//             <section className="flex-1/2">
-//                 <TableScore teamID={0} />
-//             </section>
-
-//             {/* Log History */}
-//             <section className="flex-1/2 overflow-y-hidden">
-//                 <BackLog />
-//             </section>
-
-//             {/*Popup End Game */}
-//             <section>
-//                 {showPopup && <GameResultPopup
-//                     winner={"tui nè"}
-//                 />}
-//             </section>
-//         </div>
-//     )
-// }
-
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { type BilliardMatch } from "../../models/DataObject";
 import "./home.css";
 import BackLog from "./partials/BackLog";
 import Header from "./partials/Header";
 import TableScore from "./partials/TableScore";
-import { fetchMatchAPI } from "./services/FetchAPI";
+import { fetchMatchAPI, updateScoreAPI } from "./services/FetchAPI";
+import { useStomp } from "../../hooks/useStomp";
+import { useSubscription } from "../../hooks/useSubscription";
+import { toast } from "sonner";
+import GameResultPopup from "./partials/GameResultPopup";
 
 // --- TỐI ƯU: Tạo các component placeholder để xử lý UI ---
 const LoadingComponent = () => (
@@ -79,12 +28,58 @@ const ErrorComponent = ({ message }: { message: string }) => (
 export default function Match() {
     const location = useLocation();
     const { id } = useParams<{ id: string }>();
+    const [showPopup, setShowPopup] = useState(false);
 
     // --- TỐI ƯU 1: Thêm state cho loading và error ---
     const [match, setMatch] = useState<BilliardMatch | null>(location.state?.match ?? null);
     const [isLoading, setIsLoading] = useState<boolean>(!match); // Nếu không có match ban đầu, đặt là đang loading
     const [error, setError] = useState<string | null>(null);
-    // const [showPopup, setShowPopup] = useState(false);
+    // --- 1. Thiết lập kết nối STOMP ---
+    const { client, isConnected } = useStomp();
+
+    const handleMatchUpdate = useCallback((updatedMatch: BilliardMatch) => {
+        console.log('Received match update:', updatedMatch);
+        setMatch(updatedMatch);
+    }, []);
+
+    const handleNewLog = useCallback((logMessage: any) => {
+        console.log('Received new log:', logMessage);
+        // Cập nhật state chứa log ở đây...
+        // setLogs(prevLogs => [logMessage, ...prevLogs]);
+    }, []);
+
+    // --- 3. Subscribe vào các topic cần thiết ---
+    // Hook này sẽ tự động quản lý việc subscribe và unsubscribe.
+    // Topic động dựa trên `id` của trận đấu.
+    useSubscription(client, isConnected, `/topic/match/${id}`, handleMatchUpdate);
+    useSubscription(client, isConnected, `/topic/log/${id}`, handleNewLog);
+
+    // --- 4. Gửi message (publish) ---
+    const handleScoreUpdate = (teamID: number, delta: string) => {
+        // Kiểm tra client và trạng thái kết nối trước khi gửi
+        // if (client && isConnected && id) {
+        //     console.log(`%cPublishing score update for player ${playerId}`, 'color: purple');
+        //     const payload = { teamId, playerId, delta };
+
+        //     // Thay thế việc gọi API bằng cách publish qua STOMP
+        //     client.publish({
+        //         destination: `/app/match/${id}/score`, // Endpoint trên backend để xử lý
+        //         body: JSON.stringify(payload),
+        //     });
+        // }
+        const updateScore = async () => {
+            if (match) {
+                const response = await updateScoreAPI(match.billiardMatchID, teamID, delta);
+                if (response.status === 200) {
+                    setMatch(response.data);
+                    toast.success(response.message);
+                }
+            } else {
+                toast.error('Không tìm thấy trận đấu');
+            }
+        }
+        updateScore();
+    };
 
     // --- TỐI ƯU 2: Logic useEffect đúng đắn và an toàn hơn ---
     useEffect(() => {
@@ -107,6 +102,7 @@ export default function Match() {
 
             if (response.status === 200) {
                 setMatch(response.data);
+                toast.success(response.message);
             } else {
                 setError(response.message || 'Failed to fetch match details.');
             }
@@ -114,7 +110,13 @@ export default function Match() {
         };
 
         getMatch();
-    }, [id, match]); // Phụ thuộc vào `id` để fetch lại khi URL thay đổi
+    }, [id, match]);
+
+    useEffect(() => {
+        if (match?.status === 'completed') {
+            setShowPopup(true);
+        }
+    }, [match]);
 
     // --- TỐI ƯU 3: Xử lý các trạng thái UI trước khi render ---
     if (isLoading) {
@@ -145,7 +147,10 @@ export default function Match() {
             {/* Scoreboard */}
             <section className="flex-1/2">
                 {/* TỐI ƯU 4: Truyền cả mảng teams thay vì ID tĩnh */}
-                <TableScore teamsArray={match.teams} />
+                <TableScore
+                    teamsArray={match.teams}
+                    onScoreChange={handleScoreUpdate}
+                />
             </section>
 
             {/* Log History */}
@@ -156,10 +161,9 @@ export default function Match() {
 
             {/* Popup End Game */}
             <section>
-                {/* TỐI ƯU 4: Lấy winner từ dữ liệu match */}
-                {/* {showPopup && <GameResultPopup
+                {showPopup && <GameResultPopup
                     winner={match.winner || "Hòa"}
-                />} */}
+                />}
             </section>
         </div>
     )

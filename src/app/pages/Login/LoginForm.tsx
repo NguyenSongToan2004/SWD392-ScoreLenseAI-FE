@@ -5,9 +5,10 @@ import { FaLock, FaUser } from "react-icons/fa";
 import { RiLoginCircleLine } from "react-icons/ri";
 import type { LoginFormData } from "./models/auth";
 import { Suspense } from "react";
-import loginAPI from "./services/FetchAPI";
+import { loginAPI } from "./services/FetchAPI";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import type { AuthResponse } from "../../models/DataObject";
 
 interface LoginFormProps {
     onLogin: (values: LoginFormData) => void;
@@ -21,8 +22,16 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
         onLogin(values);
         const resposne = await loginAPI(values.username, values.password);
         if (resposne.status == 200) {
+            let data = resposne.data as AuthResponse;
             toast.success(resposne.message);
-            nav('/b80255e6-d572-498e-b348-03dfcc57e2ad');
+            if (data.userType === "CUSTOMER")
+                nav('/6ba6026a-4516-4a49-9a64-852f6a2d7850');
+            else
+                nav('/admin', {
+                    state: {
+                        userInfo: data.user
+                    }
+                });
         }
     };
 

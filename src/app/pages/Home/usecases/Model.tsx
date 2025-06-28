@@ -7,7 +7,7 @@ import type ResponseAPI from '../../../models/ResponseAPI';
 import { fetchModeAPI } from '../services/FetchAPI';
 import type { Mode } from '../models/DataObject';
 import { matchSetUpStore } from "../homeStore";
-
+import { toast } from 'sonner';
 
 const Model = () => {
     const nav = useNavigate();
@@ -21,11 +21,15 @@ const Model = () => {
     };
 
     const handleNext = () => {
-        nav("/team", {
-            state: {
-                matchSetup: matchSetUp
-            }
-        })
+        if (matchSetUp.modeID === null) {
+            toast.warning('Vui lòng chọn chế độ chơi !!')
+        } else {
+            nav("/team", {
+                state: {
+                    matchSetup: matchSetUp
+                }
+            })
+        }
     }
 
     useEffect(() => {
@@ -47,9 +51,17 @@ const Model = () => {
                         <button
                             key={mode.modeID}
                             onClick={() => handleSelectGame(mode.modeID)}
-                            className="bg-button text-white py-3 text-3xl border-1
-                             border-green-200 rounded-md cursor-pointer font-light
-                             "
+                            // className="bg-button text-white py-3 text-3xl border-1
+                            //  border-green-200 rounded-md cursor-pointer font-light
+                            //  "
+                            className={`
+                                        py-3 text-3xl border-1 border-green-200 rounded-md 
+                                        cursor-pointer font-light text-white bg-button 
+                                        ${matchSetUp.modeID === mode.modeID
+                                    ? 'selected' // Chỉ thêm class 'selected'
+                                    : ''         // Không thêm gì cả
+                                }
+`}
                         >
                             {mode.name}
                         </button>

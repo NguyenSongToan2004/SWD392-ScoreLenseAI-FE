@@ -24,8 +24,9 @@ const AuthButton = () => {
             else
                 toast.error(response.message);
         }
-        setIsAuth("false");
         logOut();
+        setIsAuth("false");
+        nav("/login");
     }
 
     return (

@@ -9,10 +9,10 @@ export interface BilliardMatch {
     startTime: string;
     endTime: string | null;
     totalSet: number;
-    status: "pending" | "ongoing" | "finished" | "cancelled";
+    status: "pending" | "ongoing" | "completed" | "cancelled";
     code: string;
-    sets: GameSet[]; // Mảng các đối tượng GameSet
-    teams: Team[];   // Mảng các đối tượng Team
+    sets: GameSet[]; 
+    teams: Team[];   
 }
 
 export interface Player {
@@ -58,7 +58,7 @@ interface Role {
     permissions: Permission[];
 }
 
-interface User {
+export interface User {
     staffID?: string;
     customerID?: string;
     name: string;
@@ -71,6 +71,7 @@ interface User {
     updateAt: string | null;
     status: string;
     manager: string | null;
+    store?: Store
 }
 
 export interface AuthResponse {
@@ -80,4 +81,25 @@ export interface AuthResponse {
     user: User;
     userType: string;
 }
+
+export interface Store {
+    storeID: string;
+    name: string;
+    address: string;
+    status: 'active' | 'inactive' | string;
+    description: string;
+}
+
+export interface BilliardTable {
+    billardTableID: string;
+    tableCode: string;
+    tableType: string;
+    name: string;
+    description: string;
+    status: "inUse" | "available" | "underMaintainance";
+    storeName: string;
+    active: boolean;
+}
+
+
 

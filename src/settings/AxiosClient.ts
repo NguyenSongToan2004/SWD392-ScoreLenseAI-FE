@@ -50,24 +50,15 @@ const processQueue = (error: AxiosError | null) => {
     failedQueue = [];
 };
 
-// Hàm helper để bắn sự kiện
-// function notify(message: string, type: 'error' | 'warning' | 'info') {
-//     const event = new CustomEvent('show-notification', {
-//         detail: { message, type }
-//     });
-//     window.dispatchEvent(event);
-// }
 
 const api = axios.create({
     baseURL: `${import.meta.env.VITE_API_URL}`,
     // withCredentials là chìa khóa để trình duyệt tự động gửi httpOnly cookie
     withCredentials: true,
-    // KHÔNG cần 'Content-Type' ở đây vì axios mặc định đã là JSON
-    // KHÔNG cần 'Authorization' header vì đã dùng cookie
+    headers: {
+    
+    }
 });
-
-// BỎ interceptor.request vì không cần tự gắn token nữa
-// Trình duyệt sẽ làm việc này tự động
 
 api.interceptors.response.use(
     response => response,
@@ -126,6 +117,8 @@ api.interceptors.response.use(
 
         if (error.response) {
             const status = error.response.status;
+            const data = error.response.data as { message?: string };
+            let conflictMessage = data?.message || "Xung đột dữ liệu đã xảy ra. Vui lòng thử lại.";
             switch (status) {
                 case 403:
                     toast.error("Bạn không có quyền thực hiện hành động này.");
@@ -135,6 +128,9 @@ api.interceptors.response.use(
                     toast.warning("Tài nguyên bạn yêu cầu không tồn tại.");
                     // notify("Trang này không tìm thấy", "error");
                     break;
+                case 409:
+                    toast.warning(conflictMessage);
+                    break;
                 case 500:
                     break;
                 case 502:
@@ -142,6 +138,9 @@ api.interceptors.response.use(
                 case 503:
                     // notify("Hệ thống máy chủ đang gặp sự cố.", "error");
                     toast.warning("Hệ thống máy chủ đang gặp sự cố.")
+                    break;
+                default:
+                    toast.warning(conflictMessage);
                     break;
             }
         } else if (error.request) {

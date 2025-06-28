@@ -5,6 +5,9 @@ import mkcert from 'vite-plugin-mkcert' // <-- Import
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), mkcert()],
+  define: {
+    global: 'window',
+  },
   build: {
     outDir: 'dist', // Đặt thư mục đầu ra là 'dist'
     rollupOptions: {
@@ -21,9 +24,9 @@ export default defineConfig({
     },
   },
   server: {
-    https: true,
+    https: false,
     fs: {
       strict: false, // Cho phép truy cập hệ thống tệp rộng hơn
     }
-  },
+  },  
 })

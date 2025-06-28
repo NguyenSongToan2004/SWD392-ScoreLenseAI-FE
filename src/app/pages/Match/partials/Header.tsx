@@ -75,7 +75,7 @@ const Header = ({ setArray }: HeaderProps) => {
                     style={{ backgroundColor: `var(--primary-color)` }}
                 >
                     <img src={iconEdit} alt="Icon Edit" className="w-6" />
-                    <span className="font-bold">EDIT POINT</span>
+                    <span className="font-bold">SETTING</span>
                 </button>
             </div>
         </div>

@@ -30,13 +30,30 @@
   color: #f5a623;
 }
 
+/* Style mặc định */
 .bg-button {
   background: #888888;
-  /* transition: ease-in 0.5s; */
+  /* transition: all 1s ease-out; */
+  /* Thêm transition mượt mà */
 }
 
+/* Hiệu ứng hover cho TẤT CẢ các button */
 .bg-button:hover {
   background: linear-gradient(to right, #2f2f2f, #228b50);
+}
+
+/* Style cho button được chọn (sẽ ghi đè lên style mặc định) */
+.bg-button.selected {
+  background: linear-gradient(to right, #2f2f2f, #228b50);
+  /* Màu xanh lá cây đậm khi được chọn */
+  /* Hoặc bạn có thể dùng gradient nếu muốn */
+  /* background: linear-gradient(to right, #1a6a3d, #228b50); */
+}
+
+/* (Tùy chọn) Style hover cho button đã được chọn nếu bạn muốn nó khác đi */
+.bg-button.selected:hover {
+  background: #1a6a3d;
+  /* Hơi tối hơn một chút khi hover */
 }
 
 .text-button {

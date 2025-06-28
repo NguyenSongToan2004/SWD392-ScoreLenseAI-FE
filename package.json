@@ -10,15 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@stomp/stompjs": "^7.1.1",
     "@tailwindcss/vite": "^4.1.8",
     "antd": "^5.25.4",
     "axios": "^1.10.0",
+    "dayjs": "^1.11.13",
     "motion": "^12.18.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.1",
     "react-signify": "^1.5.8",
+    "sockjs-client": "^1.6.1",
     "sonner": "^2.0.5",
     "tailwindcss": "^4.1.8"
   },
@@ -26,6 +29,7 @@
     "@eslint/js": "^9.25.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "@types/sockjs-client": "^1.5.4",
     "@vitejs/plugin-react": "^4.4.1",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",

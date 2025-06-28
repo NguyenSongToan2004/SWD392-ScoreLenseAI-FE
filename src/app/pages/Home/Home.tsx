@@ -9,6 +9,7 @@ import { isOpacityStore, matchSetUpStore } from "./homeStore";
 import type { BilliardTable } from "./models/DataObject";
 import AuthButton from "./partials/AuthButton";
 import { fetchTableAPI } from "./services/FetchAPI";
+import { setDefaultMatchSetUp } from "./services/Function";
 
 export default function Home() {
     const isOpacity = isOpacityStore.use();
@@ -20,8 +21,9 @@ export default function Home() {
             console.log(response);
             if (response.status === 200) {
                 let table = response.data as BilliardTable;
-                console.log(table);
-                console.log(table.billardTableID);
+                matchSetUpStore.set((prev) => {
+                    prev.value = setDefaultMatchSetUp()
+                })
                 matchSetUpStore.set((prev) => {
                     prev.value.billiardTableID = table.billardTableID as string;
                 });

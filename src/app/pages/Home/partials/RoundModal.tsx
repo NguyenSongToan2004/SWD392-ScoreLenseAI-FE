@@ -1,9 +1,11 @@
 import { useState, type ChangeEvent } from 'react';
 import "../home.css"
-
+import { matchSetUpStore } from "../homeStore";
 interface RoundModalProps {
     onClose: () => void;
-    onStart: (round: number, raceTo: number) => void;
+    // onStart: (round: number, raceTo: number) => void;
+    onStart: () => void;
+
 }
 
 const RoundModal = ({ onClose, onStart }: RoundModalProps) => {
@@ -11,16 +13,22 @@ const RoundModal = ({ onClose, onStart }: RoundModalProps) => {
     const [raceTo, setRaceTo] = useState(3);
 
     const handleStart = () => {
-        onStart(round, raceTo);
+        onStart();
         onClose();
     };
 
     const handleRoundChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setRound(Number(e.target.value));  // Đảm bảo giá trị trả về là một số
+        matchSetUpStore.set((prev) => {
+            prev.value.totalSet = Number(e.target.value)
+        })
     };
 
     const handleRaceChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setRaceTo(Number(e.target.value));  // Đảm bảo giá trị trả về là một số
+        matchSetUpStore.set((prev) => {
+            prev.value.raceTo = Number(e.target.value)
+        })
     };
 
     return (

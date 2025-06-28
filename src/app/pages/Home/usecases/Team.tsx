@@ -8,6 +8,7 @@ import type { BilliardMatch, MatchSetup } from '../models/DataObject';
 import RoundModal from '../partials/RoundModal';
 import { createBillardMatchAPI } from '../services/FetchAPI';
 import { setDefaultTeamConfig } from '../services/Function';
+import { toast } from 'sonner';
 
 const Team = () => {
     const nav = useNavigate();
@@ -42,7 +43,7 @@ const Team = () => {
                 break;
             case "SCOTCH DOUBLE":
                 matchSetUpStore.set((prev) => {
-                    prev.value.setUp = "SCROTCH DOUBLE";
+                    prev.value.setUp = "SCOTCH DOUBLE";
                     prev.value.teamConfigs = setDefaultTeamConfig(mode);
                 });
                 setSelectedMode(mode);  // Update selectedMode
@@ -50,7 +51,7 @@ const Team = () => {
                 break;
             case "CUSTOME":
                 console.log("Selected: CUSTOM");
-                // Thực hiện hành động khi chọn CUSTOM
+                toast.info('This function is upgrading !');
                 // nav("/custom") // Ví dụ điều hướng trang khác
                 break;
             default:
@@ -58,11 +59,34 @@ const Team = () => {
         }
     };
 
-    const handleStart = (round: number, raceTo: number) => {
-        matchSetUpStore.set((prev) => {
-            prev.value.raceTo = raceTo,
-                prev.value.totalSet = round
-        })
+    // const handleStart = (round: number, raceTo: number) => {
+    //     matchSetUpStore.set((prev) => {
+    //         prev.value.raceTo = raceTo,
+    //             prev.value.totalSet = round
+    //     })
+    //     console.log(matchSetUp);
+
+    //     const createMatch = async () => {
+    //         const response: ResponseAPI = await createBillardMatchAPI(matchSetUp as MatchSetup);
+    //         if (response.status == 200) {
+    //             let createdMatch: BilliardMatch = response.data;
+    //             // nav(`/match/${createdMatch.billiardMatchID}`, {
+    //             //     state: {
+    //             //         match: createdMatch
+    //             //     }
+    //             // });
+    //         }
+    //     }
+    //     createMatch();
+    // };
+
+    const handleStart = () => {
+        // matchSetUpStore.set((prev) => {
+        //     prev.value.raceTo = raceTo,
+        //         prev.value.totalSet = round
+        // })
+        // console.log(matchSetUp);
+
         const createMatch = async () => {
             const response: ResponseAPI = await createBillardMatchAPI(matchSetUp as MatchSetup);
             if (response.status == 200) {
@@ -110,8 +134,15 @@ const Team = () => {
                         <button
                             key={index}
                             onClick={() => handleSelectGame(mode)}
-                            className="bg-button text-white py-1 text-3xl border-1
-                             border-green-200 rounded-md cursor-pointer font-light flex-1"
+                            // className="bg-button text-white py-1 text-3xl border-1
+                            //  border-green-200 rounded-md cursor-pointer font-light flex-1"
+                            className={`bg-button text-white py-1 text-3xl border-1
+                             border-green-200 rounded-md cursor-pointer font-light flex-1
+                                ${matchSetUp.setUp === mode
+                                    ? 'selected'
+                                    : ''
+                                }
+                             `}
                         >
                             {mode}
                         </button>
