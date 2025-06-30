@@ -64,7 +64,7 @@ const RoundModal = ({ onClose, onStart }: RoundModalProps) => {
                         >
                             {[1, 2, 3, 4, 5].map((roundOption) => (
                                 <option key={roundOption} value={roundOption}>
-                                    <span className="green">#</span>  {roundOption}
+                                    # {roundOption}
                                 </option>
                             ))}
                         </select>

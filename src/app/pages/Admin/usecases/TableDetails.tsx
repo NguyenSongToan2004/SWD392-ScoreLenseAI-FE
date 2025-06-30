@@ -51,9 +51,9 @@ const TableDetails = () => {
         //     return;
         // }
         // Khi click, chỉ cần gán bàn được chọn vào state để mở popup
-        if (table.status === 'inUse') {
-            // fetchAPI
-        }
+        // if (table.status === 'inUse') {
+        //     // fetchAPI
+        // }
         setSelectedTable(table);
         isOpacityStore.set((prev) => {
             prev.value = true;
@@ -135,7 +135,9 @@ const TableDetails = () => {
                         tableID={selectedTable.billardTableID}
                         status={selectedTable.status}
                         tableCode={selectedTable?.name as string}
-                        onClose={handleOnClosePopUp} />
+                        onClose={handleOnClosePopUp}
+                        match={selectedTable.matchResponse || null}
+                    />
                 )
             }
         </div>

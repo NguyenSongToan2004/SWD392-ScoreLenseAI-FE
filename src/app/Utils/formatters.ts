@@ -26,10 +26,7 @@ export const formatTime = (dateString: string | null): string => {
  */
 export const calculateDuration = (startTime: string, endTime?: string | null): string => {
     const start = dayjs(startTime);
-    console.log(start);
-    const end = endTime ? dayjs(endTime) : dayjs(); // Dùng thời gian hiện tại nếu không có endTime
-    console.log(end);
-    console.log('------------');
+    const end = endTime ? dayjs(endTime) : dayjs(); 
     const totalSeconds = end.diff(start, 'second');
 
     if (totalSeconds < 0) return '00:00';

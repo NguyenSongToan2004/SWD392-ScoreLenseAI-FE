@@ -1,16 +1,18 @@
 // src/pages/admin/partials/MatchDetailsPopup.tsx
-import React, { useEffect, useState } from 'react';
-import matchJson from "../../../../mocks/BillardMatch2_Mock.json";
+import React, { useEffect } from 'react';
 import playingIcon from "../../../assets/playingIcon.svg";
 import type { BilliardMatch } from '../../../models/DataObject';
 import { formatTime } from '../../../Utils/formatters';
 import Duration from './Duration';
+import { useNavigate } from 'react-router-dom';
+import nextIcon from "../../../assets/GrNext.svg"; 
 
 interface MatchDetailsPopupProps {
     tableID: string
     tableCode: string;
     onClose: () => void;
     status: 'inUse' | 'available' | 'underMaintainance';
+    match: BilliardMatch | null
 }
 
 // Helper để map modeID sang tên chế độ chơi
@@ -24,18 +26,13 @@ const getGameModeName = (modeId: number): string => {
     return modeMap[modeId] || 'CUSTOM';
 };
 
-export const MatchDetailsPopup: React.FC<MatchDetailsPopupProps> = ({ tableID, tableCode, onClose, status }) => {
-    // Dùng mock data để phát triển UI
-    const [match, setMatch] = useState<BilliardMatch>(matchJson as BilliardMatch);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    useEffect(() => {
-        if (status === 'inUse') {
-            console.log(tableID);
-            setIsLoading(false);
-            // Fetch API
-            setMatch(matchJson as BilliardMatch);
-        }
-    }, []);
+
+
+export const MatchDetailsPopup: React.FC<MatchDetailsPopupProps> = ({ tableID, tableCode, onClose, status, match }) => {
+    const nav = useNavigate();
+    const handleCreate = () => {
+        nav(`/${tableID}`);
+    }
 
     // Hiệu ứng khi nhấn phím 'Escape' để đóng popup
     useEffect(() => {
@@ -52,9 +49,25 @@ export const MatchDetailsPopup: React.FC<MatchDetailsPopupProps> = ({ tableID, t
     }, [onClose]);
 
     const renderContent = () => {
-        // isLoading có thể được dùng sau này khi kết nối lại với API
-        if (isLoading) {
-            return <div className="text-center p-8">Loading match details...</div>;
+
+        if (status === "available") {
+            return (
+                <div className="flex justify-center p-6">
+                    <button
+                        className="text-white px-4 py-2 rounded-md flex flex-row items-center gap-2 cursor-pointer hover:opacity-90 transition-opacity"
+                        onClick={handleCreate}
+                        // Sử dụng màu nền giống các nút chính khác
+                        style={{ backgroundColor: `var(--primary-color)` }}
+                    >
+                        <h5 className="text-base md:text-lg font-semibold">Create Match</h5>
+                        <img src={nextIcon} alt="Create Match" className="w-5 h-5" />
+                    </button>
+                </div>
+            )
+        }
+
+        if (status === "underMaintainance") {
+            return <div className="text-center p-8 text-red-500">This table is under maintainance !!</div>;
         }
 
         if (!match) {

@@ -99,6 +99,8 @@ export interface BilliardTable {
     status: "inUse" | "available" | "underMaintainance";
     storeName: string;
     active: boolean;
+    storeID: string,
+    matchResponse? : BilliardMatch
 }
 
 

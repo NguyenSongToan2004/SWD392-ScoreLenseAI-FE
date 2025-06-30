@@ -15,6 +15,8 @@ export default function Home() {
     const isOpacity = isOpacityStore.use();
     const { id } = useParams();
     const [table, setTable] = useState<BilliardTable>();
+    const [isLoading, setIsLoading] = useState(true); // Thêm biến loading
+
     useEffect(() => {
         const getTable = async () => {
             const response: ResponseAPI = await fetchTableAPI(id as string) as ResponseAPI;
@@ -31,10 +33,15 @@ export default function Home() {
             } else {
                 window.alert('Có lỗi ' + response.message);
             }
+            setIsLoading(false); // Kết thúc loading sau khi fetch
         }
 
         getTable();
-    }, [id]);
+    }, []);
+
+    if (isLoading) {
+        return <div className="text-xl text-center mt-10">Loading table info...</div>;
+    }
 
     return (
         <div className={`h-screen w-screen relative flex flex-col p-3 items-center bg-[#eaf5f2] overflow-hidden
@@ -62,7 +69,17 @@ export default function Home() {
                 <img src={logo} alt="8ball" className="w-25 md:w-35 h-auto mb-0 md:mb-2" />
             </div>
 
-            <Outlet />
+            {table && table.status !== 'available'
+                ?
+                <h2
+                    className="text-md text-center text-wrap md:text-3xl text-black"
+                    // style={{color : `var(--secondary-color)`}}
+                >
+                    {`This table is in ${table.status} now ! Please go to another table or ask for our staff !!`}
+                </h2>
+                :
+                <Outlet />
+            }
         </div>
     );
 }
