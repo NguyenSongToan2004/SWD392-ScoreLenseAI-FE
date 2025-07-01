@@ -30,3 +30,20 @@ export const updateScoreAPI = async (matchID: number, teamID: number, delta: str
 
     return result;
 }
+
+
+export const savePlayerAPI = async (playerID: number, email: string): Promise<ResponseAPI> => {
+    const response: ResponseAPI = await axios.put(`/v1/players/save/${playerID}`,
+        {
+            email
+        }
+    );
+
+    const result: ResponseAPI = {
+        status: response.status,
+        message: response.data.message,
+        data: response.data.data,
+    }
+
+    return result;
+}

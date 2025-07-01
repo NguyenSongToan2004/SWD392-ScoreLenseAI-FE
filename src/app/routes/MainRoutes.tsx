@@ -3,17 +3,17 @@ import PageNotFound from "../layouts/PageNotFound";
 import Home from "../pages/Home";
 // import Login from "../pages/Login";
 import React, { Suspense } from "react";
+import { Toaster } from "sonner";
 import KeepAlivePing from "../components/KeepAlivePing";
+import DashBoard from "../pages/Admin/usecases/DashBoard";
+import TableDetails from "../pages/Admin/usecases/TableDetails";
+import TeamList from "../pages/Home/partials/TeamList";
 import Model from "../pages/Home/usecases/Model";
 import Team from "../pages/Home/usecases/Team";
-import TeamList from "../pages/Home/partials/TeamList";
 import Match from "../pages/Match";
 import User from "../pages/User";
 import LayoutRoute from "./LayoutRoute";
 import PrivateRoute from "./PrivateRoute";
-import { Toaster } from "sonner";
-import TableDetails from "../pages/Admin/usecases/TableDetails";
-import DashBoard from "../pages/Admin/usecases/DashBoard";
 
 export default function MainRoutes() {
 
@@ -26,6 +26,7 @@ export default function MainRoutes() {
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
                     <Route path="/login" element={<Login />} />
+
                     <Route path="/"
                         element={
                             <PrivateRoute>

@@ -12,3 +12,15 @@ export const fetchHistoryMatchAPI = async (userID: string): Promise<ResponseAPI>
 
     return result;
 }
+
+export const fetchTableAPI = async (tableID: string): Promise<ResponseAPI> => {
+    const response = await axios.get(`/v1/tables/${tableID}`);
+
+    const result: ResponseAPI = {
+        status: response.status,
+        message: response.data.message,
+        data: response.data.data,
+    };
+
+    return result;
+}

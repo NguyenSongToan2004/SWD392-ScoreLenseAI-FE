@@ -12,9 +12,10 @@ import { useNavigate } from "react-router-dom";
 
 interface RegisterFormProps {
     onRegister: (values: RegisterFormData) => void;
+    setRegister: (isRegis: boolean) => void;
 }
 
-export default function RegisterForm({ onRegister }: RegisterFormProps) {
+export default function RegisterForm({ onRegister, setRegister }: RegisterFormProps) {
     const [form] = Form.useForm();
     const nav = useNavigate();
     const handleRegister = (values: RegisterFormData) => {
@@ -23,6 +24,7 @@ export default function RegisterForm({ onRegister }: RegisterFormProps) {
             const response = await registerAPI(values.username, values.password);
             if (response.status === 200) {
                 toast.success(response.message);
+                setRegister(false);
                 nav("/login");
             } else {
                 toast.error(response.message);

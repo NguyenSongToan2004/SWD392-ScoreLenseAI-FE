@@ -5,3 +5,8 @@
 .color-table-common {
     background-color: #9fd5c1;
 }
+
+/* Thêm đoạn này vào file CSS của bạn */
+table, th, td {
+  font-family: "Bebas Neue", sans-serif;
+}

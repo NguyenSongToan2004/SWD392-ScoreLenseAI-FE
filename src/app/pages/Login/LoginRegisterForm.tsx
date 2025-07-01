@@ -16,6 +16,10 @@ export default function LoginRegisterForm() {
     console.log("Login values:", values);
   };
 
+  const handleAfterRegis = (isRegis: boolean) => {
+    setIsRegister(isRegis);
+  }
+
   const handleRegister = (values: RegisterFormData) => {
     console.log("Register values:", values);
   };
@@ -66,7 +70,7 @@ export default function LoginRegisterForm() {
                 className="w-[80%]"
               >
                 <Suspense fallback={<div>Loading...</div>}>
-                  <RegisterForm onRegister={handleRegister} />
+                  <RegisterForm setRegister={handleAfterRegis} onRegister={handleRegister} />
                 </Suspense>
               </motion.div>
             ) : (

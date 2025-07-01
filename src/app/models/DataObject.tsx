@@ -71,6 +71,7 @@ export interface User {
     updateAt: string | null;
     status: string;
     manager: string | null;
+    imageUrl: string | null;
     store?: Store
 }
 

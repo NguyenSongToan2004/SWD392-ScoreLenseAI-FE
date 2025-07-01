@@ -292,9 +292,11 @@ export default function Match() {
             </section>
 
             <section>
-                {showPopup && <GameResultPopup
-                    winner={match.winner || "Hòa"}
-                />}
+                {showPopup &&
+                    <GameResultPopup
+                        playerArray={match.teams}
+                        winner={match.winner || "Hòa"}
+                    />}
             </section>
         </div>
     )

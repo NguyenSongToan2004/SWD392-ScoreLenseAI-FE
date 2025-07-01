@@ -3,7 +3,7 @@
 // import { type HeaderProps } from "../models/PartialModel"
 
 // const Header = ({ setArray }: HeaderProps) => {
-    
+
 //     // --- PHẦN LOGIC ĐƯỢC THÊM VÀO ---
 
 //     // 1. Tìm ra round đấu hiện tại.
@@ -54,9 +54,11 @@
 import logo from "../../../assets/Logo_shadow.svg"
 import iconEdit from "../../../assets/Icon_Edit2.svg"
 import { type HeaderProps } from "../models/PartialModel"
+import type { GameSet } from "../../../models/DataObject";
 
 // Thêm tableName vào Props
 interface CustomHeaderProps extends HeaderProps {
+    setArray: GameSet[];
     tableID: string;
 }
 
@@ -65,6 +67,7 @@ const Header = ({ setArray, tableID }: CustomHeaderProps) => {
         || setArray.find(set => set.status === 'pending');
 
     const totalRounds = setArray.length;
+    const raceTo = setArray[0].raceTo;
     const roundDisplay = currentSet
         ? `${currentSet.gameSetNo} / ${totalRounds}`
         : `Finished`;
@@ -82,6 +85,9 @@ const Header = ({ setArray, tableID }: CustomHeaderProps) => {
                 <span className="text-black">{tableID.toUpperCase()}</span>
                 <span className="text-white text-xl md:text-2xl lg:text-3xl">
                     ROUND : {roundDisplay}
+                </span>
+                <span className="text-amber-200 text-xl md:text-2xl lg:text-2xl">
+                    RACE TO : {raceTo}
                 </span>
             </h3>
 
