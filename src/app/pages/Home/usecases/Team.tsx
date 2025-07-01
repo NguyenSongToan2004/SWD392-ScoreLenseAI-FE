@@ -60,19 +60,26 @@ const Team = () => {
     };
 
     const handleStart = () => {
-        // ... (logic của bạn không thay đổi)
-        const createMatch = async () => {
-            const response: ResponseAPI = await createBillardMatchAPI(matchSetUp as MatchSetup);
-            if (response.status == 200) {
-                let createdMatch: BilliardMatch = response.data;
-                nav(`/match/${createdMatch.billiardMatchID}`, {
-                    state: {
-                        match: createdMatch
-                    }
-                });
+        toast.promise(
+            (async () => {
+                const response: ResponseAPI = await createBillardMatchAPI(matchSetUp as MatchSetup);
+                if (response.status === 200) {
+                    const createdMatch: BilliardMatch = response.data;
+                    nav(`/match/${createdMatch.billiardMatchID}`, {
+                        state: {
+                            match: createdMatch
+                        }
+                    });
+                } else {
+                    throw new Error("Fail to create match!");
+                }
+            })(),
+            {
+                loading: "Creating...",
+                success: "Create sucessfully!",
+                error: "Has error when create match!"
             }
-        }
-        createMatch();
+        );
     };
 
     const handleNext = () => {

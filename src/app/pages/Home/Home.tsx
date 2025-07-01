@@ -10,15 +10,18 @@ import type { BilliardTable } from "./models/DataObject";
 import AuthButton from "./partials/AuthButton";
 import { fetchTableAPI } from "./services/FetchAPI";
 import { setDefaultMatchSetUp } from "./services/Function";
+import HomeSkeleton from "./partials/HomeSkeleton"; // <-- 1. Import HomeSkeleton
 
 export default function Home() {
     const isOpacity = isOpacityStore.use();
     const { id } = useParams();
     const [table, setTable] = useState<BilliardTable>();
-    const [isLoading, setIsLoading] = useState(true); // Thêm biến loading
+    const [isLoading, setIsLoading] = useState(true); // <-- 2. Khởi tạo loading là true
 
     useEffect(() => {
         const getTable = async () => {
+            // Đặt trong try-catch-finally để đảm bảo loading luôn được tắt
+
             const response: ResponseAPI = await fetchTableAPI(id as string) as ResponseAPI;
             console.log(response);
             if (response.status === 200) {
@@ -33,14 +36,16 @@ export default function Home() {
             } else {
                 window.alert('Có lỗi ' + response.message);
             }
-            setIsLoading(false); // Kết thúc loading sau khi fetch
+
+            setIsLoading(false); // <-- 3. Tắt loading sau khi API hoàn tất
         }
 
         getTable();
     }, []);
 
+    // <-- 4. Render skeleton khi isLoading là true
     if (isLoading) {
-        return <div className="text-xl text-center mt-10">Loading table info...</div>;
+        return <HomeSkeleton />;
     }
 
     return (
@@ -51,9 +56,9 @@ export default function Home() {
                 <div className="absolute inset-0 bg-black opacity-30 z-50"></div>
             )}
 
-            <div className='z-100'>
+            {/* <div className='z-100'>
                 <matchSetUpStore.DevTool name="DevTool" />
-            </div>
+            </div> */}
 
             {/* Ellipse Decor */}
             <img src={ellipseLeft} className="absolute top-0 left-0 w-[80px] md:w-[200px] z-10" />
@@ -63,9 +68,7 @@ export default function Home() {
 
             {/* Table Info */}
             <div className="flex flex-col items-center z-20">
-                {/* THAY ĐỔI: Thêm font-size nhỏ hơn cho mobile và giữ size lớn cho desktop */}
                 <h1 className="text-3xl md:text-5xl mb-2">TABLE: {table?.tableCode}</h1>
-                {/* THAY ĐỔI: Giảm kích thước logo trên mobile */}
                 <img src={logo} alt="8ball" className="w-25 md:w-35 h-auto mb-0 md:mb-2" />
             </div>
 
@@ -73,7 +76,6 @@ export default function Home() {
                 ?
                 <h2
                     className="text-md text-center text-wrap md:text-3xl text-black"
-                    // style={{color : `var(--secondary-color)`}}
                 >
                     {`This table is in ${table.status} now ! Please go to another table or ask for our staff !!`}
                 </h2>

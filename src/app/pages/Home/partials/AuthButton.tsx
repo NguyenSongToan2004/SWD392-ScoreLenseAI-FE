@@ -13,33 +13,38 @@ const AuthButton = () => {
         nav("/login");
     }
 
-    const handleLogout = async () => {
-        // Xóa thông tin xác thực khỏi localStorage
+    const handleLogout = () => {
         localStorage.removeItem('isAuth');
         localStorage.removeItem('userID');
         localStorage.removeItem('staffID');
         localStorage.removeItem('role');
         localStorage.removeItem('customerName');
 
-        // Cập nhật trạng thái ngay lập tức để UI thay đổi
         setIsAuth(false);
 
-        try {
-            // Gọi API logout
+        const logoutPromise = async () => {
             const response = await logoutAPI();
-            if (response.status === 200) {
-                toast.success(response.message);
-            } else {
-                toast.error(response.message);
+            if (response.status !== 200) {
+                throw new Error(response.message);
             }
-        } catch (error) {
-            toast.error("An error occurred during logout.");
-        } finally {
-            // Điều hướng người dùng về trang login sau khi tất cả đã hoàn tất
-            nav("/login");
-        }
-    }
-    
+            return response;
+        };
+
+        // 3. Gọi toast.promise
+        toast.promise(logoutPromise(), {
+            loading: 'Đang đăng xuất, vui lòng chờ...',
+            success: (response) => {
+                nav("/login");
+                return response.message;
+            },
+            error: (error) => {
+                nav("/login");
+                return error.message;
+            },
+        });
+    };
+
+
     // Tái cấu trúc: Xác định văn bản và hành động dựa trên trạng thái
     const buttonText = isAuth ? 'LOGOUT' : 'LOGIN';
     const clickHandler = isAuth ? handleLogout : handleLogin;

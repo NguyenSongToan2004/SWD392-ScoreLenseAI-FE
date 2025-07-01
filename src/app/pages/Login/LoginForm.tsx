@@ -18,21 +18,37 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
     const [form] = Form.useForm();
     const nav = useNavigate();
 
-    const handleLogin = async (values: LoginFormData) => {
-        onLogin(values);
-        const resposne = await loginAPI(values.username, values.password);
-        if (resposne.status == 200) {
-            let data = resposne.data as AuthResponse;
-            toast.success(resposne.message);
-            if (data.userType === "CUSTOMER")
-                nav('/6ba6026a-4516-4a49-9a64-852f6a2d7850');
-            else
-                nav('/admin', {
-                    state: {
-                        userInfo: data.user
-                    }
-                });
-        }
+    const handleLogin = (values: LoginFormData) => {
+        onLogin(values)
+        const loginPromise = async () => {
+            const response = await loginAPI(values.username, values.password);
+            if (response.status !== 200) {
+                throw new Error(response.message || 'Đăng nhập thất bại. Vui lòng thử lại.');
+            }
+
+            return response;
+        };
+
+        toast.promise(loginPromise(), {
+            loading: 'Đang đăng nhập...',
+            success: (response) => {
+                const data = response.data as AuthResponse;
+                if (data.userType === "CUSTOMER") {
+                    nav('/6ba6026a-4516-4a49-9a64-852f6a2d7850');
+                } else {
+                    nav('/admin', {
+                        state: {
+                            userInfo: data.user
+                        }
+                    });
+                }
+
+                return response.message;
+            },
+            error: (error) => {
+                return error.message;
+            },
+        });
     };
 
     return (

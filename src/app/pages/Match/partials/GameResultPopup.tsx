@@ -258,8 +258,7 @@ const GameResultPopup: React.FC<GameResultPopupProps> = ({ winner, playerArray }
                         {/* [THAY ĐỔI] Tích hợp NSelect component */}
                         <div className="w-full text-left">
                             <NSelect
-                                label="Chọn người chơi"
-                                placeholder="Tìm và chọn người chơi"
+                                label="Select player"
                                 options={playerOptions}
                                 value={selectedPlayerId}
                                 onChange={(value) => setSelectedPlayerId(value)}
