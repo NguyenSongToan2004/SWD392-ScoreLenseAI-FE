@@ -53,11 +53,7 @@ const processQueue = (error: AxiosError | null) => {
 
 const api = axios.create({
     baseURL: `${import.meta.env.VITE_API_URL}`,
-    // withCredentials là chìa khóa để trình duyệt tự động gửi httpOnly cookie
     withCredentials: true,
-    headers: {
-    
-    }
 });
 
 api.interceptors.response.use(

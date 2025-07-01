@@ -11,8 +11,8 @@ export interface BilliardMatch {
     totalSet: number;
     status: "pending" | "ongoing" | "completed" | "cancelled";
     code: string;
-    sets: GameSet[]; 
-    teams: Team[];   
+    sets: GameSet[];
+    teams: Team[];
 }
 
 export interface Player {
@@ -97,10 +97,9 @@ export interface BilliardTable {
     name: string;
     description: string;
     status: "inUse" | "available" | "underMaintainance";
-    storeName: string;
     active: boolean;
     storeID: string,
-    matchResponse? : BilliardMatch
+    matchResponse?: BilliardMatch
 }
 
 

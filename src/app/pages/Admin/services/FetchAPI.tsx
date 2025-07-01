@@ -1,8 +1,8 @@
 import type ResponseAPI from "../../../models/ResponseAPI";
 import axios from "../../../../settings/AxiosClient"
 
-export const fetchTablesAPI = async (tableID: string): Promise<ResponseAPI> => {
-    const response = await axios.get(`/v2/tables/${tableID}`);
+export const fetchTablesAPI = async (storeID: string): Promise<ResponseAPI> => {
+    const response = await axios.get(`/v2/tables/${storeID}`);
 
     const result: ResponseAPI = {
         status: response.status,

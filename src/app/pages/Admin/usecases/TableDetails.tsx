@@ -132,9 +132,7 @@ const TableDetails = () => {
             {
                 selectedTable && (
                     <MatchDetailsPopup
-                        tableID={selectedTable.billardTableID}
-                        status={selectedTable.status}
-                        tableCode={selectedTable?.name as string}
+                        table={selectedTable}
                         onClose={handleOnClosePopUp}
                         match={selectedTable.matchResponse || null}
                     />
