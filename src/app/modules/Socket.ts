@@ -3,10 +3,12 @@
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
+const SOCKET_DOMAIN = import.meta.env.VITE_STOMP_ENDPOINT
+
 // Tạo và export instance của Stomp Client
 export const stompClient = new Client({
     webSocketFactory: () => {
-        return new SockJS('http://localhost:8080/ws');
+        return new SockJS(`${SOCKET_DOMAIN}`);
     },
     debug: (str) => {
         console.log(`STOMP DEBUG: ${str}`);
