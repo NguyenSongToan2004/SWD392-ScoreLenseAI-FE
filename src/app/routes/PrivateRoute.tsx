@@ -69,12 +69,14 @@ function PrivateRoute({ children }: PrivateRouteProps) {
             </>
         )
     } else {
-        let staffCreating = loc.state?.staffCreating;
-
+        let staffCreating: boolean = loc.state?.staffCreating;
         if (staffCreating) {
             return (
                 <>
-                    {children}
+                    {Array.isArray(children) ?
+                        children[0] :
+                        children
+                    }
                 </>
             )
         }
