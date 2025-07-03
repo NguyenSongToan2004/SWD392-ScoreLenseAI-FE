@@ -10,7 +10,11 @@ interface ShotEventPayload {
     result: 'SCORED' | 'MISSED';
 }
 
-const BackLog = () => {
+interface BackLogProps {
+    tableID: string;
+}
+
+const BackLog = ({ tableID }: BackLogProps) => {
     // State để lưu trữ danh sách các log entries
     const [logEntries, setLogEntries] = useState<ShotEventPayload[]>([]);
 
@@ -27,7 +31,7 @@ const BackLog = () => {
     }, []);
 
     // 3. Đăng ký (subscribe) vào topic '/topic/shot_event'
-    useSubscription(client, isConnected, '/topic/shot_event', handleNewShotEvent);
+    useSubscription(client, isConnected, `/topic/shot_event/${tableID}`, handleNewShotEvent);
 
     // Hiệu ứng để tự động cuộn lên trên cùng khi có log mới
     useEffect(() => {

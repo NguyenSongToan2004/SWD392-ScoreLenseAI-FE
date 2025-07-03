@@ -48,7 +48,7 @@
 
 
 import type React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 
 interface PrivateRouteProps {
@@ -56,16 +56,28 @@ interface PrivateRouteProps {
 }
 
 function PrivateRoute({ children }: PrivateRouteProps) {
+    const loc = useLocation();
     const role = localStorage.getItem('role');
     const isAuth = localStorage.getItem('isAuth');
     console.log("PrivateRoute rendered");
     if (!isAuth || isAuth === "false") {
+        localStorage.setItem('returnURL', loc.pathname);
         toast.info('Please login !!');
         return (
             <>
-                <Navigate to={"/login"} replace/>
+                <Navigate to={"/login"} replace />
             </>
         )
+    } else {
+        let staffCreating = loc.state?.staffCreating;
+
+        if (staffCreating) {
+            return (
+                <>
+                    {children}
+                </>
+            )
+        }
     }
 
     return (

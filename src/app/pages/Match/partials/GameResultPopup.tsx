@@ -1,148 +1,12 @@
-// // import React from "react";
-// // import checkCircle from "../../../assets/check-circle.png"
-// // import "../home.css"
-// // import { useNavigate } from "react-router-dom";
-
-// // interface GameResultPopupProps {
-// //     winner: string;
-// // }
-
-// // const GameResultPopup: React.FC<GameResultPopupProps> = ({ winner }) => {
-// //     const nav = useNavigate();
-// //     const moveUser = (type: "confirm" | "cancel") => {
-// //         if (type === "confirm") {
-// //             nav("/user")
-// //             return;
-// //         }
-// //         nav("/");
-// //     }
-
-// //     return (
-// //         <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-// //             <div className="bg-white flex flex-col gap-5 rounded-xl shadow-lg p-5 text-center max-w-5xl overflow-hidden">
-// //                 {/* Icon */}
-// //                 <div className="flex justify-center">
-// //                     <img src={checkCircle} alt="Check Circle" className="w-20 h-auto" />
-// //                 </div>
-
-// //                 <div>
-// //                     {/* Title */}
-// //                     <h2 className="text-2xl text-black font-bold ">
-// //                         CONGRATULATIONS
-// //                         <span
-// //                             className="mx-1"
-// //                             style={{ color: `var(--primary-color)` }}
-// //                         >
-// //                             {winner.toUpperCase()}
-// //                         </span>FOR WINNING!
-// //                     </h2>
-// //                     <p className="text-gray-600 text-md font-medium ">DO YOU WANT TO SAVE YOUR GAME RESULTS?</p>
-// //                 </div>
-
-// //                 {/* Buttons */}
-// //                 <div className="flex justify-center gap-4">
-// //                     <button
-// //                         onClick={() => moveUser("confirm")}
-// //                         className="button-confirm cursor-pointer text-white px-4 py-2 rounded"
-// //                     >
-// //                         Let&apos;s go
-// //                     </button>
-// //                     <button
-// //                         onClick={() => moveUser("cancel")}
-// //                         className="border bg-white border-red-500 text-red-500 px-4 py-2 rounded
-// //                                 hover:bg-gray-100 cursor-pointer
-// //                                 transition ease-in-out duration-300"
-// //                     >
-// //                         Not now
-// //                     </button>
-// //                 </div>
-// //             </div>
-// //         </div>
-// //     );
-// // };
-
-// // export default GameResultPopup;
-
-// // src/pages/Match/partials/GameResultPopup.js
-
-// import React from "react";
-// import { useNavigate } from "react-router-dom";
-// import checkCircle from "../../../assets/check-circle.png";
-// import type { Team } from "../../../models/DataObject";
-// import "../home.css";
-
-// interface GameResultPopupProps {
-//     playerArray: Team[]
-//     winner: string;
-// }
-
-// const GameResultPopup: React.FC<GameResultPopupProps> = ({ winner }) => {
-//     const nav = useNavigate();
-//     const moveUser = (type: "confirm" | "cancel") => {
-//         if (type === "confirm") {
-//             nav("/user");
-//             return;
-//         }
-//         nav("/");
-//     }
-
-//     return (
-//         <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4">
-//             {/* THAY ĐỔI: Điều chỉnh chiều rộng và padding */}
-//             <div className="bg-white flex flex-col gap-4 rounded-xl shadow-lg p-4 md:p-6 text-center w-full max-w-sm md:max-w-md overflow-hidden">
-//                 <div className="flex justify-center">
-//                     {/* THAY ĐỔI: Điều chỉnh kích thước icon */}
-//                     <img src={checkCircle} alt="Check Circle" className="w-16 md:w-20 h-auto" />
-//                 </div>
-
-//                 <div>
-//                     {/* THAY ĐỔI: Điều chỉnh kích thước chữ */}
-//                     <h2 className="text-xl md:text-2xl text-black font-bold ">
-//                         CONGRATULATIONS
-//                         <span
-//                             className="mx-1"
-//                             style={{ color: `var(--primary-color)` }}
-//                         >
-//                             {winner.toUpperCase()}
-//                         </span>FOR WINNING!
-//                     </h2>
-//                     <p className="text-gray-600 text-sm md:text-base font-medium mt-1">DO YOU WANT TO SAVE YOUR GAME RESULTS?</p>
-//                 </div>
-
-//                 {/* THAY ĐỔI: Stack các nút trên màn hình rất nhỏ */}
-//                 <div className="flex flex-col sm:flex-row justify-center gap-3">
-//                     <button
-//                         onClick={() => moveUser("confirm")}
-//                         className="button-confirm cursor-pointer text-white px-4 py-2 rounded text-base md:text-lg"
-//                     >
-//                         Let's go
-//                     </button>
-//                     <button
-//                         onClick={() => moveUser("cancel")}
-//                         className="border bg-white border-red-500 text-red-500 px-4 py-2 rounded
-//                                    hover:bg-gray-100 cursor-pointer
-//                                    transition ease-in-out duration-300 text-base md:text-lg"
-//                     >
-//                         Not now
-//                     </button>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default GameResultPopup;
-
-// src/components/popup/GameResultPopup.tsx (ví dụ về đường dẫn)
-
-import React, { useState, useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import checkCircle from "../../../assets/check-circle.png"; // Cập nhật đường dẫn nếu cần
-import "../home.css"; // Cập nhật đường dẫn nếu cần
+import NInputLabel from "../../../components/basicUI/NInputLabel";
 import NSelect from "../../../components/basicUI/NSelect"; // [THAY ĐỔI] Import NSelect tùy chỉnh của bạn
 import type { Team } from "../../../models/DataObject";
+import "../home.css"; // Cập nhật đường dẫn nếu cần
 import { savePlayerAPI } from "../services/FetchAPI";
-import { toast } from "sonner";
 
 // [THAY ĐỔI] Cập nhật props interface
 interface GameResultPopupProps {
@@ -156,7 +20,7 @@ const GameResultPopup: React.FC<GameResultPopupProps> = ({ winner, playerArray }
     const [step, setStep] = useState<'result' | 'selectPlayer'>('result');
     // [THAY ĐỔI] ID của player là number theo interface
     const [selectedPlayerId, setSelectedPlayerId] = useState<number | undefined>(undefined);
-
+    const [info, setInfo] = useState<string | undefined>(undefined);
     // [THAY ĐỔI] Sử dụng useMemo để chuyển đổi và tối ưu hóa việc tạo options cho NSelect.
     // Logic này sẽ chỉ chạy lại khi `playerArray` thay đổi.
     const playerOptions = useMemo(() => {
@@ -188,12 +52,17 @@ const GameResultPopup: React.FC<GameResultPopupProps> = ({ winner, playerArray }
     // Hàm lưu kết quả và điều hướng
     const handleSaveResult = () => {
         if (selectedPlayerId === undefined) {
-            alert("Vui lòng chọn một người chơi.");
+            toast.warning('Please choose player !')
+            return;
+        }
+
+        if (info === undefined || info.length == 0) {
+            toast.warning('Please enter gmail or phone number !');
             return;
         }
 
         const savePlayer = async () => {
-            const response = await savePlayerAPI(selectedPlayerId, "blackprohehe@gmail.com");
+            const response = await savePlayerAPI(selectedPlayerId, info);
             if (response.status === 200) {
                 console.log("Player ID đã chọn để lưu:", selectedPlayerId);
                 toast.success(response.message);
@@ -204,6 +73,10 @@ const GameResultPopup: React.FC<GameResultPopupProps> = ({ winner, playerArray }
         }
 
         savePlayer();
+    };
+
+    const handleInputName = (value: string) => {
+        setInfo(value);
     };
 
     const handleCancel = () => {
@@ -267,6 +140,11 @@ const GameResultPopup: React.FC<GameResultPopupProps> = ({ winner, playerArray }
                                 style={{ width: '100%' }}
                             />
                         </div>
+
+                        <NInputLabel
+                            label="Select player"
+                            onChange={(e) => handleInputName(e.target.value)} // e là ChangeEvent, lấy value
+                        />
 
                         <div className="flex flex-col sm:flex-row justify-center gap-3 mt-2">
                             <button

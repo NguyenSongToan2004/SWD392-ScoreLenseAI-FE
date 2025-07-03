@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import ellipseLeft from "../../assets/Home_Ellipse_Left.png";
 import ellipseRight from "../../assets/Home_Ellipse_Right.png";
 import logo from "../../assets/Logo_shadow.svg";
 import type ResponseAPI from "../../models/ResponseAPI";
 import "./home.css";
 import { isOpacityStore, matchSetUpStore } from "./homeStore";
-import type { BilliardTable } from "./models/DataObject";
+// import type { BilliardTable } from "./models/DataObject";
 import AuthButton from "./partials/AuthButton";
 import { fetchTableAPI } from "./services/FetchAPI";
 import { setDefaultMatchSetUp } from "./services/Function";
 import HomeSkeleton from "./partials/HomeSkeleton"; // <-- 1. Import HomeSkeleton
+import type { BilliardTable } from "../../models/DataObject";
 
 export default function Home() {
     const isOpacity = isOpacityStore.use();
     const { id } = useParams();
     const [table, setTable] = useState<BilliardTable>();
     const [isLoading, setIsLoading] = useState(true); // <-- 2. Khởi tạo loading là true
-
+    const nav = useNavigate();
     useEffect(() => {
         const getTable = async () => {
             // Đặt trong try-catch-finally để đảm bảo loading luôn được tắt
@@ -26,9 +27,18 @@ export default function Home() {
             console.log(response);
             if (response.status === 200) {
                 let table = response.data as BilliardTable;
+                if (table.status === "inUse" && table.matchResponse) {
+                    nav(`/match/${table.matchResponse.billiardMatchID}`,
+                        {
+                            state: {
+                                match: table.matchResponse
+                            }
+                        }
+                    );
+                }
                 matchSetUpStore.set((prev) => {
-                    prev.value = setDefaultMatchSetUp()
-                })
+                    prev.value = setDefaultMatchSetUp();
+                });
                 matchSetUpStore.set((prev) => {
                     prev.value.billiardTableID = table.billardTableID as string;
                 });
@@ -40,6 +50,10 @@ export default function Home() {
             setIsLoading(false); // <-- 3. Tắt loading sau khi API hoàn tất
         }
 
+        if (!id) {
+            nav("/login");
+            return;
+        }
         getTable();
     }, []);
 

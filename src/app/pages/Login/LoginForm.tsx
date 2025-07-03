@@ -28,13 +28,18 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
 
             return response;
         };
-
+        let returnURL = localStorage.getItem('returnURL');
         toast.promise(loginPromise(), {
             loading: 'Đang đăng nhập...',
             success: (response) => {
                 const data = response.data as AuthResponse;
                 if (data.userType === "CUSTOMER") {
-                    nav('/6ba6026a-4516-4a49-9a64-852f6a2d7850');
+                    if (returnURL) {
+                        localStorage.removeItem('returnURL');
+                        nav(`${returnURL}`);
+                    } else {    
+                        nav('/23374e21-2391-41b0-b275-651df88b3b04')
+                    }
                 } else {
                     nav('/admin', {
                         state: {

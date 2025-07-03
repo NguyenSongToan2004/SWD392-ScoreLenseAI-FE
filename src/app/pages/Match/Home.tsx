@@ -181,7 +181,8 @@ import BackLog from "./partials/BackLog";
 import GameResultPopup from "./partials/GameResultPopup";
 import Header from "./partials/Header";
 import TableScore from "./partials/TableScore";
-import { fetchMatchAPI, updateScoreAPI } from "./services/FetchAPI";
+import { fetchMatchAPI, setManualAPI, updateScoreAPI } from "./services/FetchAPI";
+import type { Loggoing } from "./models/WebSocketModel";
 
 // --- Components Placeholder ---
 const LoadingComponent = () => (
@@ -212,12 +213,57 @@ export default function Match() {
         setMatch(updatedMatch);
     }, []);
 
-    const handleNewLog = useCallback((logMessage: any) => {
+    const handleManualMode = async () => {
+        if (match != null) {
+            const response = await setManualAPI(match.billiardMatchID);
+            if (response.status === 200) {
+                toast.success(response.message);
+            } else {
+                toast.error(response.message);
+            }
+        }
+    }
+
+    const handleNewLog = useCallback((logMessage: Loggoing) => {
         console.log('Received new log:', logMessage);
+        switch (logMessage.code) {
+            case "NOTIFICATION":
+                toast.info(logMessage.data);
+                break;
+            case "ERROR":
+                toast.error(logMessage.data);
+                break;
+            case "WARNING":
+                toast("Connection Camera Failed", {
+                    description: "You can select mode to manual all actions",
+                    action: {
+                        label: "Manual",
+                        onClick: () => handleManualMode
+                    }
+                })
+                // toast.warning(
+                //     <div className="flex items-center justify-between gap-4">
+                //         <span>{logMessage.data}</span>
+                //         <button
+                //             onClick={handleManualMode}
+                //             className="px-2 py-1 text-sm bg-yellow-500 text-white rounded"
+                //         >
+                //             Manual
+                //         </button>
+                //     </div>
+                // );
+                break;
+            case "LOGGING":
+                toast.info(logMessage.data);
+                break;
+            default:
+                console.log("❓ Unknown log code:", logMessage.code);
+        }
     }, []);
 
     useSubscription(client, isConnected, `/topic/match/${id}`, handleMatchUpdate);
     useSubscription(client, isConnected, `/topic/log/${id}`, handleNewLog);
+    useSubscription(client, isConnected, `/topic/notification`, handleNewLog);
 
     const handleScoreUpdate = (teamID: number, delta: string) => {
         const updateScore = async () => {
@@ -288,7 +334,7 @@ export default function Match() {
 
             {/* THAY ĐỔI: Ẩn BackLog trên mobile */}
             <section className="hidden md:block flex-initial overflow-y-hidden">
-                <BackLog />
+                <BackLog tableID={match.billiardTableID} />
             </section>
 
             <section>

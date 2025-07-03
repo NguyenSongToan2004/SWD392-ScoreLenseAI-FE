@@ -29,7 +29,13 @@ export const MatchDetailsPopup: React.FC<MatchDetailsPopupProps> = ({ table, onC
     const nav = useNavigate();
 
     const handleCreate = () => {
-        nav(`/${table.billardTableID}`);
+        nav(`/${table.billardTableID}`,
+            {
+                state: {
+                    staffCreating: true,
+                }
+            }
+        );
     };
 
     const handleModeToggle = () => {

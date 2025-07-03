@@ -24,3 +24,16 @@ export const fetchTableAPI = async (tableID: string): Promise<ResponseAPI> => {
 
     return result;
 }
+
+export const fetchModeAPI = async (): Promise<ResponseAPI> => {
+
+    const response = await axios.get('/v1/modes');
+
+    const result: ResponseAPI = {
+        status: response.status,
+        message: response.data.message,
+        data: response.data.data,
+    };
+
+    return result;
+}

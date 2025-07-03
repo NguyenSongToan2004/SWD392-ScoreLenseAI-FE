@@ -45,15 +45,6 @@ const TableDetails = () => {
 
     // === HÀM XỬ LÝ CLICK ĐƠN GIẢN HÓA CHO VIỆC TEST ===
     const handleTableClick = (table: BilliardTable) => {
-        // Vẫn giữ logic kiểm tra trạng thái bàn
-        // if (mapApiStatusToUI(table.status) !== 'occupied') {
-        //     toast.info(`Bàn ${table.tableCode} hiện đang trống hoặc đang bảo trì.`);
-        //     return;
-        // }
-        // Khi click, chỉ cần gán bàn được chọn vào state để mở popup
-        // if (table.status === 'inUse') {
-        //     // fetchAPI
-        // }
         setSelectedTable(table);
         isOpacityStore.set((prev) => {
             prev.value = true;

@@ -90,7 +90,7 @@ export const createBillardMatchAPI = async (matchSetUp: MatchSetup): Promise<Res
 
 export const fetchTableAPI = async (tableID: string): Promise<ResponseAPI> => {
     try {
-        const response = await axios.get(`/v1/tables/${tableID}`);
+        const response = await axios.get(`/v2/tables/${tableID}`);
 
         const result: ResponseAPI = {
             status: response.status,

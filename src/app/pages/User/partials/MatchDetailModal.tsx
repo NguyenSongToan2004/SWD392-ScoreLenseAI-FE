@@ -126,6 +126,7 @@ import { IoMdClose } from "react-icons/io";
 // Đảm bảo bạn đã export các type này từ một file chung
 import type { BilliardMatch } from '../../../models/DataObject';
 import TableInfo from "./TableInfo";
+import { ModeDisplayMap } from "../models/enum";
 
 interface MatchDetailModalProps {
     isOpen: boolean;
@@ -138,6 +139,10 @@ export default function MatchDetailModal({ isOpen, onClose, match }: MatchDetail
     if (!isOpen || !match) {
         return null;
     }
+
+    const modeForDisplay = (modeID: number): string => {
+        return ModeDisplayMap[modeID] || "Unknown Mode";
+    };
 
     // Hàm helper để định dạng thời gian (ví dụ: 14:30:55)
     const formatTime = (timeString: string | null) => {
@@ -177,7 +182,7 @@ export default function MatchDetailModal({ isOpen, onClose, match }: MatchDetail
 
                         <div className='bg-gray-100 p-3 rounded-lg text-sm md:text-base'>
                             <h3 className="text-lg md:text-2xl font-bold mb-2 text-gray-700 uppercase">Setup</h3>
-                            <p><span className="mr-2 text-gray-600 font-semibold">Mode ID:</span> {match.modeID}</p>
+                            <p><span className="mr-2 text-gray-600 font-semibold">Mode ID:</span> {modeForDisplay(match.modeID)}</p>
                             <p className="uppercase"><span className="mr-2 text-gray-600 font-semibold">Setup By:</span> {match.byStaff ? `Staff` : `Customer`}</p>
                             <p><span className="mr-2 text-gray-600 font-semibold">Total Sets:</span> {match.totalSet}</p>
                         </div>
