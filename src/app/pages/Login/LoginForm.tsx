@@ -9,6 +9,7 @@ import { loginAPI } from "./services/FetchAPI";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import type { AuthResponse } from "../../models/DataObject";
+import GoogleButton from "./partials/GoogleButton";
 
 interface LoginFormProps {
     onLogin: (values: LoginFormData) => void;
@@ -37,7 +38,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
                     if (returnURL) {
                         localStorage.removeItem('returnURL');
                         nav(`${returnURL}`);
-                    } else {    
+                    } else {
                         nav('/23374e21-2391-41b0-b275-651df88b3b04')
                     }
                 } else {
@@ -163,6 +164,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
                     </motion.div>
                 </Form>
             </motion.div>
+            <GoogleButton />
         </Suspense>
     );
 } 

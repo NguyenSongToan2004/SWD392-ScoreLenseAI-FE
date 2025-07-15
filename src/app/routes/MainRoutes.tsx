@@ -14,6 +14,10 @@ import Match from "../pages/Match";
 import User from "../pages/User";
 import LayoutRoute from "./LayoutRoute";
 import PrivateRoute from "./PrivateRoute";
+import TableManagement from "../pages/Admin/usecases/TableManagement";
+import TableView from "../pages/Admin/usecases/TableView";
+import TableHome from "../pages/Admin/usecases/TableHome";
+import TableEdit from "../pages/Admin/usecases/TableEdit";
 
 export default function MainRoutes() {
 
@@ -64,6 +68,28 @@ export default function MainRoutes() {
                                 <DashBoard />
                             </PrivateRoute>
                         } />
+
+                        <Route path="/admin/table-management" element={
+                            <PrivateRoute>
+                                <TableHome />
+                            </PrivateRoute>
+                        } >
+                            <Route path="/admin/table-management/" element={
+                                <PrivateRoute>
+                                    <TableManagement />
+                                </PrivateRoute>
+                            } />
+                            <Route path="/admin/table-management/detail/:id" element={
+                                <PrivateRoute>
+                                    <TableView />
+                                </PrivateRoute>
+                            } />
+                            <Route path="/admin/table-management/edit/:id" element={
+                                <PrivateRoute>
+                                    <TableEdit />
+                                </PrivateRoute>
+                            } />
+                        </Route>
 
                     </Route>
                     <Route path="*" element={<PageNotFound />} />

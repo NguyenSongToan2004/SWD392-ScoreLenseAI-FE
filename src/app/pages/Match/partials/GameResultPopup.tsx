@@ -135,8 +135,8 @@ const GameResultPopup: React.FC<GameResultPopupProps> = ({ winner, playerArray }
                                 options={playerOptions}
                                 value={selectedPlayerId}
                                 onChange={(value) => setSelectedPlayerId(value)}
-                                showSearch // Cho phép tìm kiếm
-                                allowClear // Cho phép xóa lựa chọn
+                                showSearch 
+                                allowClear 
                                 style={{ width: '100%' }}
                             />
                         </div>

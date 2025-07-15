@@ -47,7 +47,7 @@ export default function HistoryTable() {
                 // TODO: Thay thế customerID tĩnh bằng ID của người dùng đang đăng nhập
                 const customerID = "6e0c2c33-5fc7-4fac-a6ae-f31f04b77521";
                 const response = await fetchHistoryMatchAPI(customerID);
-
+                
                 if (response.status === 200) {
                     setHistoryMatchs(response.data);
                 } else {

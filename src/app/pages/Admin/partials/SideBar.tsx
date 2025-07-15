@@ -38,6 +38,17 @@ const SideBar = () => {
                             TABLE DETAILS
                         </NavLink>
                     </li>
+                    
+                    <li className="mb-2 text-white">
+                        <NavLink
+                            to="/admin/table-management"
+                            state={loc.state}
+                            className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                        >
+                            <img src={infoIcon} alt="Table Info Icon" className="mr-3" />
+                            TABLE MANAGEMENT
+                        </NavLink>
+                    </li>
                 </ul>
             </nav>
         </aside>

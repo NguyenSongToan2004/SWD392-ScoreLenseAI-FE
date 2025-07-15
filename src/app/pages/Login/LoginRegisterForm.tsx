@@ -30,7 +30,7 @@ export default function LoginRegisterForm() {
         <div className="flex flex-col items-center justify-start h-full">
           {/* Animated Logo */}
           <motion.img
-            className="select-none w-35 h-35 md:w-55 md:h-55"
+            className="select-none w-35 h-35 md:w-50 md:h-50"
             src="login-logo.png"
             initial={{ scale: 0, rotate: -180, opacity: 0 }}
             animate={{ scale: 1, rotate: 0, opacity: 1 }}
@@ -67,7 +67,7 @@ export default function LoginRegisterForm() {
                   duration: 0.4,
                   ease: "easeInOut"
                 }}
-                className="w-[80%]"
+                className="w-[80%] z-10"
               >
                 <Suspense fallback={<div>Loading...</div>}>
                   <RegisterForm setRegister={handleAfterRegis} onRegister={handleRegister} />
@@ -83,10 +83,10 @@ export default function LoginRegisterForm() {
                   duration: 0.4,
                   ease: "easeInOut"
                 }}
-                className="w-[80%]"
+                className="w-[80%] z-10"
               >
                 <Suspense fallback={<div>Loading...</div>}>
-                  <LoginForm onLogin={handleLogin} />
+                    <LoginForm onLogin={handleLogin} />
                 </Suspense>
               </motion.div>
             )}
@@ -106,7 +106,7 @@ export default function LoginRegisterForm() {
         >
           {/* <img className="pointer-events-none select-none" src="login-art1.png" /> */}
           <img
-            className="pointer-events-none select-none w-40 lg:w-auto"
+            className="pointer-events-none select-none w-60 lg:w-auto"
             src="login-art1.png"
           />
         </motion.div>
@@ -123,7 +123,7 @@ export default function LoginRegisterForm() {
         >
           {/* <img className="pointer-events-none select-none" src="login-art2.png" /> */}
           <img
-            className="pointer-events-none select-none w-40 lg:w-auto"
+            className="pointer-events-none select-none w-60 lg:w-auto"
             src="login-art2.png"
           />
         </motion.div>

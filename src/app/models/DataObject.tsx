@@ -100,6 +100,7 @@ export interface BilliardTable {
     status: "inUse" | "available" | "underMaintainance";
     active: boolean;
     storeID: string,
+    cameraUrl:string,
     matchResponse?: BilliardMatch
 }
 

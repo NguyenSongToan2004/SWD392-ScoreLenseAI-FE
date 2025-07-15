@@ -6,7 +6,6 @@ import logo from "../../assets/Logo_shadow.svg";
 import type ResponseAPI from "../../models/ResponseAPI";
 import "./home.css";
 import { isOpacityStore, matchSetUpStore } from "./homeStore";
-// import type { BilliardTable } from "./models/DataObject";
 import AuthButton from "./partials/AuthButton";
 import { fetchTableAPI } from "./services/FetchAPI";
 import { setDefaultMatchSetUp } from "./services/Function";
