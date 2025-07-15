@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import type { BilliardTable } from '../../../models/DataObject'
 import type { BilliardTableRequest } from '../models/RequestObject'
+import { TableFactoryProvider } from '../models/RequestObject'
 import { editTablesAPI } from '../services/FetchAPI'
 
 const TableEdit = () => {
@@ -14,36 +15,46 @@ const TableEdit = () => {
   useEffect(() => {
     const table = loc.state?.table as BilliardTable;
     if (table) {
-      const {
-        tableType,
-        name,
-        description,
-        status,
-        active,
-        storeID,
-        cameraUrl
-      } = table;
-
+      const factory = TableFactoryProvider.getFactory(table.tableType);
+      const defaultRequest = factory.createTableRequest();
+      
       setTable(table);
-
       setForm({
-        name,
-        tableType,
-        description,
-        status,
-        active,
-        storeID,
-        cameraUrl: cameraUrl ?? "",
+        ...defaultRequest,
+        name: table.name,
+        tableType: table.tableType,
+        description: table.description,
+        status: table.status,
+        active: table.active,
+        storeID: table.storeID,
+        cameraUrl: table.cameraUrl ?? "",
       });
-
     } else {
       alert('Table is not valid');
     }
   }, []);
 
+  const handleTableTypeChange = (newTableType: string) => {
+    if (!form) return;
+    
+    const factory = TableFactoryProvider.getFactory(newTableType);
+    const defaultRequest = factory.createTableRequest();
+    
+    setForm(prev => ({
+      ...prev!,
+      tableType: newTableType,
+      description: defaultRequest.description, // Apply default description for new type
+    }));
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const target = e.target as HTMLInputElement;
     const { name, value, type } = target;
+
+    if (name === 'tableType') {
+      handleTableTypeChange(value);
+      return;
+    }
 
     setForm(prev => {
       if (!prev) return prev;
