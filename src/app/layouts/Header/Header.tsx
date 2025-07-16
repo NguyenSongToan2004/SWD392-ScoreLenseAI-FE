@@ -370,16 +370,16 @@ import type { Store, User } from "../../models/DataObject";
 
 // Import API services (ensure paths are correct)
 import { logoutAPI } from "../../pages/Home/services/FetchAPI";
-import { fetchCustomerInfoAPI } from "./services/FetchAPI";
+import { fetchCustomerInfoAPI, fetchStaffInfoAPI } from "./services/FetchAPI";
 import AvatarUploader from "./partials/AvatarUploader";
 
 const Header = () => {
     const loc = useLocation();
     const nav = useNavigate();
 
-    // State for user information, initialized from location state if available
+    console.log('header render')
+
     const [userInfo, setUserInfo] = useState<User | undefined>(loc.state?.userInfo as User | undefined);
-    // State to manage the sidebar's visibility
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const storeInfo: Store | undefined = userInfo?.store;
@@ -399,12 +399,16 @@ const Header = () => {
     // Fetch user info if it's not already available
     useEffect(() => {
         if (!userInfo) {
+            console.log('fetch user')
+            console.log(userInfo)
             const fetchUserInfo = async () => {
                 let response;
                 if (role === "CUSTOMER") {
+                    console.log('fetch customer');
                     response = await fetchCustomerInfoAPI();
                 } else if (role === "STAFF") {
-                    // TODO: Implement API fetch for Staff information here
+                    console.log('fetch staff');
+                    response = await fetchStaffInfoAPI();
                     console.log("TODO: Implement API fetch for Staff information");
                 }
 
@@ -541,7 +545,7 @@ const Header = () => {
                                 </div>
                                 <div className="pb-3 border-b border-gray-200">
                                     <p className="text-sm text-gray-500">Roles</p>
-                                    <p className="text-lg font-medium text-gray-900 capitalize">{userInfo?.roles?.map(r => r.name).join(", ") || 'No roles assigned'}</p>
+                                    <p className="text-lg font-medium text-gray-900 capitalize">{userInfo?.role?.name || 'No roles assigned'}</p>
                                 </div>
                                 <div>
                                     <p className="text-sm text-gray-500">Status</p>

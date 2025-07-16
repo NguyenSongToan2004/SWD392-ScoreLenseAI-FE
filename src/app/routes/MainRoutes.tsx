@@ -14,10 +14,29 @@ import Match from "../pages/Match";
 import User from "../pages/User";
 import LayoutRoute from "./LayoutRoute";
 import PrivateRoute from "./PrivateRoute";
-import TableManagement from "../pages/Admin/usecases/TableManagement";
-import TableView from "../pages/Admin/usecases/TableView";
-import TableHome from "../pages/Admin/usecases/TableHome";
-import TableEdit from "../pages/Admin/usecases/TableEdit";
+import TableManagement from "../pages/Admin/usecases/TableManagement/TableManagement";
+import TableView from "../pages/Admin/usecases/TableManagement/TableView";
+import TableHome from "../pages/Admin/usecases/TableManagement/TableHome";
+import TableEdit from "../pages/Admin/usecases/TableManagement/TableEdit";
+import TableCreate from "../pages/Admin/usecases/TableManagement/TableCreate";
+import ModeHome from "../pages/Admin/usecases/Mode/ModeHome";
+import ModeManagement from "../pages/Admin/usecases/Mode/ModeManagement";
+import ModeView from "../pages/Admin/usecases/Mode/ModeView";
+import ModeEdit from "../pages/Admin/usecases/Mode/ModeEdit";
+import ModeCreate from "../pages/Admin/usecases/Mode/ModeCreate";
+import StaffHome from "../pages/Admin/usecases/StaffManagement/StaffHome";
+import StaffManagement from "../pages/Admin/usecases/StaffManagement/StaffManagement";
+import StaffView from "../pages/Admin/usecases/StaffManagement/StaffView";
+import StaffEdit from "../pages/Admin/usecases/StaffManagement/StaffEdit";
+import StaffCreate from "../pages/Admin/usecases/StaffManagement/StaffCreate";
+import PermissionHome from "../pages/Admin/usecases/PermissionManagement/PermissionHome";
+import PermissionManagement from "../pages/Admin/usecases/PermissionManagement/PermissionManagement";
+import PermissionView from "../pages/Admin/usecases/PermissionManagement/PermissionView";
+import PermissionCreate from "../pages/Admin/usecases/PermissionManagement/PermissionCreate";
+import RoleHome from "../pages/Admin/usecases/Role/RoleHome";
+import RoleManagement from "../pages/Admin/usecases/Role/RoleManagement";
+import RoleView from "../pages/Admin/usecases/Role/RoleView";
+import PermissionAdd from "../pages/Admin/usecases/Role/PermissionAdd";
 
 export default function MainRoutes() {
 
@@ -89,8 +108,116 @@ export default function MainRoutes() {
                                     <TableEdit />
                                 </PrivateRoute>
                             } />
+                            <Route path="/admin/table-management/create" element={
+                                <PrivateRoute>
+                                    <TableCreate />
+                                </PrivateRoute>
+                            } />
                         </Route>
 
+
+                        <Route path="/admin/mode-management" element={
+                            <PrivateRoute>
+                                <ModeHome />
+                            </PrivateRoute>
+                        } >
+                            <Route path="/admin/mode-management/" element={
+                                <PrivateRoute>
+                                    <ModeManagement />
+                                </PrivateRoute>
+                            } />
+                            <Route path="/admin/mode-management/detail/:id" element={
+                                <PrivateRoute>
+                                    <ModeView />
+                                </PrivateRoute>
+                            } />
+                            <Route path="/admin/mode-management/edit/:id" element={
+                                <PrivateRoute>
+                                    <ModeEdit />
+                                </PrivateRoute>
+                            } />
+                            <Route path="/admin/mode-management/create" element={
+                                <PrivateRoute>
+                                    <ModeCreate />
+                                </PrivateRoute>
+                            } />
+                        </Route>
+
+                        <Route path="/admin/staff-management" element={
+                            <PrivateRoute>
+                                <StaffHome />
+                            </PrivateRoute>
+                        } >
+                            <Route path="/admin/staff-management/" element={
+                                <PrivateRoute>
+                                    <StaffManagement />
+                                </PrivateRoute>
+                            } />
+                            <Route path="/admin/staff-management/detail/:id" element={
+                                <PrivateRoute>
+                                    <StaffView />
+                                </PrivateRoute>
+                            } />
+                            <Route path="/admin/staff-management/edit/:id" element={
+                                <PrivateRoute>
+                                    <StaffEdit />
+                                </PrivateRoute>
+                            } />
+                            <Route path="/admin/staff-management/create" element={
+                                <PrivateRoute>
+                                    <StaffCreate />
+                                </PrivateRoute>
+                            } />
+                        </Route>
+
+                        <Route path="/admin/permission-management" element={
+                            <PrivateRoute>
+                                <PermissionHome />
+                            </PrivateRoute>
+                        } >
+                            <Route path="/admin/permission-management/" element={
+                                <PrivateRoute>
+                                    <PermissionManagement />
+                                </PrivateRoute>
+                            } />
+
+                            <Route path="/admin/permission-management/detail/:name" element={
+                                <PrivateRoute>
+                                    <PermissionView />
+                                </PrivateRoute>
+                            } />
+
+                            <Route path="/admin/permission-management/create" element={
+                                <PrivateRoute>
+                                    <PermissionCreate />
+                                </PrivateRoute>
+                            } />
+                            
+                        </Route>
+
+                        <Route path="/admin/role-management" element={
+                            <PrivateRoute>
+                                <RoleHome />
+                            </PrivateRoute>
+                        } >
+                            <Route path="/admin/role-management/" element={
+                                <PrivateRoute>
+                                    <RoleManagement />
+                                </PrivateRoute>
+                            } />
+
+                            <Route path="/admin/role-management/detail/:name" element={
+                                <PrivateRoute>
+                                    <RoleView />
+                                </PrivateRoute>
+                            } />
+
+                            <Route path="/admin/role-management/create" element={
+                                <PrivateRoute>
+                                    <PermissionAdd />
+                                </PrivateRoute>
+                            } />
+                        </Route>
                     </Route>
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>

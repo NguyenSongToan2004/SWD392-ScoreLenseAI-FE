@@ -3,7 +3,7 @@ import SideBar from "./partials/SideBar";
 
 export default function Admin() {
     return (
-        <div className="flex h-screen bg-gray-200 font-sans">
+        <div className="flex h-full bg-gray-200 font-sans">
             {/* Sidebar sẽ chiếm một phần chiều rộng cố định */}
             <SideBar />
 

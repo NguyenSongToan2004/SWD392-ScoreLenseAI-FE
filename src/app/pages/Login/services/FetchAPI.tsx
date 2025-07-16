@@ -27,6 +27,9 @@ export const loginAPI = async (email: string, password: string): Promise<Respons
             if (authResponse.user.staffID != null)
                 localStorage.setItem('userID', authResponse.user.staffID);
             localStorage.setItem('customerName', authResponse.user.name);
+            if (authResponse.user.store) {
+                localStorage.setItem('storeID', authResponse.user.store.storeID);
+            }
             // localStorage.setItem('user', authResponse.user);
         } else {
             console.warn(`Unexpected response status: ${response.status}`);

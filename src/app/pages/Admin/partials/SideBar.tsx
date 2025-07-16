@@ -1,14 +1,15 @@
 // src/pages/admin/partials/SideBar.tsx
 
+import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom"; // 1. Import thêm useLocation
-import infoIcon from "../../../assets/AiOutlineInfoCircle.svg"
+import infoIcon from "../../../assets/AiOutlineInfoCircle.svg";
 import trophyIcon from "../../../assets/BiTrophy.svg";
 
 const SideBar = () => {
-    // 2. Lấy thông tin về location hiện tại
+    const [isOpen, setIsOpen] = useState(false);
+
     const loc = useLocation();
 
-    // Helper class cho NavLink để code gọn hơn
     const navLinkClasses = "flex items-center px-4 py-3 text-gray-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors duration-200";
     const activeNavLinkClasses = "bg-slate-900 text-white";
 
@@ -19,8 +20,7 @@ const SideBar = () => {
                     <li className="mb-2 text-white">
                         <NavLink
                             to="/admin/dashboard"
-                            // 3. Truyền state hiện tại vào NavLink
-                            state={loc.state}
+                            state={{ userInfo: loc.state?.userInfo }}
                             className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
                         >
                             <img src={trophyIcon} alt="Trophy Icon" className="mr-3" />
@@ -30,24 +30,106 @@ const SideBar = () => {
                     <li className="mb-2 text-white">
                         <NavLink
                             to="/admin/table"
-                            // 3. Truyền state hiện tại vào NavLink
-                            state={loc.state}
+                            state={{ userInfo: loc.state?.userInfo }}
                             className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
                         >
                             <img src={infoIcon} alt="Table Info Icon" className="mr-3" />
                             TABLE DETAILS
                         </NavLink>
                     </li>
-                    
-                    <li className="mb-2 text-white">
+
+                    {/* <li className="mb-2 text-white">
                         <NavLink
                             to="/admin/table-management"
-                            state={loc.state}
+                            state={{ userInfo: loc.state?.userInfo }}
                             className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
                         >
-                            <img src={infoIcon} alt="Table Info Icon" className="mr-3" />
+                            <img src={infoIcon} alt="Table Management Icon" className="mr-3" />
                             TABLE MANAGEMENT
                         </NavLink>
+                    </li> */}
+
+                    <li className="mb-2 text-white">
+                        {/* Nút để bật/tắt dropdown */}
+                        <button
+                            type="button"
+                            className={`${navLinkClasses} w-full`}
+                            onClick={() => setIsOpen(!isOpen)}
+                        >
+                            <span className="flex-1 text-left whitespace-nowrap">MANAGEMENT</span>
+                            {/* Icon mũi tên chỉ xuống */}
+                            <svg
+                                className={`w-6 h-6 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''}`}
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clipRule="evenodd"
+                                ></path>
+                            </svg>
+                        </button>
+
+                        {/* Nội dung dropdown, chỉ hiển thị khi isOpen là true */}
+                        {isOpen && (
+                            <ul className="pl-4 mt-2">
+                                <li className="mb-2 border-l-1">
+                                    <NavLink
+                                        to="/admin/table-management"
+                                        state={{ userInfo: loc.state?.userInfo }}
+                                        className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                                    >
+                                        <img src={infoIcon} alt="Table Management Icon" className="mr-3 w-6 h-6" />
+                                        TABLE
+                                    </NavLink>
+                                </li>
+                                <li className="mb-2 border-l-1">
+                                    <NavLink
+                                        to="/admin/mode-management"
+                                        state={{ userInfo: loc.state?.userInfo }}
+                                        className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                                    >
+                                        <img src={infoIcon} alt="Table Management Icon" className="mr-3 text-whit" />
+                                        Mode
+                                    </NavLink>
+                                </li>
+                                <li className="mb-2 border-l-1">
+                                    <NavLink
+                                        to="/admin/staff-management"
+                                        state={{ userInfo: loc.state?.userInfo }}
+                                        className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                                    >
+                                        <img src={infoIcon} alt="Table Management Icon" className="mr-3" />
+                                        Staff
+                                    </NavLink>
+                                </li>
+
+                                <li className="mb-2 border-l-1">
+                                    <NavLink
+                                        to="/admin/permission-management"
+                                        state={{ userInfo: loc.state?.userInfo }}
+                                        className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                                    >
+                                        <img src={infoIcon} alt="Table Management Icon" className="mr-3" />
+                                        Permission
+                                    </NavLink>
+                                </li>
+
+                                <li className="mb-2 border-l-1">
+                                    <NavLink
+                                        to="/admin/role-management"
+                                        state={{ userInfo: loc.state?.userInfo }}
+                                        className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                                    >
+                                        <img src={infoIcon} alt="Table Management Icon" className="mr-3" />
+                                        Role
+                                    </NavLink>
+                                </li>
+
+                            </ul>
+                        )}
                     </li>
                 </ul>
             </nav>

@@ -39,3 +39,18 @@ export const calculateDuration = (startTime: string, endTime?: string | null): s
 
     return `${formattedMinutes}:${formattedSeconds}`;
 };
+
+/**
+ * Format date for API requests (Java LocalDate format)
+ * Converts YYYY-MM-DD to proper ISO format
+ */
+export const formatDateForAPI = (dateString: string): string => {
+    if (!dateString) return '';
+    
+    // Parse the date parts
+    const [year, month, day] = dateString.split('-').map(Number);
+    
+    // Create a valid ISO date string that Java's LocalDate can parse
+    // Format: yyyy-MM-dd
+    return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+};

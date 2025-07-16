@@ -1,14 +1,33 @@
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import type { BilliardTable } from "../../Home/models/DataObject"; // Ensure this path is correct
+import { toast } from "sonner";
+import { getNavigationState, navigateWithState } from "../../../../Utils/navigationUtils";
+import type { BilliardTable } from "../../../Home/models/DataObject";
 
 const TableView = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const table: BilliardTable | undefined = location.state?.table;
+    const table = getNavigationState<BilliardTable>(location, 'table');
+
+    useEffect(() => {
+        if (!table) {
+            toast.error('Không tìm thấy thông tin bàn');
+            navigate(-1);
+        }
+    }, [table, navigate]);
+
+    if (!table) {
+        return <div>Loading...</div>;
+    }
 
     const handleGoBack = () => {
-        navigate(-1); // -1 to go back to the previous page in browser history
+        const userInfo = getNavigationState(location, 'userInfo');
+        const store = getNavigationState(location, 'store');
+        navigateWithState(navigate, "/admin/table-management", { 
+            userInfo,
+            store 
+        });
     };
 
     // Handle case where there is no table data
@@ -31,10 +50,10 @@ const TableView = () => {
 
     // Detail page UI
     return (
-        <div className="p-4 sm:p-6 md:p-8 bg-gray-50 min-h-screen">
+        <div className="p-4 sm:p-6 md:p-8 bg-gray-50 min-h-screen max-h-screen overflow-y-auto">
             <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md">
                 {/* Page Header */}
-                <div className="flex items-center justify-between p-4 border-b">
+                <div className="flex items-center justify-between p-4 border-b sticky top-0 bg-white z-10">
                     <h2 className="text-2xl font-bold text-gray-800">
                         Table Details: {table.name}
                     </h2>
@@ -50,7 +69,7 @@ const TableView = () => {
                 </div>
 
                 {/* Detailed Content */}
-                <div className="p-6">
+                <div className="p-6 overflow-y-auto max-h-[calc(100vh-200px)]">
                     <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                         <div className="p-3 rounded-md bg-gray-50 border-2 border-green-700">
                             <dt className="text-sm font-medium text-gray-500">Table Code</dt>

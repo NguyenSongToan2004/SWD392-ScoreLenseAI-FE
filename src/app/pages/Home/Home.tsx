@@ -69,9 +69,9 @@ export default function Home() {
                 <div className="absolute inset-0 bg-black opacity-30 z-50"></div>
             )}
 
-            {/* <div className='z-100'>
+            <div className='z-100'>
                 <matchSetUpStore.DevTool name="DevTool" />
-            </div> */}
+            </div>
 
             {/* Ellipse Decor */}
             <img src={ellipseLeft} className="absolute top-0 left-0 w-[80px] md:w-[200px] z-10" />

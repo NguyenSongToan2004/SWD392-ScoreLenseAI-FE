@@ -13,6 +13,18 @@ export const fetchCustomerInfoAPI = async (): Promise<ResponseAPI> => {
     return result;
 }
 
+export const fetchStaffInfoAPI = async (): Promise<ResponseAPI> => {
+    const response: ResponseAPI = await axios.get(`/v1/staffs/my-profile`);
+
+    const result: ResponseAPI = {
+        status: response.status,
+        message: response.data.message,
+        data: response.data.data,
+    }
+
+    return result;
+}
+
 export const uploadAvatarAPI = async (customerId: string, file: File): Promise<ResponseAPI> => {
     // FormData is the standard way to send files via HTTP.
     const formData = new FormData();

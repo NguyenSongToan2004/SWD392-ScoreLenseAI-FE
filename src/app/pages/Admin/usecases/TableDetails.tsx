@@ -63,7 +63,10 @@ const TableDetails = () => {
         const fetchTables = async () => {
             try {
                 let store: User | undefined = loc.state?.userInfo as User | undefined
-                const response = await fetchTablesAPI(store?.store?.storeID || "");
+                const response = await fetchTablesAPI(
+                    store?.store?.storeID || 
+                    localStorage.getItem("storeID") as string
+                );
                 if (response.status === 200 && Array.isArray(response.data)) {
                     toast.info('Fetched table data successfully!');
 
@@ -72,6 +75,7 @@ const TableDetails = () => {
                         parseInt(a.tableCode) - parseInt(b.tableCode)
                     );
                     setTables(sortedData);
+                    console.log(response);
                 } else {
                     // Xử lý trường hợp API trả về lỗi hoặc data không phải mảng
                     toast.error(response.message || 'Failed to fetch table data.');

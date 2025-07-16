@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import type { AuthResponse } from "../../models/DataObject";
 import GoogleButton from "./partials/GoogleButton";
+import { navigateWithState } from "../../Utils/navigationUtils";
 
 interface LoginFormProps {
     onLogin: (values: LoginFormData) => void;
@@ -42,13 +43,10 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
                         nav('/23374e21-2391-41b0-b275-651df88b3b04')
                     }
                 } else {
-                    nav('/admin', {
-                        state: {
-                            userInfo: data.user
-                        }
+                    navigateWithState(nav, '/admin', {
+                        userInfo: data.user
                     });
                 }
-
                 return response.message;
             },
             error: (error) => {

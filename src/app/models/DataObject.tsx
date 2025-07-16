@@ -52,7 +52,7 @@ interface Permission {
     description: string;
 }
 
-interface Role {
+export interface Role {
     name: string;
     description: string;
     permissions: Permission[];
@@ -66,10 +66,10 @@ export interface User {
     phoneNumber: string;
     dob: string;
     address: string;
-    roles: Role[];
+    role: Role;
     createAt: string;
     updateAt: string | null;
-    status: string;
+    status: "active" | "inActive";
     manager: string | null;
     imageUrl: string | null;
     store?: Store
@@ -100,7 +100,7 @@ export interface BilliardTable {
     status: "inUse" | "available" | "underMaintainance";
     active: boolean;
     storeID: string,
-    cameraUrl:string,
+    cameraUrl: string,
     matchResponse?: BilliardMatch
 }
 
