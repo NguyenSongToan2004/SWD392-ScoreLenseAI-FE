@@ -60,7 +60,7 @@ export const fetchModeTestAPI = async (id: number): Promise<ResponseAPI> => {
 export const createBillardMatchAPI = async (matchSetUp: MatchSetup): Promise<ResponseAPI> => {
     try {
         // Sửa lỗi: Truyền thẳng object `matchSetUp` làm body cho request.
-        const response = await axios.post('/v1/billiardmatches', matchSetUp);
+        const response = await axios.post('/v3/billiardmatches', matchSetUp);
 
         const result: ResponseAPI = {
             status: response.status,
