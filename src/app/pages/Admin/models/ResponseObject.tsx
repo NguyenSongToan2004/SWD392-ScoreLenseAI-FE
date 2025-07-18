@@ -39,3 +39,16 @@ export interface AddPermissionResponse {
     description: string;
     permissions: Permission[]
 }
+
+export interface Customer {
+  customerName: string;
+  matchCount: number;
+}
+
+export interface BilliardStats {
+  totalTables: number;
+  currentlyPlaying: number;
+  availableTables: number;
+  brokenTables: number;
+  customers: Customer[];
+}

@@ -2,6 +2,36 @@ import axios from "../../../../settings/AxiosClient";
 import type ResponseAPI from "../../../models/ResponseAPI";
 import type { AddPermissionRequest, BilliardTableRequest, EditUserAccountRequest, ModeRequest, PermissionRequest, UserAccountRequest } from "../models/RequestObject";
 
+export const fetchStatisticAPI = async (params?: {
+    queryType?: string;
+    storeId?: string;
+    page?: number;
+    size?: number;
+    sortBy?: string;
+    sortDirection?: string;
+}): Promise<ResponseAPI> => {
+    const queryParams = new URLSearchParams();
+    
+    if (params?.queryType) queryParams.append('queryType', params.queryType);
+    if (params?.storeId) queryParams.append('storeId', params.storeId);
+    if (params?.page !== undefined) queryParams.append('page', params.page.toString());
+    if (params?.size !== undefined) queryParams.append('size', params.size.toString());
+    if (params?.sortBy) queryParams.append('sortBy', params.sortBy);
+    if (params?.sortDirection) queryParams.append('sortDirection', params.sortDirection);
+
+    const response = await axios.get('/v3/stores', {
+        params: queryParams,
+    });
+
+    const result: ResponseAPI = {
+        status: response.status,
+        message: response.data.message,
+        data: response.data.data
+    }
+
+    return result;
+}
+
 export const fetchTablesAPI = async (storeID: string): Promise<ResponseAPI> => {
     const response = await axios.get(`/v2/tables/list/${storeID}`);
 

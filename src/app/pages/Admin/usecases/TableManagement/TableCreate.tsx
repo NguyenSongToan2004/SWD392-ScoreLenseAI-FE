@@ -9,7 +9,7 @@ import type { Store, User } from '../../../../models/DataObject'
 const TableCreate = () => {
     const [form, setForm] = useState<BilliardTableRequest>({
         name: '',
-        tableType: '',
+        tableType: 'pool',
         description: '',
         status: 'available',
         cameraUrl: '',

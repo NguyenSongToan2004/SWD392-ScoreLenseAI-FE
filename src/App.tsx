@@ -3,28 +3,29 @@ import './App.css';
 import { useNotification } from './app/components/NotificationProvider';
 import MainRoutes from "./app/routes/MainRoutes";
 import { onMessageListener } from './services/fcmService';
+import { setupStompListeners, stompClient } from './app/modules/Socket';
 
 function App() {
   const { addNotification } = useNotification();
 
-  // useEffect(() => {
-  //   console.log("App component mounted. Setting up and activating WebSocket client...");
+  useEffect(() => {
+    console.log("App component mounted. Setting up and activating WebSocket client...");
 
-  //   // Thiết lập các hàm lắng nghe
-  //   setupStompListeners();
+    // Thiết lập các hàm lắng nghe
+    setupStompListeners();
 
-  //   // Kích hoạt kết nối
-  //   // stompClient.activate();
+    // Kích hoạt kết nối
+    // stompClient.activate();
 
-  //   // Optional: Trả về một cleanup function để ngắt kết nối khi app unmount
-  //   // (hữu ích cho hot-reloading trong môi trường dev)
-  //   return () => {
-  //     if (stompClient.connected) {
-  //       stompClient.deactivate();
-  //       console.log("WebSocket client deactivated.");
-  //     }
-  //   };
-  // }, [])
+    // Optional: Trả về một cleanup function để ngắt kết nối khi app unmount
+    // (hữu ích cho hot-reloading trong môi trường dev)
+    return () => {
+      if (stompClient.connected) {
+        stompClient.deactivate();
+        console.log("WebSocket client deactivated.");
+      }
+    };
+  }, [])
 
   useEffect(() => {
     // Listen for foreground messages
