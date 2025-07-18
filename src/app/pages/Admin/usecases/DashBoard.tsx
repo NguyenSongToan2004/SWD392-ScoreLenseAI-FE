@@ -12,28 +12,6 @@ import { fetchStatisticAPI } from "../services/FetchAPI";
 import { toast } from "sonner";
 import type { BilliardStats } from "../models/ResponseObject";
 
-// --- DỮ LIỆU GIẢ ---
-const statsData = [
-  { title: 'TOTAL TABLES', value: 20, icon: tableIcon, color: 'orange' },
-  { title: 'CURRENTLY PLAYING', value: 5, icon: currentPlayIcon, color: 'green' },
-  { title: 'AVAILABLE TABLES', value: 13, icon: availableTableIcon, color: 'blue' },
-  { title: 'BROKEN', value: 2, icon: brokenIcon, color: 'red' },
-];
-
-const topCustomersData = [
-  { rank: 1, name: 'ANDREW', matches: 300 },
-  { rank: 2, name: 'THONG LE', matches: 300 },
-  { rank: 3, name: 'SONG TOAN', matches: 300 },
-  { rank: 4, name: 'CODE FOR RICE', matches: 300 },
-  { rank: 5, name: 'MINH DINH', matches: 300 },
-  { rank: 6, name: 'VY NGUYEN', matches: 300 },
-  { rank: 7, name: 'KA', matches: 300 },
-  { rank: 8, name: 'MY', matches: 300 },
-  { rank: 9, name: 'VINH', matches: 300 },
-];
-
-// --- COMPONENT CHÍNH ---
-// Phần này của bạn đã đúng hoàn toàn, không cần sửa.
 const DashBoard = () => {
 
   const [data, setData] = useState<BilliardStats | null>();
