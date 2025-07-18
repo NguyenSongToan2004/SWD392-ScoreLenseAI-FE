@@ -11,3 +11,13 @@ export interface Introspect {
     userType: 'CUSTOMER' | 'ADMIN' | 'STAFF'; // giống role, giữ riêng nếu có logic khác
     auth: boolean;
 }
+
+export interface FirebaseMessages {
+    collapseKey : string | undefined;
+    from : string;
+    messageId : string;
+    notification : {
+        body : string;
+        title : string;
+    };
+}

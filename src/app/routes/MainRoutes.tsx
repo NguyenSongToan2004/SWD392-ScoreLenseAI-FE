@@ -37,6 +37,8 @@ import RoleHome from "../pages/Admin/usecases/Role/RoleHome";
 import RoleManagement from "../pages/Admin/usecases/Role/RoleManagement";
 import RoleView from "../pages/Admin/usecases/Role/RoleView";
 import PermissionAdd from "../pages/Admin/usecases/Role/PermissionAdd";
+import ResetPassword from "../pages/Login/usecases/ResetPassword";
+import ForgetPassword from "../pages/Login/usecases/ForgetPassword";
 
 export default function MainRoutes() {
 
@@ -49,6 +51,10 @@ export default function MainRoutes() {
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
                     <Route path="/login" element={<Login />} />
+
+                    <Route path="/reset-password" element={<ResetPassword />} />
+
+                    <Route path="/forget-password" element={<ForgetPassword />} />
 
                     <Route path="/"
                         element={
@@ -63,6 +69,7 @@ export default function MainRoutes() {
                             <Route path="/team/list" element={<TeamList />} />
                         </Route>
                     </Route>
+                    
                     <Route path="/match/:id" element={<Match />} />
                     <Route path="/user" element={
                         <LayoutRoute >
@@ -192,7 +199,7 @@ export default function MainRoutes() {
                                     <PermissionCreate />
                                 </PrivateRoute>
                             } />
-                            
+
                         </Route>
 
                         <Route path="/admin/role-management" element={

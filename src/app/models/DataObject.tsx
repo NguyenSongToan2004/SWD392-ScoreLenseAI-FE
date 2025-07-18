@@ -104,5 +104,10 @@ export interface BilliardTable {
     matchResponse?: BilliardMatch
 }
 
+export interface TableOperationRequest {
+    operationType: "register" | string;
+    tableID: string;
+    token: string;
+}
 
 

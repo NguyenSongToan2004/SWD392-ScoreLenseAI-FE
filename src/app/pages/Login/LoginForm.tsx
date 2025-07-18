@@ -6,11 +6,12 @@ import { RiLoginCircleLine } from "react-icons/ri";
 import type { LoginFormData } from "./models/auth";
 import { Suspense } from "react";
 import { loginAPI } from "./services/FetchAPI";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import type { AuthResponse } from "../../models/DataObject";
+import type { AuthResponse, TableOperationRequest } from "../../models/DataObject";
 import GoogleButton from "./partials/GoogleButton";
 import { navigateWithState } from "../../Utils/navigationUtils";
+import { requestNotificationPermission, sendTokenToServer } from "../../../services/fcmService";
 
 interface LoginFormProps {
     onLogin: (values: LoginFormData) => void;
@@ -20,16 +21,37 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
     const [form] = Form.useForm();
     const nav = useNavigate();
 
-    const handleLogin = (values: LoginFormData) => {
-        onLogin(values)
+    const handleLogin = async (values: LoginFormData) => {
+        onLogin(values);
+
         const loginPromise = async () => {
             const response = await loginAPI(values.username, values.password);
             if (response.status !== 200) {
                 throw new Error(response.message || 'Đăng nhập thất bại. Vui lòng thử lại.');
             }
 
+            // Request notification permission sau khi login thành công
+            const fcmToken = await requestNotificationPermission();
+
+            if (fcmToken) {
+                const data = response.data as AuthResponse;
+                const userID = data.user.customerID || data.user.staffID;
+                const form: TableOperationRequest = {
+                    operationType: "register",
+                    tableID: "23374e21-2391-41b0-b275-651df88b3b04",
+                    token: fcmToken
+                }
+                if (userID) {
+                    await sendTokenToServer(form);
+                } else {
+                    console.log('ko co user nhe !!');
+                }
+            }
+
+
             return response;
         };
+
         let returnURL = localStorage.getItem('returnURL');
         toast.promise(loginPromise(), {
             loading: 'Đang đăng nhập...',
@@ -130,13 +152,14 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
                                 Remember
                             </Checkbox>
                         </Form.Item>
-                        <motion.a
-                            style={{ color: "#1f7d53" }}
+                        <motion.div
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >
-                            Forgot password?
-                        </motion.a>
+                            <Link to="/forget-password" style={{ color: "#1f7d53", textDecoration: 'none' }}>
+                                Forgot password?
+                            </Link>
+                        </motion.div>
                     </motion.div>
 
                     <motion.div

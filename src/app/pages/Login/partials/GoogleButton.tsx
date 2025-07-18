@@ -1,10 +1,10 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import type { AuthResponse } from '../../../models/DataObject';
+import type { AuthResponse, TableOperationRequest } from '../../../models/DataObject';
 import type { GoogleUserData } from '../models/auth';
 import { decodeAccessToken, loginGoogleAPI } from '../services/FetchAPI';
-
+import { requestNotificationPermission, sendTokenToServer } from '../../../../services/fcmService';
 
 const GoogleButton = () => {
     const nav = useNavigate()
@@ -17,6 +17,22 @@ const GoogleButton = () => {
                     const response = await loginGoogleAPI(userInfo.email, userInfo.given_name, userInfo.picture);
                     if (response.status !== 200) {
                         throw new Error(response.message || 'Đăng nhập thất bại. Vui lòng thử lại.');
+                    }
+
+                    // Request notification permission
+                    const fcmToken = await requestNotificationPermission();
+                    if (fcmToken) {
+                        const data = response.data as AuthResponse;
+                        const userID = data.user.customerID || data.user.staffID;
+                        const form: TableOperationRequest = {
+                            operationType: "register",
+                            tableID: "23374e21-2391-41b0-b275-651df88b3b04",
+                            token: fcmToken
+                        }
+
+                        if (userID) {
+                            await sendTokenToServer(form);
+                        }
                     }
 
                     return response;

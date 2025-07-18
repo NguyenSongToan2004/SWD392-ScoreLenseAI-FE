@@ -132,3 +132,38 @@ export const decodeAccessToken = async (access_token: string): Promise<GoogleUse
     }
 };
 
+export const resetPasswordAPI = async (resetToken: string, newPassword: string, confirmPassword: string): Promise<ResponseAPI> => {
+    const response = await axios.post(`/v2/auth/password-reset`, {
+        resetToken,
+        newPassword,
+        confirmPassword
+    });
+
+    const result: ResponseAPI = {
+        status: response.status,
+        message: response.data.message,
+        data: response.data.data,
+    };
+
+    return result;
+};
+
+
+export const forgotPasswordAPI = async (email: string): Promise<ResponseAPI> => {
+
+    const response = await axios.post(`/v2/auth/password-forgot`, {
+        email
+    });
+
+    const result: ResponseAPI = {
+        status: response.status,
+        message: response.data.message,
+        data: response.data.data,
+    };
+
+    return result;
+};
+
+
+
+

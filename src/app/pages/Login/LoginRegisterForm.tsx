@@ -86,7 +86,7 @@ export default function LoginRegisterForm() {
                 className="w-[80%] z-10"
               >
                 <Suspense fallback={<div>Loading...</div>}>
-                    <LoginForm onLogin={handleLogin} />
+                  <LoginForm onLogin={handleLogin} />
                 </Suspense>
               </motion.div>
             )}
