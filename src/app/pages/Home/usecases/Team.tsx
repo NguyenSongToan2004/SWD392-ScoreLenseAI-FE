@@ -17,7 +17,6 @@ const Team = () => {
     const matchSetUp = matchSetUpStore.use();
 
     const handleSelectGame = (mode: string) => {
-        // ... (logic của bạn không thay đổi)
         const resetTeam = () => {
             matchSetUpStore.set((prev) => {
                 prev.value.setUp = "1vs1";
