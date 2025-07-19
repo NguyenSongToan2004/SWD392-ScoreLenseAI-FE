@@ -32,7 +32,7 @@ const AuthButton = () => {
 
         // 3. Gọi toast.promise
         toast.promise(logoutPromise(), {
-            loading: 'Đang đăng xuất, vui lòng chờ...',
+            loading: 'Logging out, please wait...',
             success: (response) => {
                 nav("/login");
                 return response.message;

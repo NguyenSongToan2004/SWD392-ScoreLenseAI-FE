@@ -123,7 +123,7 @@ export const logoutAPI = async (): Promise<ResponseAPI> => {
         if (response.status !== 200) {
             console.warn(`Unexpected response status: ${response.status}`);
         } else {
-            console.log('Log out thành công !');
+            console.log('Logout successful!');
         }
 
         return result;

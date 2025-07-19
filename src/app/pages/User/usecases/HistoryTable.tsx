@@ -67,11 +67,11 @@ export default function HistoryTable() {
         id: match.billiardMatchID,
         match: `${match.teams[0]?.name || 'N/A'} vs ${match.teams[1]?.name || 'N/A'}`,
         mode: match.modeID,
-        winner: match.winner || "Chưa có",
+        winner: match.winner || "No winner yet",
         date: new Date(match.startTime).toLocaleDateString('vi-VN'),
         time: match.endTime
             ? new Date(new Date(match.endTime).getTime() - new Date(match.startTime).getTime()).toISOString().substr(11, 8)
-            : "Đang diễn ra",
+            : "In progress",
     });
     const modeForDisplay = (modeID: number): string => {
         return ModeDisplayMap[modeID] || "Unknown Mode";

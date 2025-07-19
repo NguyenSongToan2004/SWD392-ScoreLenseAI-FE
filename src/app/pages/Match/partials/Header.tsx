@@ -21,7 +21,7 @@ const Header = ({ setArray, tableID }: CustomHeaderProps) => {
         : `Finished`;
 
     const handleSetting = () => {
-        toast.info('This function is coming soon !')
+        toast.info('This function is coming soon!')
     }
 
     return (

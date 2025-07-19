@@ -60,24 +60,13 @@ export default function Match() {
                 toast.error(logMessage.data);
                 break;
             case "WARNING":
-                toast("Connection Camera Failed", {
-                    description: "You can select mode to manual all actions",
+                toast("Camera Connection Failed", {
+                    description: "You can select manual mode for all actions",
                     action: {
                         label: "Manual",
                         onClick: () => handleManualMode
                     }
                 })
-                // toast.warning(
-                //     <div className="flex items-center justify-between gap-4">
-                //         <span>{logMessage.data}</span>
-                //         <button
-                //             onClick={handleManualMode}
-                //             className="px-2 py-1 text-sm bg-yellow-500 text-white rounded"
-                //         >
-                //             Manual
-                //         </button>
-                //     </div>
-                // );
                 break;
             case "LOGGING":
                 toast.info(logMessage.data);
@@ -100,7 +89,7 @@ export default function Match() {
                     toast.success(response.message);
                 }
             } else {
-                toast.error('Không tìm thấy trận đấu');
+                toast.error('Match not found');
             }
         }
         updateScore();
