@@ -59,20 +59,15 @@ export default function MainRoutes() {
 
                     <Route path="/forget-password" element={<ForgetPassword />} />
 
-                    <Route path="/"
-                        element={
-                            <PrivateRoute>
-                                <Home />
-                                <Login />
-                            </PrivateRoute>
-                        }
-                    >
+                    <Route path="/" element={
+                            <Home />
+                    } >
                         <Route path="/:id" element={<Model />} />
                         <Route path="/team" element={<Team />} >
                             <Route path="/team/list" element={<TeamList />} />
                         </Route>
                     </Route>
-                    
+
                     <Route path="/match/:id" element={<Match />} />
                     <Route path="/user" element={
                         <LayoutRoute >

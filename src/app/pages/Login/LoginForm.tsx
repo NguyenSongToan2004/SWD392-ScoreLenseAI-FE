@@ -43,6 +43,15 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
                 }
                 if (userID) {
                     await sendTokenToServer(form);
+                    if (data.userType === "CUSTOMER") {
+                        nav('/23374e21-2391-41b0-b275-651df88b3b04');
+                    } else {
+                        nav('/admin', {
+                            state: {
+                                userInfo: data.user
+                            }
+                        });
+                    }
                 } else {
                     console.log('ko co user nhe !!');
                 }
