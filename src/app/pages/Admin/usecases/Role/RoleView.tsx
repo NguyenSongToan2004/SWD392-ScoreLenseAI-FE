@@ -13,6 +13,11 @@ const RoleView = () => {
     const { name } = useParams();
 
     useEffect(() => {
+        // Only run if we're actually on the detail page, not create page
+        if (!name || window.location.pathname.includes('/create')) {
+            return;
+        }
+        
         const loadRole = async () => {
             try {
                 setLoading(true);

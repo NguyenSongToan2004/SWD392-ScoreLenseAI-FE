@@ -96,12 +96,11 @@ const PermissionAdd = () => {
             
             const response = await createRoleAPI(requestData);
 
-            if (response.status === 200) {
+            if (response.status === 200 || response.status === 1000) {
                 toast.success(response.message || 'Permissions updated successfully');
                 const userInfo = getNavigationState(loc, 'userInfo');
                 const store = getNavigationState(loc, 'store');
 
-                // Navigate back to role detail page
                 navigateWithState(nav, `/admin/role-management/detail/${role.name}`, {
                     userInfo,
                     store

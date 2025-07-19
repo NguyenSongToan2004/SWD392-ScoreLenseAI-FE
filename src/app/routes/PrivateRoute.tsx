@@ -59,27 +59,35 @@ function PrivateRoute({ children }: PrivateRouteProps) {
     const loc = useLocation();
     const role = localStorage.getItem('role');
     const isAuth = localStorage.getItem('isAuth');
-    console.log("PrivateRoute rendered");
+    
     if (!isAuth || isAuth === "false") {
         localStorage.setItem('returnURL', loc.pathname);
         toast.info('Please login !!');
+        return <Navigate to={"/login"} replace />;
+    }
+
+    // Only check staffCreating for specific routes, not for role creation
+    if (loc.pathname.includes('/create') && !loc.pathname.includes('/staff')) {
+        return (
+            <div>
+                {Array.isArray(children) ?
+                    children[role === "STAFF" ? 1 : 0] :
+                    children
+                }
+            </div>
+        );
+    }
+
+    let staffCreating: boolean = loc.state?.staffCreating;
+    if (staffCreating) {
         return (
             <>
-                <Navigate to={"/login"} replace />
+                {Array.isArray(children) ?
+                    children[0] :
+                    children
+                }
             </>
         )
-    } else {
-        let staffCreating: boolean = loc.state?.staffCreating;
-        if (staffCreating) {
-            return (
-                <>
-                    {Array.isArray(children) ?
-                        children[0] :
-                        children
-                    }
-                </>
-            )
-        }
     }
 
     return (

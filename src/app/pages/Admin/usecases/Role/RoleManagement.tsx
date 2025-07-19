@@ -18,7 +18,7 @@ const RoleManagement = () => {
             try {
                 setLoading(true);
                 const response = await fetchRolesAPI();
-                if (response.status === 200 && Array.isArray(response.data)) {
+                if ((response.status === 200 || response.status === 1000) && Array.isArray(response.data)) {
                     setRoleList(response.data);
                 } else {
                     toast.error(response.message || 'Failed to fetch role data.');
@@ -37,7 +37,7 @@ const RoleManagement = () => {
     const handleCreate = () => {
         const userInfo = getNavigationState(loc, 'userInfo');
         const store = getNavigationState(loc, 'store');
-        navigateWithState(nav, `/admin/role-management/create`, {
+        navigateWithState(nav, '/admin/role-management/create', {
             userInfo,
             store
         });
@@ -67,7 +67,7 @@ const RoleManagement = () => {
                     const deleteRole = async () => {
                         try {
                             const response = await deleteRoleAPI(role.name);
-                            if (response.status === 200) {
+                            if (response.status === 200 || response.status === 1000) {
                                 setIsLoad(!isLoad);
                                 toast.success(response.message || 'Role deleted successfully');
                             } else {

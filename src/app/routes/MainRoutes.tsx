@@ -37,6 +37,7 @@ import RoleHome from "../pages/Admin/usecases/Role/RoleHome";
 import RoleManagement from "../pages/Admin/usecases/Role/RoleManagement";
 import RoleView from "../pages/Admin/usecases/Role/RoleView";
 import PermissionAdd from "../pages/Admin/usecases/Role/PermissionAdd";
+import RoleCreate from "../pages/Admin/usecases/Role/RoleCreate";
 import ResetPassword from "../pages/Login/usecases/ResetPassword";
 import ForgetPassword from "../pages/Login/usecases/ForgetPassword";
 
@@ -210,28 +211,11 @@ export default function MainRoutes() {
 
                         </Route>
 
-                        <Route path="/admin/role-management" element={
-                            <PrivateRoute>
-                                <RoleHome />
-                            </PrivateRoute>
-                        } >
-                            <Route path="/admin/role-management/" element={
-                                <PrivateRoute>
-                                    <RoleManagement />
-                                </PrivateRoute>
-                            } />
-
-                            <Route path="/admin/role-management/detail/:name" element={
-                                <PrivateRoute>
-                                    <RoleView />
-                                </PrivateRoute>
-                            } />
-
-                            <Route path="/admin/role-management/create" element={
-                                <PrivateRoute>
-                                    <PermissionAdd />
-                                </PrivateRoute>
-                            } />
+                        <Route path="/admin/role-management">
+                            <Route index element={<RoleManagement />} />
+                            <Route path="create" element={<RoleCreate />} />
+                            <Route path="detail/:name" element={<RoleView />} />
+                            <Route path="edit/:name" element={<PermissionAdd />} />
                         </Route>
                     </Route>
                     <Route path="*" element={<PageNotFound />} />
