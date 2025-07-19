@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
-import { getNavigationState, navigateWithState } from '../../../../Utils/navigationUtils';
+import { getNavigationState } from '../../../../Utils/navigationUtils';
 import type { Customer } from '../../../../models/DataObject';
 import { getCustomerAPI } from '../../services/FetchAPI';
 
