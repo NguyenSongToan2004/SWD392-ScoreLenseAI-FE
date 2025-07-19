@@ -42,7 +42,7 @@ const StaffEdit = () => {
                         dob: staffFromState.dob || '',
                         address: staffFromState.address || '',
                         status: staffFromState.status?.toLowerCase() === 'active' ? 'active' : 'inActive',
-                        role: staffFromState.role?.name || '',
+                        role: staffFromState.role || '',
                         managerID: staffFromState.manager || '',
                         storeID: staffFromState.store?.storeID || ''
                     });
@@ -58,7 +58,7 @@ const StaffEdit = () => {
                             dob: staffData.dob || '',
                             address: staffData.address || '',
                             status: staffData.status?.toLowerCase() === 'active' ? 'active' : 'inActive',
-                            role: staffData.role?.name || '',
+                            role: staffData.role || '',
                             managerID: staffData.manager || '',
                             storeID: staffData.store?.storeID || ''
                         });

@@ -545,7 +545,7 @@ const Header = () => {
                                 </div>
                                 <div className="pb-3 border-b border-gray-200">
                                     <p className="text-sm text-gray-500">Roles</p>
-                                    <p className="text-lg font-medium text-gray-900 capitalize">{userInfo?.role?.name || 'No roles assigned'}</p>
+                                    <p className="text-lg font-medium text-gray-900 capitalize">{userInfo?.role || 'No roles assigned'}</p>
                                 </div>
                                 <div>
                                     <p className="text-sm text-gray-500">Status</p>

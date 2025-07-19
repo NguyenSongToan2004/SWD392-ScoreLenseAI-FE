@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useStomp } from '../../../hooks/useStomp'; // Điều chỉnh đường dẫn nếu cần
 import { useSubscription } from '../../../hooks/useSubscription'; // Điều chỉnh đường dẫn nếu cần
+import { formatTime } from '../../../Utils/formatters';
 
 // Kiểu dữ liệu nhận về từ WebSocket (khớp với class ShotEvent của Spring Boot)
 interface ShotEventPayload {
@@ -67,7 +68,7 @@ const BackLog = ({ tableID }: BackLogProps) => {
                             <div key={`${entry.shot}-${index}`} className="flex justify-between items-center py-1 text-md font-semibold">
                                 {/* Cột trái */}
                                 <div className="flex items-center gap-2">
-                                    <span>{entry.time.substring(0, 5)}</span>
+                                    <span>{formatTime(entry.time)}</span>
                                     {/* Sử dụng biến colorClass vừa tạo */}
                                     <span className={colorClass}>
                                         {/* Backend đã gửi cả chữ "SHOT ", nên chỉ cần hiển thị entry.shot */}

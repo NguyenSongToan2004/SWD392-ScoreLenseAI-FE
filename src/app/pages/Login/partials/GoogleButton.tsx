@@ -26,7 +26,7 @@ const GoogleButton = () => {
                         const userID = data.user.customerID || data.user.staffID;
                         const form: TableOperationRequest = {
                             operationType: "register",
-                            tableID: "23374e21-2391-41b0-b275-651df88b3b04",
+                            tableID: "e8602f47-b5f3-4bea-ad82-93dbc408171b",
                             token: fcmToken
                         }
 
