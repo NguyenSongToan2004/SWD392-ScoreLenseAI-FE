@@ -7,6 +7,8 @@ import { fetchPermissionAPI } from "../../services/FetchAPI";
 
 const PermissionManagement = () => {
     const [permissionList, setPermissionList] = useState<Permission[]>([]);
+    const [filteredPermissions, setFilteredPermissions] = useState<Permission[]>([]);
+    const [searchTerm, setSearchTerm] = useState<string>('');
     const [isLoad, setIsLoad] = useState<boolean>(false);
     const loc = useLocation();
     const nav = useNavigate();
@@ -17,17 +19,36 @@ const PermissionManagement = () => {
                 const response = await fetchPermissionAPI();
                 if (response.status === 200 && Array.isArray(response.data)) {
                     setPermissionList(response.data);
+                    setFilteredPermissions(response.data);
                 } else {
                     toast.error(response.message || 'Failed to fetch permission data.');
                     setPermissionList([]);
+                    setFilteredPermissions([]);
                 }
             } catch (error) {
                 setPermissionList([]);
+                setFilteredPermissions([]);
                 toast.error('Error fetching permissions');
             }
         }
         fetchPermissions();
-    }, [isLoad])
+    }, [isLoad]);
+
+    // Filter permissions based on search term
+    useEffect(() => {
+        if (searchTerm.trim() === '') {
+            setFilteredPermissions(permissionList);
+        } else {
+            const filtered = permissionList.filter(permission =>
+                permission.name.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredPermissions(filtered);
+        }
+    }, [searchTerm, permissionList]);
+
+    const handleSearch = (value: string) => {
+        setSearchTerm(value);
+    };
 
     const handleAction = (actionType: 'detail' | 'edit' | 'delete', permission: Permission) => {
         const userInfo = getNavigationState(loc, 'userInfo');
@@ -58,18 +79,31 @@ const PermissionManagement = () => {
     };
 
     return (
-        <div className="p-4 sm:p-6 md:p-8 h-full  bg-white rounded-2xl">
-            <div>
-                <h2 className="text-3xl font-bold mb-6 text-gray-800 inline-block mr-10">Permission Management</h2>
-                {/* <button
-                    onClick={handleCreate}
-                    className="border rounded-xl px-2 py-2 border-green text-green-800 cursor-pointer hover:bg-green-800 hover:text-white mb-2">
-                    <strong className="text-2xl">+</strong> Create Permission
-                </button> */}
+        <div className="p-4 sm:p-6 md:p-8 h-full bg-white rounded-2xl">
+            <div className="flex justify-between items-center mb-6">
+                <h2 className="text-3xl font-bold text-gray-800">Permission Management</h2>
+            </div>
+
+            {/* Search Bar */}
+            <div className="mb-6">
+                <div className="relative">
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-gray-500">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
+                    </div>
+                    <input
+                        type="text"
+                        className="block w-full p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Search permissions by name..."
+                        value={searchTerm}
+                        onChange={(e) => handleSearch(e.target.value)}
+                    />
+                </div>
             </div>
 
             <div className="shadow-md rounded-lg overflow-hidden">
-                {permissionList.length > 0 ? (
+                {filteredPermissions.length > 0 ? (
                     <div className="overflow-x-auto">
                         <table className="w-full text-base text-left text-gray-700">
                             <thead className="text-2xl text-gray-800 uppercase bg-gray-100">
@@ -80,7 +114,7 @@ const PermissionManagement = () => {
                                 </tr>
                             </thead>
                             <tbody className="max-h-96 overflow-y-auto">
-                                {permissionList.map((permission) => (
+                                {filteredPermissions.map((permission) => (
                                     <tr key={permission.name} className="bg-white border-b hover:bg-gray-50 text-xl">
                                         <td className="px-6 py-4">{permission.name}</td>
                                         <td className="px-6 py-4 truncate max-w-sm" title={permission.description}>
@@ -124,7 +158,13 @@ const PermissionManagement = () => {
                         </table>
                     </div>
                 ) : (
-                    <p className="text-center py-10 text-lg text-gray-500">No permission data to display.</p>
+                    <div className="text-center py-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 text-gray-400 mx-auto mb-4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
+                        <p className="text-gray-500 text-lg">No permissions found</p>
+                        <p className="text-gray-400 text-sm mt-2">Try adjusting your search</p>
+                    </div>
                 )}
             </div>
         </div>
