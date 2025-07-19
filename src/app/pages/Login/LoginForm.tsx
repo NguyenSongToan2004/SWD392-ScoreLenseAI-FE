@@ -75,7 +75,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
                 if (data.userType === "CUSTOMER") {
                     if (returnURL) {
                         localStorage.removeItem('returnURL');
-                        nav(`/${returnURL}`);
+                        nav(`${returnURL}`);
                     } else {
                         nav('/23374e21-2391-41b0-b275-651df88b3b04')
                     }
