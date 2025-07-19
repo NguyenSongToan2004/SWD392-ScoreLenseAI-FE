@@ -28,6 +28,7 @@ const BackLog = ({ tableID }: BackLogProps) => {
     // 2. Định nghĩa hàm callback để xử lý message mới từ WebSocket
     const handleNewShotEvent = useCallback((payload: ShotEventPayload) => {
         // Thêm log mới vào đầu danh sách để hiển thị mới nhất ở trên
+        console.log(payload);
         setLogEntries(prevEntries => [payload, ...prevEntries]);
     }, []);
 
