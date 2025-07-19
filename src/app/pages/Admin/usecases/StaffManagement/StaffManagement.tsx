@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import type { User } from '../../../../models/DataObject';
+import type { Staff, User } from '../../../../models/DataObject';
 import { getNavigationState, navigateWithState } from '../../../../Utils/navigationUtils';
 import type { ListStaffResponse } from '../../models/ResponseObject';
 import { fetchStaffsAPI } from '../../services/FetchAPI';
@@ -134,7 +134,7 @@ const StaffManagement = () => {
         navigateWithState(nav, `/admin/staff-management/create`, navigationState);
     }, [nav, navigationState]);
 
-    const handleAction = useCallback((actionType: 'detail' | 'edit' | 'delete', staff: User) => {
+    const handleAction = useCallback((actionType: 'detail' | 'edit' | 'delete', staff: Staff) => {
         switch (actionType) {
             case 'detail':
                 navigateWithState(nav, `/admin/staff-management/detail/${staff.staffID}`, {
@@ -357,7 +357,7 @@ const StaffManagement = () => {
                                                 <span
                                                     className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full"
                                                 >
-                                                    {staff.role.name}
+                                                    {staff.role == null ? 'N/A' : staff.role}
                                                 </span>
                                             </div>
                                         </td>

@@ -1,4 +1,4 @@
-import type { User } from "../../../models/DataObject";
+import type { Staff } from "../../../models/DataObject";
 
 export interface StaffResponse {
     staffID: string;
@@ -22,7 +22,7 @@ export interface Permission {
 }
 
 export interface ListStaffResponse {
-    content: User[],
+    content: Staff[],
     page: number,
     size: number,
     totalElements: number,

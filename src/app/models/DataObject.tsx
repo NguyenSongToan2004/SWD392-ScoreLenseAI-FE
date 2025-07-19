@@ -66,7 +66,24 @@ export interface User {
     phoneNumber: string;
     dob: string;
     address: string;
-    role: Role;
+    role: string | null;
+    createAt: string;
+    updateAt: string | null;
+    status: "active" | "inActive";
+    manager: string | null;
+    imageUrl: string | null;
+    store?: Store
+}
+
+export interface Staff {
+    staffID?: string;
+    customerID?: string;
+    name: string;
+    email: string;
+    phoneNumber: string;
+    dob: string;
+    address: string;
+    role: string | null;
     createAt: string;
     updateAt: string | null;
     status: "active" | "inActive";
