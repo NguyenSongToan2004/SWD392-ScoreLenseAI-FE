@@ -127,4 +127,18 @@ export interface TableOperationRequest {
     token: string;
 }
 
+export interface Customer {
+    customerID: string;
+    name: string;
+    email: string;
+    phoneNumber: string | null;
+    dob: string;
+    address: string;
+    createAt: string;
+    updateAt: string | null;
+    type: "normal" | "vip" | string;
+    status: "active" | "inactive" | string;
+    imageUrl: string | null;
+}
+
 
