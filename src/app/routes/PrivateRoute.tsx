@@ -61,7 +61,7 @@ function PrivateRoute({ children }: PrivateRouteProps) {
     const isAuth = localStorage.getItem('isAuth');
     
     if (!isAuth || isAuth === "false") {
-        localStorage.setItem('returnURL', loc.pathname);
+        // localStorage.setItem('returnURL', loc.pathname);
         toast.info('Please login !!');
         return <Navigate to={"/login"} replace />;
     }

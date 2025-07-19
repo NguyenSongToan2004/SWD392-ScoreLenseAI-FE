@@ -20,8 +20,6 @@ export default function Home() {
     const nav = useNavigate();
     useEffect(() => {
         const getTable = async () => {
-            // Đặt trong try-catch-finally để đảm bảo loading luôn được tắt
-
             const response: ResponseAPI = await fetchTableAPI(id as string) as ResponseAPI;
             console.log(response);
             if (response.status === 200) {
@@ -50,7 +48,6 @@ export default function Home() {
         }
 
         if (!id) {
-            localStorage.setItem("returnURL", window.location.pathname);
             nav("/login");
             return;
         }
