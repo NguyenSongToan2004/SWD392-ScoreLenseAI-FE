@@ -14,8 +14,6 @@ dist-ssr
 
 .env
 
-# Firebase config for service worker (contains sensitive keys)
-public/firebase-config.js
 
 # Editor directories and files
 .vscode/*
