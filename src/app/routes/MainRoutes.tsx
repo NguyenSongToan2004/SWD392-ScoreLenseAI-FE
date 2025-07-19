@@ -40,6 +40,9 @@ import PermissionAdd from "../pages/Admin/usecases/Role/PermissionAdd";
 import ResetPassword from "../pages/Login/usecases/ResetPassword";
 import ForgetPassword from "../pages/Login/usecases/ForgetPassword";
 
+import CustomerHome from "../pages/Admin/usecases/CustomerManagement/CustomerHome";
+import CustomerManagement from "../pages/Admin/usecases/CustomerManagement/CustomerManagement";
+import CustomerView from "../pages/Admin/usecases/CustomerManagement/CustomerView";
 export default function MainRoutes() {
 
     const Login = React.lazy(() => import('../pages/Login'));
@@ -175,6 +178,11 @@ export default function MainRoutes() {
                                     <StaffCreate />
                                 </PrivateRoute>
                             } />
+                        </Route>
+
+                        <Route path="/admin/customer-management" element={<CustomerHome />}>
+                            <Route index element={<CustomerManagement />} />
+                            <Route path="detail/:id" element={<CustomerView />} />
                         </Route>
 
                         <Route path="/admin/permission-management" element={

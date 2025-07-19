@@ -108,6 +108,17 @@ const SideBar = () => {
 
                                 <li className="mb-2 border-l-1">
                                     <NavLink
+                                        to="/admin/customer-management"
+                                        state={{ userInfo: loc.state?.userInfo }}
+                                        className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                                    >
+                                        <img src={infoIcon} alt="Customer Management Icon" className="mr-3" />
+                                        Customer
+                                    </NavLink>
+                                </li>
+
+                                <li className="mb-2 border-l-1">
+                                    <NavLink
                                         to="/admin/permission-management"
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}

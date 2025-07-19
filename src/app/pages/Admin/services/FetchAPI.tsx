@@ -336,6 +336,71 @@ export const getRoleAPI = async (roleName: string): Promise<ResponseAPI> => {
     return result;
 }
 
+export const fetchCustomersAPI = async (params?: {
+    page?: number;
+    size?: number;
+    sortBy?: string;
+    sortDirection?: string;
+    search?: string;
+    status?: string;
+}): Promise<ResponseAPI> => {
+    const queryParams = new URLSearchParams();
+
+    if (params?.page !== undefined) queryParams.append('page', params.page.toString());
+    if (params?.size !== undefined) queryParams.append('size', params.size.toString());
+    if (params?.sortBy) queryParams.append('sortBy', params.sortBy);
+    if (params?.sortDirection) queryParams.append('sortDirection', params.sortDirection);
+    if (params?.search) queryParams.append('search', params.search);
+    if (params?.status) queryParams.append('status', params.status);
+
+    const response = await axios.get('/v2/customers', {
+        params: queryParams,
+    });
+
+    const result: ResponseAPI = {
+        status: response.status,
+        message: response.data.message,
+        data: response.data.data
+    }
+
+    return result;
+}
+
+export const getCustomerAPI = async (customerId: string): Promise<ResponseAPI> => {
+    const response = await axios.get(`/v1/customers/${customerId}`);
+
+    const result: ResponseAPI = {
+        status: response.status,
+        message: response.data.message,
+        data: response.data.data
+    }
+
+    return result;
+}
+
+export const updateCustomerStatusAPI = async (customerId: string, status: string): Promise<ResponseAPI> => {
+    const response = await axios.put(`/v1/customers/status/${customerId}?status=${status}`);
+
+    const result: ResponseAPI = {
+        status: response.status,
+        message: response.data.message,
+        data: response.data.data
+    }
+
+    return result;
+}
+
+export const deleteCustomerAPI = async (customerId: string): Promise<ResponseAPI> => {
+    const response = await axios.delete(`/v1/customers/${customerId}`);
+
+    const result: ResponseAPI = {
+        status: response.status,
+        message: response.data.message,
+        data: response.data.data
+    }
+
+    return result;
+}
 
 
 
