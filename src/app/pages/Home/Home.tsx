@@ -50,6 +50,7 @@ export default function Home() {
         }
 
         if (!id) {
+            localStorage.setItem("returnURL", window.location.pathname);
             nav("/login");
             return;
         }
