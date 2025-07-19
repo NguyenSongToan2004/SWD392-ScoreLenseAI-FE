@@ -101,9 +101,11 @@ const PermissionAdd = () => {
                 const userInfo = getNavigationState(loc, 'userInfo');
                 const store = getNavigationState(loc, 'store');
 
+                // Navigate back to detail page to trigger fresh data fetch
                 navigateWithState(nav, `/admin/role-management/detail/${role.name}`, {
                     userInfo,
-                    store
+                    store,
+                    refreshData: Date.now() // Add timestamp to force refresh
                 });
             } else {
                 toast.error(response.message || 'Failed to update permissions');

@@ -22,15 +22,10 @@ const RoleView = () => {
             try {
                 setLoading(true);
 
-                // Try to get role from navigation state first
-                const roleData = getNavigationState<Role>(loc, 'role');
-
-                if (roleData) {
-                    setRole(roleData);
-                } else if (name) {
-                    // Fetch role data from API
+                // Always fetch fresh data from API to get latest permissions
+                if (name) {
                     const response = await getRoleAPI(name);
-                    if (response.status === 200) {
+                    if (response.status === 200 || response.status === 1000) {
                         setRole(response.data);
                     } else {
                         toast.error(response.message || 'Failed to fetch role data.');
@@ -41,6 +36,7 @@ const RoleView = () => {
                     nav(-1);
                 }
             } catch (error) {
+                console.error('Error loading role:', error);
                 toast.error('Error loading role data');
                 nav(-1);
             } finally {
@@ -49,10 +45,15 @@ const RoleView = () => {
         };
 
         loadRole();
-    }, [loc.state, nav, name]);
+    }, [nav, name, loc.pathname]); // Added loc.pathname to re-fetch when navigating back
 
     const handleGoBack = () => {
-        nav(-1);
+        const userInfo = getNavigationState(loc, 'userInfo');
+        const store = getNavigationState(loc, 'store');
+        navigateWithState(nav, '/admin/role-management', {
+            userInfo,
+            store
+        });
     };
 
     const handleEdit = () => {
@@ -180,23 +181,16 @@ const RoleView = () => {
                         <h3 className='text-2xl font-bold text-gray-800 mb-4'>Permissions</h3>
 
                         {role.permissions && role.permissions.length > 0 ? (
-                            <div className='flex-row flex flex-wrap gap-4'>
+                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                                 {role.permissions.map((permission, index) => (
                                     <div key={index} className='border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow'>
-                                        <div className='flex items-start justify-between'>
-                                            <div className='flex-1'>
-                                                <h4 className='font-semibold text-gray-800 mb-2'>
-                                                    {permission.name}
-                                                </h4>
-                                                <p className='text-sm text-gray-600'>
-                                                    {permission.description || 'No description available'}
-                                                </p>
-                                            </div>
-                                            <div className='ml-3'>
-                                                <span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800'>
-                                                    Permission
-                                                </span>
-                                            </div>
+                                        <div className='flex flex-col'>
+                                            <h4 className='font-semibold text-gray-800 mb-2'>
+                                                {permission.name}
+                                            </h4>
+                                            <p className='text-sm text-gray-600'>
+                                                {permission.description || 'No description available'}
+                                            </p>
                                         </div>
                                     </div>
                                 ))}
