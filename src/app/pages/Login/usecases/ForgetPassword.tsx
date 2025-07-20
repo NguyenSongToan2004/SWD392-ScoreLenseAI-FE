@@ -33,6 +33,18 @@ const ForgetPassword = () => {
                 transition={{ duration: 0.5 }}
                 className="bg-white p-8 rounded-lg shadow-md w-full max-w-md"
             >
+                <motion.button
+                    className="absolute top-4 left-4 border-2 px-2 py-1 rounded-xl cursor-pointer hover:bg-gray-500 hover:text-white transition-colors duration-200"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                    type="button"
+                    onClick={() => window.history.back()}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                >
+                    Back
+                </motion.button>
                 <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
                     Forgot Password
                 </h2>

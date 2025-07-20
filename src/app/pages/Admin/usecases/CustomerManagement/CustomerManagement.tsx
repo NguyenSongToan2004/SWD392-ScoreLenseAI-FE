@@ -9,7 +9,7 @@ const CustomerManagement = () => {
     const [customerList, setCustomerList] = useState<Customer[]>([]);
     const [pagination, setPagination] = useState({
         page: 1,
-        size: 10,
+        size: 5,
         totalElements: 0,
         totalPages: 0,
         last: false,
@@ -166,7 +166,7 @@ const CustomerManagement = () => {
     }), [pagination.page, pagination.size, pagination.totalElements]);
 
     return (
-        <div className="p-4 sm:p-6 md:p-8 flex flex-col h-full bg-white rounded-2xl">
+        <div className="p-4 sm:p-6 md:p-8 flex flex-col max-h-full bg-white rounded-2xl">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-3xl font-bold text-gray-800">Customer Management</h2>
             </div>

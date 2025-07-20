@@ -144,7 +144,7 @@ const RoleView = () => {
                                 <div className='md:col-span-2'>
                                     <label className='block text-sm font-medium text-gray-700 mb-2'>Description</label>
                                     <div className='p-3 bg-gray-50 rounded-md border min-h-[100px]'>
-                                        {role.description || 'No description available'}
+                                        {role.description || 'No description available'}    
                                     </div>
                                 </div>
                             </div>
@@ -185,10 +185,13 @@ const RoleView = () => {
                                 {role.permissions.map((permission, index) => (
                                     <div key={index} className='border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow'>
                                         <div className='flex flex-col'>
-                                            <h4 className='font-semibold text-gray-800 mb-2'>
+                                            <h4 className='font-semibold text-gray-800 mb-2 line-clamp-1'
+                                                title={permission.name}>
                                                 {permission.name}
                                             </h4>
-                                            <p className='text-sm text-gray-600'>
+                                            <p className='text-sm text-gray-600 line-clamp-1'
+                                                title={permission.description}
+                                            >
                                                 {permission.description || 'No description available'}
                                             </p>
                                         </div>

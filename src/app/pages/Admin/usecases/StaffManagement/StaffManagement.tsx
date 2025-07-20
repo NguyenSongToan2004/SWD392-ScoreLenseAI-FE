@@ -10,7 +10,7 @@ const StaffManagement = () => {
     const [staffList, setStaffList] = useState<User[]>([]);
     const [pagination, setPagination] = useState({
         page: 1,
-        size: 3,
+        size: 5,
         totalElements: 0,
         totalPages: 0,
         last: false,
@@ -199,7 +199,7 @@ const StaffManagement = () => {
     }), [pagination.page, pagination.size, pagination.totalElements]);
 
     return (
-        <div className="p-4 sm:p-6 md:p-8 flex flex-col h-full bg-white rounded-2xl">
+        <div className="p-4 sm:p-6 md:p-8 flex flex-col max-h-full bg-white rounded-2xl">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-3xl font-bold text-gray-800">Staff Management</h2>
                 <button
@@ -210,7 +210,7 @@ const StaffManagement = () => {
             </div>
 
             {/* Search and Filter Controls */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-6">
+            <div className="flex flex-col sm:flex-row gap-4 mb-6 h-full">
                 <div className="flex-1">
                     <input
                         type="text"
@@ -246,7 +246,7 @@ const StaffManagement = () => {
             </div>
 
             {/* Pagination Controls */}
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-4 h-full">
                 <div className="flex items-center gap-4">
                     <span className="text-sm text-gray-600">
                         Showing {paginationInfo.showingFrom} to {paginationInfo.showingTo} of {paginationInfo.total} entries
@@ -266,7 +266,7 @@ const StaffManagement = () => {
                 </div>
             </div>
 
-            <div className="flex-1 flex flex-col shadow-md rounded-lg overflow-hidden">
+            <div className="flex-1 flex flex-col shadow-md rounded-lg h-full">
                 {loading ? (
                     <div className="flex-1 flex items-center justify-center">
                         <div className="text-center">
@@ -312,7 +312,6 @@ const StaffManagement = () => {
                                             {getSortIcon('status')}
                                         </div>
                                     </th>
-                                    <th scope="col" className="px-6 py-3">Store</th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 cursor-pointer hover:bg-gray-200 select-none"
@@ -366,7 +365,6 @@ const StaffManagement = () => {
                                                 {staff.status}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-4">{staff.store?.name || 'N/A'}</td>
                                         <td className="px-6 py-4">{formatDate(staff.createAt)}</td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-x-2">
@@ -414,7 +412,7 @@ const StaffManagement = () => {
 
             {/* Pagination - Fixed at bottom */}
             {!loading && pagination.totalPages > 1 && (
-                <div className="flex justify-between items-center mt-6 pt-4 border-t">
+                <div className="flex justify-between items-center mt-6 pt-4 border-t h-full">
                     <div className="text-sm text-gray-600">
                         Page {pagination.page} of {pagination.totalPages}
                     </div>

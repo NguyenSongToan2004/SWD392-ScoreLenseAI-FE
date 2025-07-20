@@ -1,17 +1,17 @@
 import { Button, Checkbox, Form } from "antd";
 import { motion } from "motion/react";
-import NInputLabel from "../../components/basicUI/NInputLabel";
+import { Suspense } from "react";
 import { FaLock, FaUser } from "react-icons/fa";
 import { RiLoginCircleLine } from "react-icons/ri";
-import type { LoginFormData } from "./models/auth";
-import { Suspense } from "react";
-import { loginAPI } from "./services/FetchAPI";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import type { AuthResponse, TableOperationRequest } from "../../models/DataObject";
-import GoogleButton from "./partials/GoogleButton";
-import { navigateWithState } from "../../Utils/navigationUtils";
 import { requestNotificationPermission, sendTokenToServer } from "../../../services/fcmService";
+import NInputLabel from "../../components/basicUI/NInputLabel";
+import type { AuthResponse, TableOperationRequest } from "../../models/DataObject";
+import type { LoginFormData } from "./models/auth";
+import GoogleButton from "./partials/GoogleButton";
+import { loginAPI } from "./services/FetchAPI";
+
 
 interface LoginFormProps {
     onLogin: (values: LoginFormData) => void;
@@ -20,6 +20,7 @@ interface LoginFormProps {
 export default function LoginForm({ onLogin }: LoginFormProps) {
     const [form] = Form.useForm();
     const nav = useNavigate();
+    const location = useLocation();
 
     const handleLogin = async (values: LoginFormData) => {
         onLogin(values);
@@ -27,10 +28,9 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
         const loginPromise = async () => {
             const response = await loginAPI(values.username, values.password);
             if (response.status !== 200) {
-                throw new Error(response.message || 'Đăng nhập thất bại. Vui lòng thử lại.');
+                toast.error(response.message);
             }
 
-            // Request notification permission sau khi login thành công
             const fcmToken = await requestNotificationPermission();
 
             if (fcmToken) {
@@ -43,45 +43,29 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
                 }
                 if (userID) {
                     await sendTokenToServer(form);
-                    // if (data.userType === "CUSTOMER") {
-                    //     let returnURL = localStorage.getItem('returnURL');
-                    //     if (returnURL) {
-                    //         localStorage.removeItem('returnURL');
-                    //         console.log(returnURL);
-                    //         nav(`/${returnURL}`);
-                    //     } else {
-                    //         nav('/23374e21-2391-41b0-b275-651df88b3b04')
-                    //     }
-                    // } else {
-                    //     nav('/admin', {
-                    //         state: {
-                    //             userInfo: data.user
-                    //         }
-                    //     });
-                    // }
-                } else {
-                    console.log('ko co user nhe !!');
-                }
+                } 
             }
 
             return response;
         };
 
-        let returnURL = localStorage.getItem('returnURL');
+        const returnURL = location.state?.from?.pathname;
+
         toast.promise(loginPromise(), {
-            loading: 'Đang đăng nhập...',
+            loading: 'Logging in... Please wait!',
             success: (response) => {
                 const data = response.data as AuthResponse;
+
                 if (data.userType === "CUSTOMER") {
-                    if (returnURL) {
-                        localStorage.removeItem('returnURL');
-                        nav(`${returnURL}`);
-                    } else {
-                        nav('/23374e21-2391-41b0-b275-651df88b3b04')
-                    }
-                } else {
-                    navigateWithState(nav, '/admin', {
-                        userInfo: data.user
+                    const destination = returnURL || '/23374e21-2391-41b0-b275-651df88b3b04';
+                    nav(destination, { replace: true });
+                } else { 
+                    const destination = returnURL || '/admin';
+                    nav(destination, {
+                        state : {
+                            userInfo: data.user
+                        },
+                        replace: true
                     });
                 }
                 return response.message;

@@ -84,7 +84,7 @@ const RoleManagement = () => {
     };
 
     return (
-        <div className="p-4 sm:p-6 md:p-8 max-h-screen overflow-y-auto bg-white rounded-2xl">
+        <div className="p-4 sm:p-6 md:p-8 max-h-full bg-white rounded-2xl">
             <div>
                 <h2 className="text-3xl font-bold mb-6 text-gray-800 inline-block mr-10">Role Management</h2>
                 <button
@@ -94,7 +94,7 @@ const RoleManagement = () => {
                 </button>
             </div>
 
-            <div className="shadow-md rounded-lg overflow-hidden">
+            <div className="shadow-md rounded-lg">
                 {loading ? (
                     <div className="p-6 text-center">
                         <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mb-2"></div>
@@ -111,7 +111,7 @@ const RoleManagement = () => {
                                     <th scope="col" className="px-6 py-3">Action</th>
                                 </tr>
                             </thead>
-                            <tbody className="max-h-96 overflow-y-auto">
+                            <tbody>
                                 {roleList.map((role) => (
                                     <tr key={role.name} className="bg-white border-b hover:bg-gray-50 text-xl">
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{role.name}</td>

@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 const CustomerHome = () => {
     return (
-        <div className="h-full">
+        <div>
             <Outlet />
         </div>
     );

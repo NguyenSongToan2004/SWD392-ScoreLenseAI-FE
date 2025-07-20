@@ -1,5 +1,5 @@
 import { useGoogleLogin } from '@react-oauth/google';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import type { AuthResponse, TableOperationRequest } from '../../../models/DataObject';
 import type { GoogleUserData } from '../models/auth';
@@ -8,6 +8,7 @@ import { requestNotificationPermission, sendTokenToServer } from '../../../../se
 
 const GoogleButton = () => {
     const nav = useNavigate()
+    const location = useLocation();
     const loginGG = useGoogleLogin({
         onSuccess: async (response) => {
             try {
@@ -32,47 +33,30 @@ const GoogleButton = () => {
 
                         if (userID) {
                             await sendTokenToServer(form);
-                            // if (data.userType === "CUSTOMER") {
-                            //     let returnURL = localStorage.getItem('returnURL');
-                            //     if (returnURL) {
-                            //         localStorage.removeItem('returnURL');
-                            //         console.log(returnURL);
-                            //         nav(`/${returnURL}`);
-                            //     } else {
-                            //         nav('/23374e21-2391-41b0-b275-651df88b3b04')
-                            //     }
-                            // } else {
-                            //     nav('/admin', {
-                            //         state: {
-                            //             userInfo: data.user
-                            //         }
-                            //     });
-                            // }
                         }
                     }
 
                     return response;
                 };
-                let returnURL = localStorage.getItem('returnURL');
+                const returnURL = location.state?.from?.pathname;
+
                 toast.promise(loginPromise(), {
                     loading: 'Đang đăng nhập...',
                     success: (response) => {
                         const data = response.data as AuthResponse;
+
                         if (data.userType === "CUSTOMER") {
-                            if (returnURL) {
-                                localStorage.removeItem('returnURL');
-                                nav(`${returnURL}`);
-                            } else {
-                                nav('/23374e21-2391-41b0-b275-651df88b3b04')
-                            }
+                            const destination = returnURL || '/23374e21-2391-41b0-b275-651df88b3b04';
+                            nav(destination, { replace: true });
                         } else {
-                            nav('/admin', {
+                            const destination = returnURL || '/admin';
+                            nav(destination, {
                                 state: {
                                     userInfo: data.user
-                                }
+                                },
+                                replace: true
                             });
                         }
-
                         return response.message;
                     },
                     error: (error) => {

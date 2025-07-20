@@ -29,7 +29,7 @@ const Model = () => {
 
     const handleNext = () => {
         if (matchSetUp.modeID === null) {
-            toast.warning('Vui lòng chọn chế độ chơi !!')
+            toast.warning('Please choose mode game !')
         } else {
             nav("/team", {
                 state: {

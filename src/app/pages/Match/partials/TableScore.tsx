@@ -1,6 +1,4 @@
-import { toast } from "sonner";
 import type { Team } from "../../../models/DataObject";
-import { cancelMatchAPI } from "../services/FetchAPI";
 
 interface TableScoreProps {
     teamsArray: Team[];
@@ -18,27 +16,8 @@ const TableScore = ({ teamsArray, onScoreChange }: TableScoreProps) => {
         return <div>Loading teams...</div>;
     }
 
-    const playerA = teamA.players[0];
-    const playerB = teamB.players[0];
-
-    const handleCancel = (matchID: number, forfeitTeamID: number) => {
-        const confirmed = window.confirm("Are you sure you want to cancel this match?");
-        if (confirmed) {
-            console.log("Match cancelled");
-
-            const updateMatch = async () => {
-                const response = await cancelMatchAPI(matchID, forfeitTeamID, "cancel");
-
-                if (response.status === 200) {
-                    toast.message(response.message);
-                } else {
-                    toast.error(response.message);
-                }
-            }
-
-            updateMatch();
-        }
-    };
+    const playerA = (teamA.players[0]?.name ?? '') + ' ' + (teamA.players[1]?.name ?? '');
+    const playerB = (teamB.players[0]?.name ?? '') + ' ' + (teamB.players[1]?.name ?? '');
 
     if (!playerA || !playerB) {
         return <div>Loading players...</div>
@@ -51,13 +30,6 @@ const TableScore = ({ teamsArray, onScoreChange }: TableScoreProps) => {
                 {/* Tên đội: Căn giữa trên mobile, căn trái trên desktop */}
                 <div className="flex flex-row justify-center md:justify-start items-center gap-4">
                     <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center md:text-left">{teamA.name}</h3>
-                    <button
-                        className="w-8 h-8 cursor-pointer bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors duration-200 shadow-sm"
-                        onClick={() => handleCancel(teamA.billiardMatchID, teamA.teamID)}
-                    >
-                        {/* <img src={iconEdit} alt="Cancel" className="w-4 h-4" /> */}
-                        <strong>X</strong>
-                    </button>
                 </div>
 
                 {/* Container cho Tên người chơi và Điểm */}
@@ -65,7 +37,7 @@ const TableScore = ({ teamsArray, onScoreChange }: TableScoreProps) => {
                     {/* Tên người chơi A: Ẩn trên mobile, hiển thị và căn phải trên desktop */}
 
                     <h4 className="hidden md:flex md:basis-1/2 md:self-start items-center justify-end pr-4 text-2xl lg:text-4xl text-amber-300 font-bold">
-                        {playerA.name}
+                        {playerA}
                     </h4>
 
                     {/* Bảng điểm A */}
@@ -97,13 +69,6 @@ const TableScore = ({ teamsArray, onScoreChange }: TableScoreProps) => {
             <div className="w-full md:basis-1/3 flex flex-col gap-2">
                 {/* Tên đội: Căn giữa trên mobile, căn phải trên desktop */}
                 <div className="flex flex-row justify-center md:justify-end items-center gap-4 ">
-                    <button
-                        className="w-8 h-8 cursor-pointer bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors duration-200 shadow-sm"
-                        onClick={() => handleCancel(teamB.billiardMatchID, teamB.teamID)}
-                    >
-                        {/* <img src={iconEdit} alt="Cancel" className="w-4 h-4" /> */}
-                        <strong>X</strong>
-                    </button>
                     <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center md:text-right">{teamB.name}</h3>
                 </div>
                 {/* Container cho Tên người chơi và Điểm */}
@@ -129,7 +94,7 @@ const TableScore = ({ teamsArray, onScoreChange }: TableScoreProps) => {
                         className="hidden md:flex md:basis-1/2 md:self-start items-center justify-start pl-4 text-2xl lg:text-4xl font-bold"
                         style={{ color: 'var(--primary-color)' }}
                     >
-                        {playerB.name}
+                        {playerB}
                     </h4>
                 </div>
             </div>

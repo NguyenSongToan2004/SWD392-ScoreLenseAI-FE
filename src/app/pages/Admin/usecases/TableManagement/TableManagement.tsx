@@ -65,12 +65,13 @@ const TableManagement = () => {
                 break;
             case 'delete':
                 if (window.confirm(`Are you sure you want to delete table ${table.name}?`)) {
-
+                    
                     const deleteTable = async () => {
+                        setIsLoad(false);
                         const response = await deleteTablesAPI(table.billardTableID as string);
                         if (response.status === 200) {
                             setIsLoad(true);
-                            toast.success(response.message);
+                            toast.success(response.message);                            
                         } else {
                             toast.error(response.message);
                         }
@@ -93,7 +94,7 @@ const TableManagement = () => {
     }
 
     return (
-        <div className="p-4 sm:p-6 md:p-8 max-h-screen overflow-y-auto bg-white rounded-2xl">
+        <div className="p-4 sm:p-6 md:p-8 max-h-full bg-white rounded-2xl">
             <div>
                 <h2 className="text-3xl font-bold mb-6 text-gray-800 inline-block mr-10">Billiard Table Management</h2>
                 <button onClick={hanldeCreateNav} className="border rounded-xl px-2 py-2 border-green text-green-800 cursor-pointer hover:bg-green-800 hover:text-white mb-2">

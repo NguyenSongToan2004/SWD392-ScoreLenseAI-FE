@@ -2,7 +2,7 @@ import axios from "../../../../settings/AxiosClient";
 import type ResponseAPI from "../../../models/ResponseAPI";
 
 export const fetchHistoryMatchAPI = async (userID: string): Promise<ResponseAPI> => {
-    const response = await axios.get(`/v1/billiardmatches/bycustomer/${userID}`);
+    const response = await axios.get(`/v1/billiard-matches/bycustomer/${userID}`);
 
     const result: ResponseAPI = {
         status: response.status,

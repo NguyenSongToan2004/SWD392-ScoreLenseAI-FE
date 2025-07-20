@@ -79,7 +79,7 @@ const PermissionManagement = () => {
     };
 
     return (
-        <div className="p-4 sm:p-6 md:p-8 h-full bg-white rounded-2xl">
+        <div className="p-4 sm:p-6 md:p-8 max-h-full bg-white rounded-2xl">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-3xl font-bold text-gray-800">Permission Management</h2>
             </div>
@@ -102,17 +102,17 @@ const PermissionManagement = () => {
                 </div>
             </div>
 
-            <div className="shadow-md rounded-lg overflow-hidden">
+            <div className="shadow-md rounded-lg h-full">
                 {filteredPermissions.length > 0 ? (
                     <div className="overflow-x-auto">
                         <table className="w-full text-base text-left text-gray-700">
-                            <thead className="text-2xl text-gray-800 uppercase bg-gray-100">
+                            <thead className="text-2xl text-gray-800 uppercase bg-gray-100 sticky top-0">
                                 <tr>
                                     <th scope="col" className="px-6 py-3">Name</th>
                                     <th scope="col" className="px-6 py-3">Description</th>
                                     <th scope="col" className="px-6 py-3">Action</th>
                                 </tr>
-                            </thead>
+                            </thead>    
                             <tbody className="max-h-96 overflow-y-auto">
                                 {filteredPermissions.map((permission) => (
                                     <tr key={permission.name} className="bg-white border-b hover:bg-gray-50 text-xl">

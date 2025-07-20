@@ -136,7 +136,9 @@ export default function Match() {
             <section className="flex-initial">
                 <Header
                     setArray={match.sets}
-                    tableID={`TABLE: ${match.billiardMatchID}`} // Truyền tên bàn
+                    tableID={`TABLE: ${match.billiardMatchID}`}
+                    matchID={match.billiardMatchID}
+                    teamID={match.teams[0]?.teamID}
                 />
             </section>
 
