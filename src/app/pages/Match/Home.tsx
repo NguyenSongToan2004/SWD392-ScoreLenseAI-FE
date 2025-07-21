@@ -24,6 +24,11 @@ const ErrorComponent = ({ message }: { message: string }) => (
     </div>
 );
 
+interface MatchSocketPayload {
+    code: "WINNING_MATCH" | "WINNING_SET",
+    data: string;
+}
+
 export default function Match() {
     const location = useLocation();
     const { id } = useParams<{ id: string }>();
@@ -34,11 +39,25 @@ export default function Match() {
     const [error, setError] = useState<string | null>(null);
     const { client, isConnected } = useStomp();
 
-    const handleMatchUpdate = useCallback((updatedMatch: BilliardMatch) => {
-        console.log('Received match update:', updatedMatch);
-        setMatch(updatedMatch);
+    const handleMatchUpdate = useCallback((payload: MatchSocketPayload) => {
+        console.log('Received match update:', payload);
+        if (payload.code === "WINNING_SET") {
+            const reFetchMatch = async () => {
+                setIsLoading(true);
+                const response = await fetchMatchAPI(id as string);
+                if (response.status === 200) {
+                    setMatch(response.data);
+                } else {
+                    setError(response.message || 'Failed to fetch match details.');
+                }
+                setIsLoading(false);
+            }
+            reFetchMatch();
+        } else {
+            setShowPopup(true);
+        }
     }, []);
-    
+
     const handleManualMode = async () => {
         if (match != null) {
             const response = await setManualAPI(match.billiardMatchID);
@@ -76,8 +95,13 @@ export default function Match() {
         }
     }, []);
 
-    useSubscription(client, isConnected, `/topic/match/${id}`, handleMatchUpdate);
-    useSubscription(client, isConnected, `/topic/log/${id}`, handleNewLog);
+    useSubscription(
+        client, 
+        isConnected && match !== null, 
+        `/topic/match_event/${match?.billiardTableID}`, 
+        handleMatchUpdate
+    );
+    // useSubscription(client, isConnected, `/topic/log/${id}`, handleNewLog);
     useSubscription(client, isConnected, `/topic/notification`, handleNewLog);
 
     const handleScoreUpdate = (teamID: number, delta: string) => {
