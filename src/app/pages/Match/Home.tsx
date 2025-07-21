@@ -140,15 +140,13 @@ export default function Match() {
             }
             setIsLoading(false);
         };
-        getMatch();
-    }, [id, match]);
 
-    useEffect(() => {
+        getMatch();
         if (match?.status === 'completed') {
             setShowPopup(true);
         }
-    }, [match]);
-
+    }, [id, match]);
+    
     if (isLoading) return <LoadingComponent />;
     if (error) return <ErrorComponent message={error} />;
     if (!match) return <ErrorComponent message="Could not find match data." />;
