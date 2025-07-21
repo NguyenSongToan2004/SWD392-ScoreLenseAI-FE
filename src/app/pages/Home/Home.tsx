@@ -11,6 +11,7 @@ import { fetchTableAPI } from "./services/FetchAPI";
 import { setDefaultMatchSetUp } from "./services/Function";
 import HomeSkeleton from "./partials/HomeSkeleton"; // <-- 1. Import HomeSkeleton
 import type { BilliardTable } from "../../models/DataObject";
+import { toast } from "sonner";
 
 export default function Home() {
     const isOpacity = isOpacityStore.use();
@@ -41,10 +42,10 @@ export default function Home() {
                 });
                 setTable(response.data);
             } else {
-                window.alert('Có lỗi ' + response.message);
+                toast.error(response.message);
             }
 
-            setIsLoading(false); // <-- 3. Tắt loading sau khi API hoàn tất
+            setIsLoading(false); 
         }
 
         if (!id) {
@@ -54,7 +55,6 @@ export default function Home() {
         getTable();
     }, []);
 
-    // <-- 4. Render skeleton khi isLoading là true
     if (isLoading) {
         return <HomeSkeleton />;
     }

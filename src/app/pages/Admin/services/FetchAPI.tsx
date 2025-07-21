@@ -11,7 +11,7 @@ export const fetchStatisticAPI = async (params?: {
     sortDirection?: string;
 }): Promise<ResponseAPI> => {
     const queryParams = new URLSearchParams();
-    
+
     if (params?.queryType) queryParams.append('queryType', params.queryType);
     if (params?.storeId) queryParams.append('storeId', params.storeId);
     if (params?.page !== undefined) queryParams.append('page', params.page.toString());
@@ -40,7 +40,7 @@ export const fetchTablesAPI = async (storeID: string): Promise<ResponseAPI> => {
         message: response.data.message,
         data: response.data.data
     }
-
+    
     return result;
 }
 

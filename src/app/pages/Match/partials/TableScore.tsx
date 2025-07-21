@@ -5,8 +5,6 @@ interface TableScoreProps {
     onScoreChange: (teamID: number, delta: string) => void;
 }
 
-
-
 const TableScore = ({ teamsArray, onScoreChange }: TableScoreProps) => {
 
     const teamA = teamsArray?.[0];

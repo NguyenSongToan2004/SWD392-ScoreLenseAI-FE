@@ -309,7 +309,7 @@ export default function MainRoutes() {
 
                     <Route element={<PrivateRoute />}>
                         <Route path="/" element={<Home />}>
-                            <Route path=":id" element={<Model />} />
+                            <Route index path=":id" element={<Model />} />
                             <Route path="team" element={<Team />}>
                                 <Route path="list" element={<TeamList />} />
                             </Route>

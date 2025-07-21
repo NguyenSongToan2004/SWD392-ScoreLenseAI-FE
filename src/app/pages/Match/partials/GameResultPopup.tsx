@@ -25,11 +25,9 @@ const GameResultPopup: React.FC<GameResultPopupProps> = ({ winner, playerArray }
     // Logic này sẽ chỉ chạy lại khi `playerArray` thay đổi.
     const playerOptions = useMemo(() => {
         if (!playerArray) return [];
-        // Làm phẳng mảng các đội thành một mảng người chơi duy nhất
         return playerArray.flatMap(team =>
             team.players.map(player => ({
                 value: player.playerID,
-                // Tạo label dễ hiểu: "Tên người chơi (Tên đội)"
                 label: `${player.name} (${team.name})`
             }))
         );
@@ -37,19 +35,14 @@ const GameResultPopup: React.FC<GameResultPopupProps> = ({ winner, playerArray }
 
     // Hàm chuyển sang bước chọn người chơi
     const handleShowPlayerSelect = () => {
-        // Nếu có người chơi trong danh sách, chọn người đầu tiên làm mặc định
         if (playerOptions.length > 0) {
             setSelectedPlayerId(playerOptions[0].value);
             setStep('selectPlayer');
         } else {
             console.warn("Không có người chơi nào để lựa chọn.");
-            // Có thể hiển thị thông báo lỗi hoặc xử lý khác ở đây
         }
     };
 
-
-
-    // Hàm lưu kết quả và điều hướng
     const handleSaveResult = () => {
         if (selectedPlayerId === undefined) {
             toast.warning('Please choose player !')

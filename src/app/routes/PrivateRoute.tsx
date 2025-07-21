@@ -111,8 +111,8 @@ function PrivateRoute() {
     const isAuth = localStorage.getItem('isAuth') === 'true';
 
     if (!isAuth) {
-        toast.info('Vui lòng đăng nhập để tiếp tục!');
-        return <Navigate to="/login" state={{ from: location }} replace />;
+        toast.info('Please login to continue!');
+        return <Navigate to="/login" state={{ from: location.pathname }} replace />;
     }
 
     return <Outlet />;

@@ -25,7 +25,6 @@ const BackLog = ({ tableID }: BackLogProps) => {
     const { client, isConnected } = useStomp();
 
     const handleNewShotEvent = useCallback((payload: ReceivedData) => {
-        console.log(payload);
         setLogEntries(prevEntries => [payload, ...prevEntries]);
     }, []);
 

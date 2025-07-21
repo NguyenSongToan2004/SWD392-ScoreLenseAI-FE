@@ -49,8 +49,8 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
             return response;
         };
 
-        const returnURL = location.state?.from?.pathname;
-
+        const returnURL = location.state?.from;
+        console.log(returnURL);
         toast.promise(loginPromise(), {
             loading: 'Logging in... Please wait!',
             success: (response) => {
