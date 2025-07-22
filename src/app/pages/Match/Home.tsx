@@ -50,7 +50,10 @@ export default function Match() {
                 if (response.data.status === 'completed') {
                     setShowPopup(true);
                 }
-            } else {
+            } else if (response.status === 500) {
+                setError('Player was saved as the other customer.');
+            }
+            else {
                 setError(response.message || 'Failed to fetch match details.');
             }
             setIsLoading(false);
@@ -113,6 +116,9 @@ export default function Match() {
                 const response = await updateScoreAPI(match.billiardMatchID, teamID, delta);
                 if (response.status === 200) {
                     setMatch(response.data);
+                    if (response.data.status === "completed") {
+                        setShowPopup(true);
+                    }
                     toast.success(response.message);
                 }
             } else {
@@ -143,7 +149,7 @@ export default function Match() {
             const response = await fetchMatchAPI(id);
             if (response.status === 200) {
                 setMatch(response.data);
-                if (match && match.status === "completed") {
+                if (response.data && response.data.status === "completed") {
                     setShowPopup(true);
                 }
             } else {

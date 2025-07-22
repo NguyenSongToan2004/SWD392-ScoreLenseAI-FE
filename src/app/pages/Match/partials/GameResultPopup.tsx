@@ -7,6 +7,7 @@ import NSelect from "../../../components/basicUI/NSelect"; // [THAY ĐỔI] Impo
 import type { Team } from "../../../models/DataObject";
 import "../home.css"; // Cập nhật đường dẫn nếu cần
 import { savePlayerAPI } from "../services/FetchAPI";
+import type { SavePlayerRequest } from "../models/PartialModel";
 
 // [THAY ĐỔI] Cập nhật props interface
 interface GameResultPopupProps {
@@ -55,7 +56,12 @@ const GameResultPopup: React.FC<GameResultPopupProps> = ({ winner, playerArray }
         }
 
         const savePlayer = async () => {
-            const response = await savePlayerAPI(selectedPlayerId, info);
+            const form : SavePlayerRequest = {
+                updateType: "saveCustomer",
+                id: selectedPlayerId,
+                info: info
+            }
+            const response = await savePlayerAPI(form);
             if (response.status === 200) {
                 console.log("Player ID đã chọn để lưu:", selectedPlayerId);
                 toast.success(response.message);
