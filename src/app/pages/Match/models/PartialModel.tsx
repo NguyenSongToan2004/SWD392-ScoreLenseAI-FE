@@ -8,3 +8,12 @@ import type { GameSet } from "../../../models/DataObject";
 export interface HeaderProps {
     setArray: GameSet[];
 }
+
+
+
+export interface SavePlayerRequest {
+  updateType: "saveCustomer",
+  id: number,
+  info : string
+}
+

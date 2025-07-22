@@ -1,5 +1,6 @@
 import axios from "../../../../settings/AxiosClient"
 import type ResponseAPI from "../../../models/ResponseAPI"
+import type { SavePlayerRequest } from "../models/PartialModel";
 
 export const fetchMatchAPI = async (id: string): Promise<ResponseAPI> => {
     const response: ResponseAPI = await axios.get(`/v1/billiard-matches/${Number(id)}`);
@@ -52,17 +53,9 @@ export const cancelMatchAPI = async (matchID: number, forfeitTeamID: number, upd
     return result;
 }
 
-interface SavePlayerRequest {
-  updateType: "saveCustomer",
-  id: string,
-  info : string
-}
-
-export const savePlayerAPI = async (playerID: number, info: string): Promise<ResponseAPI> => {
-    const response: ResponseAPI = await axios.put(`/v1/players/save/${playerID}`,
-        {
-            info
-        }
+export const savePlayerAPI = async (form: SavePlayerRequest): Promise<ResponseAPI> => {
+    const response: ResponseAPI = await axios.put(`/v3/players`,
+        form
     );
 
     const result: ResponseAPI = {
