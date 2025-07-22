@@ -1,6 +1,6 @@
 import axios from "../../../../settings/AxiosClient";
 import type ResponseAPI from "../../../models/ResponseAPI";
-import type { AddPermissionRequest, BilliardTableRequest, EditUserAccountRequest, ModeRequest, PermissionRequest, UserAccountRequest } from "../models/RequestObject";
+import type { AddPermissionRequest, BilliardTableRequest, EditUserAccountRequest, ModeRequest, PermissionRequest, UserAccountRequest, StoreRequest } from "../models/RequestObject";
 
 export const fetchStatisticAPI = async (params?: {
     queryType?: string;
@@ -276,13 +276,73 @@ export const editStaffAPI = async (form: EditUserAccountRequest, staffId: string
     return result;
 }
 
-export const fetchStoreAPI = async (storeID: string): Promise<ResponseAPI> => {
-    const response = await axios.get(`/v1/stores/${storeID}`);
-
+export const fetchStoreAPI = async (): Promise<ResponseAPI> => {
+    const response = await axios.get(`/v1/stores`);
+    
     const result: ResponseAPI = {
-        status: response.status,
+        status: response.data.status,
         message: response.data.message,
-        data: response.data.data
+        data: response.data.data,
+    }
+
+    return result;
+}
+
+export const fetchStoreByIdAPI = async (storeID: string): Promise<ResponseAPI> => {
+    const response = await axios.get(`/v1/stores/${storeID}`);
+    
+    const result: ResponseAPI = {
+        status: response.data.status,
+        message: response.data.message,
+        data: response.data.data,
+    }
+
+    return result;
+}
+
+export const fetchStoreDetailAPI = async (storeID: string): Promise<ResponseAPI> => {
+    const response = await axios.get(`/v1/stores/data/${storeID}`);
+    
+    const result: ResponseAPI = {
+        status: response.data.status,
+        message: response.data.message,
+        data: response.data.data,
+    }
+
+    return result;
+}
+
+export const createStoreAPI = async (storeData: StoreRequest): Promise<ResponseAPI> => {
+    const response = await axios.post(`/v1/stores`, storeData);
+    
+    const result: ResponseAPI = {
+        status: response.data.status,
+        message: response.data.message,
+        data: response.data.data,
+    }
+
+    return result;
+}
+
+export const updateStoreAPI = async (storeID: string, storeData: StoreRequest): Promise<ResponseAPI> => {
+    const response = await axios.put(`/v1/stores/${storeID}`, storeData);
+    
+    const result: ResponseAPI = {
+        status: response.data.status,
+        message: response.data.message,
+        data: response.data.data,
+    }
+
+    return result;
+}
+
+export const updateStoreStatusAPI = async (storeID: string, status: 'activate' | 'closed'): Promise<ResponseAPI> => {
+    const response = await axios.put(`/v1/stores/status/${storeID}?status=${status}`);
+    
+    const result: ResponseAPI = {
+        status: response.data.status,
+        message: response.data.message,
+        data: response.data.data,
     }
 
     return result;

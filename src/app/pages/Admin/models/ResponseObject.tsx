@@ -52,3 +52,35 @@ export interface BilliardStats {
   brokenTables: number;
   customers: Customer[];
 }
+
+export interface Store {
+    storeID: string;
+    name: string;
+    address: string;
+    status: "activate" | "closed";
+    description: string;
+    billiardTables: BilliardTable[];
+}
+
+export interface BilliardTable {
+    billardTableID: string;
+    tableCode: string;
+    tableType: string;
+    name: string;
+    description: string;
+    status: string;
+    qrCode: string;
+    cameraUrl: string;
+    active: boolean;
+}
+
+export interface StoreDetail {
+    totalTables: number;
+    currentlyPlaying: number;
+    availableTables: number;
+    brokenTables: number;
+    customers: {
+        customerName: string;
+        matchCount: number;
+    }[];
+}

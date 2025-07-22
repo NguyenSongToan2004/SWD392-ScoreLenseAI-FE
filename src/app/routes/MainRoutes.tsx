@@ -295,6 +295,12 @@ const RoleCreate = React.lazy(() => import("../pages/Admin/usecases/Role/RoleCre
 const RoleView = React.lazy(() => import("../pages/Admin/usecases/Role/RoleView"));
 const PermissionAdd = React.lazy(() => import("../pages/Admin/usecases/Role/PermissionAdd"));
 
+// Lazy load Store Management components
+const StoreHome = React.lazy(() => import("../pages/Admin/StoreManagement/StoreHome"));
+const StoreManagement = React.lazy(() => import("../pages/Admin/StoreManagement/StoreManagement"));
+const StoreView = React.lazy(() => import("../pages/Admin/StoreManagement/StoreView"));
+const StoreEdit = React.lazy(() => import("../pages/Admin/StoreManagement/StoreEdit"));
+const StoreCreate = React.lazy(() => import("../pages/Admin/StoreManagement/StoreCreate"));
 
 export default function MainRoutes() {
     return (
@@ -362,6 +368,13 @@ export default function MainRoutes() {
                                         <Route path="create" element={<RoleCreate />} />
                                         <Route path="detail/:name" element={<RoleView />} />
                                         <Route path="edit/:name" element={<PermissionAdd />} />
+                                    </Route>
+
+                                    <Route path="store-management" element={<StoreHome />}>
+                                        <Route index element={<StoreManagement />} />
+                                        <Route path="detail/:id" element={<StoreView />} />
+                                        <Route path="edit/:id" element={<StoreEdit />} />
+                                        <Route path="create" element={<StoreCreate />} />
                                     </Route>
                                 </Route>
                             </Route>

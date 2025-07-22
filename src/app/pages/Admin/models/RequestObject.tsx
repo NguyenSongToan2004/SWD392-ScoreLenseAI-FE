@@ -49,3 +49,42 @@ export interface AddPermissionRequest {
   description: string;
   permissions: string[]
 }
+
+export interface StoreRequest {
+  name: string;
+  address: string;
+  status: 'activate' | 'closed';
+  description: string;
+}
+
+export interface BilliardTable {
+  billardTableID: string;
+  tableCode: string;
+  tableType: string;
+  name: string;
+  description: string;
+  status: 'available' | 'inUse' | 'underMaintainance';
+  qrCode: string;
+  cameraUrl: string;
+  active: boolean;
+}
+
+export interface Store {
+  storeID: string;
+  name: string;
+  address: string;
+  status: 'activate' | 'closed';
+  description: string;
+  billiardTables: BilliardTable[];
+}
+
+export interface StoreDetailData {
+  totalTables: number;
+  currentlyPlaying: number;
+  availableTables: number;
+  brokenTables: number;
+  customers: {
+    customerName: string;
+    matchCount: number;
+  }[];
+}

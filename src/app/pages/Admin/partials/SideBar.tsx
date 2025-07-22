@@ -77,12 +77,22 @@ const SideBar = () => {
                             <ul className="pl-4 mt-2">
                                 <li className="mb-2 border-l-1">
                                     <NavLink
+                                        to="/admin/store-management"
+                                        state={{ userInfo: loc.state?.userInfo }}
+                                        className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                                    >
+                                        <img src={infoIcon} alt="Store Management Icon" className="mr-3 w-6 h-6" />
+                                        Store
+                                    </NavLink>
+                                </li>
+                                <li className="mb-2 border-l-1">
+                                    <NavLink
                                         to="/admin/table-management"
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
                                     >
                                         <img src={infoIcon} alt="Table Management Icon" className="mr-3 w-6 h-6" />
-                                        TABLE
+                                        Table
                                     </NavLink>
                                 </li>
                                 <li className="mb-2 border-l-1">
