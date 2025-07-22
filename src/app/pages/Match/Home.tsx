@@ -41,22 +41,25 @@ export default function Match() {
 
     const handleMatchUpdate = useCallback((payload: MatchSocketPayload) => {
         console.log('Received match update:', payload);
-        if (payload.code === "WINNING_SET") {
-            const reFetchMatch = async () => {
-                setIsLoading(true);
-                const response = await fetchMatchAPI(id as string);
-                if (response.status === 200) {
-                    setMatch(response.data);
-                } else {
-                    setError(response.message || 'Failed to fetch match details.');
+        const reFetchMatch = async () => {
+            setIsLoading(true);
+            const response = await fetchMatchAPI(id as string);
+            if (response.status === 200) {
+                setMatch(response.data);
+                // Check nếu match completed thì show popup
+                if (response.data.status === 'completed') {
+                    setShowPopup(true);
                 }
-                setIsLoading(false);
+            } else {
+                setError(response.message || 'Failed to fetch match details.');
             }
-            reFetchMatch();
-        } else {
+            setIsLoading(false);
+        }
+        reFetchMatch();
+        if (payload.code === "WINNING_MATCH") {
             setShowPopup(true);
         }
-    }, []);
+    }, [id]);
 
     const handleManualMode = async () => {
         if (match != null) {
@@ -122,8 +125,13 @@ export default function Match() {
     useEffect(() => {
         if (match && match.billiardMatchID.toString() === id) {
             setIsLoading(false);
+            // Chỉ check completed status khi match đã load xong
+            if (match.status === 'completed') {
+                setShowPopup(true);
+            }
             return;
         }
+
         const getMatch = async () => {
             if (!id) {
                 setError("Match ID is missing from URL.");
@@ -135,6 +143,9 @@ export default function Match() {
             const response = await fetchMatchAPI(id);
             if (response.status === 200) {
                 setMatch(response.data);
+                if (match && match.status === "completed") {
+                    setShowPopup(true);
+                }
             } else {
                 setError(response.message || 'Failed to fetch match details.');
             }
@@ -142,18 +153,11 @@ export default function Match() {
         };
 
         getMatch();
-        if (match?.status === 'completed') {
-            setShowPopup(true);
-        }
-    }, [id, match]);
+    }, [id]);
 
     if (isLoading) return <LoadingComponent />;
     if (error) return <ErrorComponent message={error} />;
     if (!match) return <ErrorComponent message="Could not find match data." />;
-
-    if (match && match.status === "completed") {
-        setShowPopup(true);
-    }
 
     return (
         // THAY ĐỔI: Điều chỉnh padding cho mobile
