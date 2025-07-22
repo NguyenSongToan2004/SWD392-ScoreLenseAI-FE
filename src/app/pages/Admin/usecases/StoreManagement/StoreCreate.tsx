@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { getNavigationState, navigateWithState } from '../../../../Utils/navigationUtils';
+import { getNavigationState } from '../../../../Utils/navigationUtils';
+import type { StoreRequest } from '../../models/RequestObject';
 import { createStoreAPI } from '../../services/FetchAPI';
 
 const StoreCreate = () => {
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<StoreRequest>({
         name: '',
         address: '',
         status: 'activate',
@@ -25,7 +26,7 @@ const StoreCreate = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         if (!form.name.trim() || !form.address.trim()) {
             toast.error('Please fill in all required fields');
             return;
@@ -34,11 +35,15 @@ const StoreCreate = () => {
         try {
             setLoading(true);
             const response = await createStoreAPI(form);
-            
+
             if (response.status === 200) {
                 toast.success(response.message || 'Store created successfully');
-                const state = getNavigationState(loc);
-                navigateWithState(nav, '/admin/store-management', state);
+                nav('/admin/store-management', {
+                    state: {
+                        userInfo: getNavigationState(loc, 'userInfo'),
+                        store: getNavigationState(loc, 'store')
+                    }
+                });
             } else {
                 toast.error(response.message || 'Failed to create store');
             }
@@ -50,8 +55,12 @@ const StoreCreate = () => {
     };
 
     const handleGoBack = () => {
-        const state = getNavigationState(loc);
-        navigateWithState(nav, '/admin/store-management', state);
+        nav('/admin/store-management', {
+            state: {
+                userInfo: getNavigationState(loc, 'userInfo'),
+                store: getNavigationState(loc, 'store')
+            }
+        });
     };
 
     return (

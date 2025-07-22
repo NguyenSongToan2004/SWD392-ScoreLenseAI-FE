@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
-import { getNavigationState, navigateWithState } from '../../../../Utils/navigationUtils';
+import { getNavigationState } from '../../../../Utils/navigationUtils';
+import type { StoreRequest } from '../../models/RequestObject';
 import type { Store } from '../../models/ResponseObject';
 import { fetchStoreByIdAPI, updateStoreAPI } from '../../services/FetchAPI';
 
 const StoreEdit = () => {
     const { id } = useParams<{ id: string }>();
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<StoreRequest>({
         name: '',
         address: '',
         status: 'activate',
@@ -64,7 +65,7 @@ const StoreEdit = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         if (!form.name.trim() || !form.address.trim()) {
             toast.error('Please fill in all required fields');
             return;
@@ -78,11 +79,16 @@ const StoreEdit = () => {
         try {
             setLoading(true);
             const response = await updateStoreAPI(id, form);
-            
+
             if (response.status === 200) {
                 toast.success(response.message || 'Store updated successfully');
-                const state = getNavigationState(loc);
-                navigateWithState(nav, '/admin/store-management', state);
+                // const state = getNavigationState(loc);
+                nav('/admin/store-management', {
+                    state: {
+                        userInfo: getNavigationState(loc, 'userInfo'),
+                        store: getNavigationState(loc, 'store')
+                    }
+                });
             } else {
                 toast.error(response.message || 'Failed to update store');
             }
@@ -94,8 +100,13 @@ const StoreEdit = () => {
     };
 
     const handleGoBack = () => {
-        const state = getNavigationState(loc);
-        navigateWithState(nav, '/admin/store-management', state);
+        // const state = getNavigationState(loc);
+        nav('/admin/store-management', {
+            state: {
+                userInfo: getNavigationState(loc, 'userInfo'),
+                store: getNavigationState(loc, 'store')
+            }
+        });
     };
 
     if (initialLoading) {

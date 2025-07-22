@@ -1,7 +1,7 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { getNavigationState, navigateWithState } from "../../../../Utils/navigationUtils";
+import { getNavigationState } from "../../../../Utils/navigationUtils";
 import type { Store } from "../../models/ResponseObject";
 import { fetchStoreAPI, updateStoreStatusAPI } from "../../services/FetchAPI";
 
@@ -48,7 +48,7 @@ const StoreManagement = () => {
     // Filter and paginate stores
     useEffect(() => {
         let filtered = storeList;
-        
+
         if (searchTerm.trim() !== '') {
             filtered = filtered.filter(store =>
                 store.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -99,13 +99,23 @@ const StoreManagement = () => {
     }, []);
 
     const handleAction = (action: string, store: Store) => {
-        const state = getNavigationState(loc);
+        // const state = getNavigationState(loc);
         switch (action) {
             case "detail":
-                navigateWithState(nav, `/admin/store/detail/${store.storeID}`, state);
+                nav(`/admin/store/detail/${store.storeID}`, {
+                    state: {
+                        userInfo: getNavigationState(loc, 'userInfo'),
+                        store: getNavigationState(loc, 'store')
+                    }
+                });
                 break;
             case "edit":
-                navigateWithState(nav, `/admin/store/edit/${store.storeID}`, state);
+                nav(`/admin/store/edit/${store.storeID}`, {
+                    state: {
+                        userInfo: getNavigationState(loc, 'userInfo'),
+                        store: getNavigationState(loc, 'store')
+                    }
+                });
                 break;
             case "toggleStatus":
                 handleToggleStatus(store);
@@ -140,8 +150,13 @@ const StoreManagement = () => {
                 <h2 className="text-3xl font-bold text-gray-800">Store Management</h2>
                 <button
                     onClick={() => {
-                        const state = getNavigationState(loc);
-                        navigateWithState(nav, '/admin/store/create', state);
+                        // const state = getNavigationState(loc);
+                        nav('/admin/store/create', {
+                            state: {
+                                userInfo: getNavigationState(loc, 'userInfo'),
+                                store: getNavigationState(loc, 'store')
+                            }
+                        });
                     }}
                     className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
                 >
@@ -224,11 +239,10 @@ const StoreManagement = () => {
                                         <td className="px-6 py-4 font-medium">{store.name}</td>
                                         <td className="px-6 py-4">{store.address}</td>
                                         <td className="px-6 py-4">
-                                            <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                                                store.status === 'activate' 
-                                                    ? 'bg-green-100 text-green-800' 
-                                                    : 'bg-red-100 text-red-800'
-                                            }`}>
+                                            <span className={`px-3 py-1 rounded-full text-sm font-medium ${store.status === 'activate'
+                                                ? 'bg-green-100 text-green-800'
+                                                : 'bg-red-100 text-red-800'
+                                                }`}>
                                                 {store.status === 'activate' ? 'Active' : 'Closed'}
                                             </span>
                                         </td>
@@ -259,11 +273,10 @@ const StoreManagement = () => {
                                                 </button>
                                                 <button
                                                     title={store.status === 'activate' ? 'Close Store' : 'Activate Store'}
-                                                    className={`focus:outline-none cursor-pointer ${
-                                                        store.status === 'activate' 
-                                                            ? 'text-red-500 hover:text-red-800' 
-                                                            : 'text-green-500 hover:text-green-800'
-                                                    }`}
+                                                    className={`focus:outline-none cursor-pointer ${store.status === 'activate'
+                                                        ? 'text-red-500 hover:text-red-800'
+                                                        : 'text-green-500 hover:text-green-800'
+                                                        }`}
                                                     onClick={() => handleAction("toggleStatus", store)}
                                                 >
                                                     {store.status === 'activate' ? (

@@ -25,7 +25,7 @@ const InputStore = () => {
                 
                 if (storeID) {
                     try {
-                        const response = await fetchStoreAPI(storeID);
+                        const response = await fetchStoreAPI();
                         if (response.status === 200) {
                             setStore(response.data);
                         } else {

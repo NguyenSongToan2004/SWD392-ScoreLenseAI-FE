@@ -20,9 +20,9 @@ const SideBar = () => {
     const activeNavLinkClasses = "bg-slate-900 text-white";
 
     return (
-        <aside className="w-64 bg-slate-800 p-4 font-semibold">
-            <nav>
-                <ul>
+        <aside className="w-64 bg-slate-800 p-4 font-semibold h-full">
+            <nav className="h-full">
+                <ul className="h-full">
                     <li className="mb-2 text-white">
                         <NavLink
                             to="/admin/dashboard"
@@ -44,18 +44,7 @@ const SideBar = () => {
                         </NavLink>
                     </li>
 
-                    {/* <li className="mb-2 text-white">
-                        <NavLink
-                            to="/admin/table-management"
-                            state={{ userInfo: loc.state?.userInfo }}
-                            className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
-                        >
-                            <img src={infoIcon} alt="Table Management Icon" className="mr-3" />
-                            TABLE MANAGEMENT
-                        </NavLink>
-                    </li> */}
-
-                    <li className="mb-2 text-white">
+                    <li className="mb-2 text-white h-full">
                         {/* Nút để bật/tắt dropdown */}
                         <button
                             type="button"
@@ -80,7 +69,7 @@ const SideBar = () => {
 
                         {/* Nội dung dropdown, chỉ hiển thị khi isOpen là true */}
                         {isOpen && (
-                            <ul className="pl-4 mt-2">
+                            <ul className="pl-4 mt-2 max-h-90 overflow-y-auto scrollbar-hide">
                                 <li className="mb-2 border-l-1">
                                     <NavLink
                                         to="/admin/store-management"

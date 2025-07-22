@@ -3,9 +3,9 @@ import { calculateDuration } from '../../../Utils/formatters'; // Import hàm t�
 
 // 1. Định nghĩa các props mà component này cần
 interface DurationProps {
-  status: 'pending' | 'ongoing' | 'completed' | 'cancelled';
-  startTime: string;
-  endTime?: string | null; // endTime là tùy chọn
+    status: 'pending' | 'ongoing' | 'completed' | 'cancelled';
+    startTime: string;
+    endTime?: string | null; // endTime là tùy chọn
 }
 
 const Duration: React.FC<DurationProps> = ({ status, startTime, endTime }) => {
