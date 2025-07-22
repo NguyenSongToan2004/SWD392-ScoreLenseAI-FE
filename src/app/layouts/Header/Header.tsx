@@ -426,7 +426,7 @@ const Header = () => {
     };
 
     // Handle user logout
-    const logout = async () => {
+    const logout = () => {
         // Clear authentication data from localStorage
         localStorage.removeItem('isAuth');
         localStorage.removeItem('userID');
@@ -434,19 +434,25 @@ const Header = () => {
         localStorage.removeItem('role');
         localStorage.removeItem('customerName');
 
-        try {
+        const logoutPromise = async () => {
             const response = await logoutAPI();
-            if (response.status === 200) {
-                toast.success(response.message || "Logged out successfully!");
-            } else {
-                toast.error(response.message || "An error occurred during logout.");
+            if (response.status !== 200) {
+                throw new Error(response.message || "An error occurred during logout.");
             }
-        } catch (error) {
-            toast.error("Could not connect to the server to log out.");
-        } finally {
-            // Always navigate to login page after handling logout
-            nav("/login");
-        }
+            return response;
+        };
+
+        toast.promise(logoutPromise(), {
+            loading: 'Logging out, please wait...',
+            success: (response) => {
+                nav("/login");
+                return response.message || "Logged out successfully!";
+            },
+            error: (error) => {
+                nav("/login");
+                return error.message || "Could not connect to the server to log out.";
+            },
+        });
     };
 
     return (
@@ -521,8 +527,9 @@ const Header = () => {
                             {/* === KHU VỰC AVATAR ĐÃ ĐƯỢC THAY THẾ === */}
                             <div className="flex flex-col items-center p-6 border-b border-gray-200 bg-gray-50">
                                 <AvatarUploader
-                                    customerId={userInfo?.customerID}
+                                    userId={userInfo?.customerID || userInfo?.staffID}
                                     initialAvatarUrl={userInfo?.imageUrl || userCircleIcon}
+                                    role={userInfo?.customerID ? "CUSTOMER" : "STAFF"}
                                     onUploadSuccess={handleAvatarUpdate}
                                 />
                                 <h3 className="text-xl font-bold text-gray-900 mt-4">{userInfo?.name || 'User Name'}</h3>

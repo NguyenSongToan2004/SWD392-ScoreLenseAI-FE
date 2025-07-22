@@ -25,14 +25,20 @@ export const fetchStaffInfoAPI = async (): Promise<ResponseAPI> => {
     return result;
 }
 
-export const uploadAvatarAPI = async (customerId: string, file: File): Promise<ResponseAPI> => {
+export const uploadAvatarAPI = async (userId: string, file: File, role: "CUSTOMER" | "STAFF"): Promise<ResponseAPI> => {
     // FormData is the standard way to send files via HTTP.
     const formData = new FormData();
     // The key 'image' must match what the API expects.
     formData.append('image', file);
+    let requestURL = ""
+    if (role === "STAFF") {
+        requestURL = `/v1/users/staff/${userId}/image`
+    } else {
+        requestURL = `/v1/users/customers/${userId}/image`
+    }
 
-    const response = await axios.post(
-        `/v1/users/customers/${customerId}/image`,
+    const response = await axios.put(
+        `${requestURL}`,
         formData,
         {
             headers: {

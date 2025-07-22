@@ -5,11 +5,12 @@ import { uploadAvatarAPI } from '../services/FetchAPI'; // <-- Cập nhật đư
 
 interface AvatarUploaderProps {
     initialAvatarUrl: string;
-    customerId: string | undefined;
+    userId: string | undefined;
+    role: "CUSTOMER" | "STAFF";
     onUploadSuccess: (newImageUrl: string) => void;
 }
 
-const AvatarUploader: React.FC<AvatarUploaderProps> = ({ initialAvatarUrl, customerId, onUploadSuccess }) => {
+const AvatarUploader: React.FC<AvatarUploaderProps> = ({ initialAvatarUrl, userId, role, onUploadSuccess }) => {
     const [isLoading, setIsLoading] = useState(false);
     // State nội bộ để quản lý URL avatar, được khởi tạo từ prop
     const [avatarUrl, setAvatarUrl] = useState<string>(initialAvatarUrl);
@@ -34,7 +35,7 @@ const AvatarUploader: React.FC<AvatarUploaderProps> = ({ initialAvatarUrl, custo
     };
 
     const handleUpload = async (file: File) => {
-        if (!customerId) {
+        if (!userId) {
             toast.error("Cannot upload: Customer ID is missing.");
             return;
         }
@@ -42,7 +43,8 @@ const AvatarUploader: React.FC<AvatarUploaderProps> = ({ initialAvatarUrl, custo
         setIsLoading(true);
 
         try {
-            const result = await uploadAvatarAPI(customerId, file);
+
+            const result = await uploadAvatarAPI(userId, file, role);
 
             if (result.status === 200 || result.status === 201) {
                 toast.success(result.message || "Avatar updated successfully!");

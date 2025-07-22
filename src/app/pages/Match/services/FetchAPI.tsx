@@ -52,6 +52,11 @@ export const cancelMatchAPI = async (matchID: number, forfeitTeamID: number, upd
     return result;
 }
 
+interface SavePlayerRequest {
+  updateType: "saveCustomer",
+  id: string,
+  info : string
+}
 
 export const savePlayerAPI = async (playerID: number, info: string): Promise<ResponseAPI> => {
     const response: ResponseAPI = await axios.put(`/v1/players/save/${playerID}`,
