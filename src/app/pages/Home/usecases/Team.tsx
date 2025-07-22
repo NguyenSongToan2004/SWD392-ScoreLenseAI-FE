@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import backIcon from "../../../assets/GrBack.svg";
 import nextIcon from "../../../assets/GrNext.svg";
@@ -14,7 +14,47 @@ const Team = () => {
     const nav = useNavigate();
     const [selectedMode, setSelectedMode] = useState<string | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [preloadedComponents, setPreloadedComponents] = useState<Set<string>>(new Set());
     const matchSetUp = matchSetUpStore.use();
+
+    // Preload components khi hover vào mode tabs
+    const preloadModeComponent = useCallback((mode: string) => {
+        if (!preloadedComponents.has(mode)) {
+            setPreloadedComponents(prev => new Set(prev).add(mode));
+            
+            // Dynamic import based on mode
+            switch (mode) {
+                case '1 VS 1':
+                    // Preload components cho chế độ 1vs1
+                    import('../partials/TeamCard');
+                    import('../partials/TeamList');
+                    import('../../Match/Home');
+                    import('../../Match/partials/TableScore');
+                    break;
+                case '2 VS 2':
+                    // Preload components cho chế độ 2vs2
+                    import('../partials/TeamCard');
+                    import('../partials/TeamList');
+                    import('../partials/RoundModal');
+                    import('../../Match/Home');
+                    import('../../Match/partials/TableScore');
+                    import('../../Match/partials/Header');
+                    break;
+                case 'SCOTCH DOUBLE':
+                    // Preload components cho chế độ scotch double
+                    import('../partials/TeamCard');
+                    import('../partials/TeamList');
+                    import('../partials/RoundModal');
+                    import('../../Match/Home');
+                    import('../../Match/partials/TableScore');
+                    import('../../Match/partials/Header');
+                    import('../../Match/partials/GameResultPopup');
+                    break;
+                default:
+                    break;
+            }
+        }
+    }, [preloadedComponents]);
 
     const handleSelectGame = (mode: string) => {
         const resetTeam = () => {
@@ -109,6 +149,7 @@ const Team = () => {
                         <button
                             key={index}
                             onClick={() => handleSelectGame(mode)}
+                            onMouseEnter={() => preloadModeComponent(mode)}
                             className={`text-white py-1 md:py-2 border-1 border-green-200 rounded-md cursor-pointer font-light flex-1
                                  text-sm md:text-2xl lg:text-3xl bg-button
                                  ${matchSetUp.setUp === mode ? 'selected' : ''}
