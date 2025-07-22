@@ -39,19 +39,20 @@ export default function HistoryTable() {
         });
     };
 
-    // useEffect để fetch dữ liệu lịch sử trận đấu khi component được mount
     useEffect(() => {
         const fetchHistoryMatch = async () => {
             setIsLoading(true);
             try {
                 // TODO: Thay thế customerID tĩnh bằng ID của người dùng đang đăng nhập
-                const customerID = "6e0c2c33-5fc7-4fac-a6ae-f31f04b77521";
-                const response = await fetchHistoryMatchAPI(customerID);
-                
-                if (response.status === 200) {
-                    setHistoryMatchs(response.data);
-                } else {
-                    toast.warning(response.message || "Không thể tải lịch sử trận đấu.");
+                const customerID = localStorage.getItem('userID');
+                if (customerID) {
+                    const response = await fetchHistoryMatchAPI(customerID);
+
+                    if (response.status === 200) {
+                        setHistoryMatchs(response.data);
+                    } else {
+                        toast.warning(response.message || "Không thể tải lịch sử trận đấu.");
+                    }
                 }
             } catch (error) {
                 toast.error("Lỗi kết nối máy chủ.");

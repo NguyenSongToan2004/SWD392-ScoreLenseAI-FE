@@ -62,9 +62,9 @@ const ForgetPassword = () => {
       if (apiResponse.status !== 200) {
         toast.error(apiResponse.message);
       }
-      toast.success("Email reset password đã được gửi!");
+      toast.success("Email reset password sent!");
     } catch (error) {
-      toast.error("Có lỗi xảy ra. Vui lòng thử lại!");
+      toast.error("Something errors, please try again !");
       console.log(error);
     } finally {
       setLoading(false);
