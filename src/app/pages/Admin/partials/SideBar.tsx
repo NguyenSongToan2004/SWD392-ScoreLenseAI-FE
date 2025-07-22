@@ -4,6 +4,12 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom"; // 1. Import thêm useLocation
 import infoIcon from "../../../assets/AiOutlineInfoCircle.svg";
 import trophyIcon from "../../../assets/BiTrophy.svg";
+import storeIcon from "../../../assets/storeIcon.png";
+import tableIcon from "../../../assets/TableIcon.svg";
+import editIcon from "../../../assets/BiEditAlt_Green.svg";
+import userIcon from "../../../assets/FaUserCircle.svg";
+import modeIcon from "../../../assets/CurrentPlayIcon.svg";
+import permissionIcon from "../../../assets/BiLogInCircle.svg";
 
 const SideBar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -81,7 +87,7 @@ const SideBar = () => {
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
                                     >
-                                        <img src={infoIcon} alt="Store Management Icon" className="mr-3 w-6 h-6" />
+                                        <img src={storeIcon} alt="Store Management Icon" className="mr-3 w-6 h-6" />
                                         Store
                                     </NavLink>
                                 </li>
@@ -91,7 +97,7 @@ const SideBar = () => {
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
                                     >
-                                        <img src={infoIcon} alt="Table Management Icon" className="mr-3 w-6 h-6" />
+                                        <img src={tableIcon} alt="Table Management Icon" className="mr-3 w-6 h-6" />
                                         Table
                                     </NavLink>
                                 </li>
@@ -101,7 +107,7 @@ const SideBar = () => {
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
                                     >
-                                        <img src={infoIcon} alt="Table Management Icon" className="mr-3 text-whit" />
+                                        <img src={modeIcon} alt="Mode Management Icon" className="mr-3 w-6 h-6" />
                                         Mode
                                     </NavLink>
                                 </li>
@@ -111,7 +117,7 @@ const SideBar = () => {
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
                                     >
-                                        <img src={infoIcon} alt="Table Management Icon" className="mr-3" />
+                                        <img src={userIcon} alt="Staff Management Icon" className="mr-3 w-6 h-6" />
                                         Staff
                                     </NavLink>
                                 </li>
@@ -122,7 +128,7 @@ const SideBar = () => {
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
                                     >
-                                        <img src={infoIcon} alt="Customer Management Icon" className="mr-3" />
+                                        <img src={userIcon} alt="Customer Management Icon" className="mr-3 w-6 h-6" />
                                         Customer
                                     </NavLink>
                                 </li>
@@ -133,7 +139,7 @@ const SideBar = () => {
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
                                     >
-                                        <img src={infoIcon} alt="Table Management Icon" className="mr-3" />
+                                        <img src={permissionIcon} alt="Permission Management Icon" className="mr-3 w-6 h-6" />
                                         Permission
                                     </NavLink>
                                 </li>
@@ -144,7 +150,7 @@ const SideBar = () => {
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
                                     >
-                                        <img src={infoIcon} alt="Table Management Icon" className="mr-3" />
+                                        <img src={editIcon} alt="Role Management Icon" className="mr-3 w-6 h-6" />
                                         Role
                                     </NavLink>
                                 </li>
