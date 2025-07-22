@@ -38,7 +38,7 @@ const GoogleButton = () => {
 
                     return response;
                 };
-                const returnURL = location.state?.from?.pathname;
+                const returnURL = location.state?.from;
 
                 toast.promise(loginPromise(), {
                     loading: 'Đang đăng nhập...',

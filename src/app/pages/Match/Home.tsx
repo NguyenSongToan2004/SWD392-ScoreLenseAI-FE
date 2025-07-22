@@ -96,9 +96,9 @@ export default function Match() {
     }, []);
 
     useSubscription(
-        client, 
-        isConnected && match !== null, 
-        `/topic/match_event/${match?.billiardTableID}`, 
+        client,
+        isConnected && match !== null,
+        `/topic/match_event/${match?.billiardTableID}`,
         handleMatchUpdate
     );
     // useSubscription(client, isConnected, `/topic/log/${id}`, handleNewLog);
@@ -146,10 +146,14 @@ export default function Match() {
             setShowPopup(true);
         }
     }, [id, match]);
-    
+
     if (isLoading) return <LoadingComponent />;
     if (error) return <ErrorComponent message={error} />;
     if (!match) return <ErrorComponent message="Could not find match data." />;
+
+    if (match && match.status === "completed") {
+        setShowPopup(true);
+    }
 
     return (
         // THAY ĐỔI: Điều chỉnh padding cho mobile
