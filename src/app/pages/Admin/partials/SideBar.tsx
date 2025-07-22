@@ -1,6 +1,6 @@
 // src/pages/admin/partials/SideBar.tsx
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { NavLink, useLocation } from "react-router-dom"; // 1. Import thêm useLocation
 import infoIcon from "../../../assets/AiOutlineInfoCircle.svg";
 import trophyIcon from "../../../assets/BiTrophy.svg";
@@ -13,8 +13,70 @@ import permissionIcon from "../../../assets/BiLogInCircle.svg";
 
 const SideBar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [preloadedComponents, setPreloadedComponents] = useState<Set<string>>(new Set());
 
     const loc = useLocation();
+
+    // Preload components khi hover
+    const preloadComponent = useCallback((componentName: string) => {
+        if (!preloadedComponents.has(componentName)) {
+            setPreloadedComponents(prev => new Set(prev).add(componentName));
+            
+            // Dynamic import based on component name
+            switch (componentName) {
+                case 'store':
+                    import('../usecases/StoreManagement/StoreManagement');
+                    import('../usecases/StoreManagement/StoreCreate');
+                    import('../usecases/StoreManagement/StoreEdit');
+                    import('../usecases/StoreManagement/StoreView');
+                    break;
+                case 'table':
+                    // Preload table management components
+                    import('../usecases/TableManagement/TableManagement');
+                    // import('../usecases/TableManagement/TableCreate');
+                    // import('../usecases/TableManagement/TableEdit');
+                    // import('../usecases/TableManagement/TableView');
+                    break;
+                case 'mode':
+                    // Preload mode management components
+                    import('../usecases/Mode/ModeManagement');
+                    import('../usecases/Mode/ModeCreate');
+                    import('../usecases/Mode/ModeEdit');
+                    import('../usecases/Mode/ModeView');
+                    break;
+                case 'staff':
+                    // Preload staff management components
+                    import('../usecases/StaffManagement/StaffManagement');
+                    import('../usecases/StaffManagement/StaffCreate');
+                    import('../usecases/StaffManagement/StaffEdit');
+                    import('../usecases/StaffManagement/StaffView');
+                    break;
+                case 'customer':
+                    // Preload customer management components
+                    import('../usecases/CustomerManagement/CustomerManagement');
+                    // import('../usecases/CustomerManagement/CustomerCreate');
+                    // import('../usecases/CustomerManagement/CustomerEdit');
+                    import('../usecases/CustomerManagement/CustomerView');
+                    break;
+                case 'permission':
+                    // Preload permission management components
+                    import('../usecases/PermissionManagement/PermissionManagement');
+                    import('../usecases/PermissionManagement/PermissionCreate');
+                    // import('../usecases/PermissionManagement/PermissionEdit');
+                    import('../usecases/PermissionManagement/PermissionView');
+                    break;
+                case 'role':
+                    // Preload role management components
+                    import('../usecases/Role/RoleManagement');
+                    import('../usecases/Role/RoleCreate');
+                    // import('../usecases/Role/RoleEdit');
+                    import('../usecases/Role/RoleView');
+                    break;
+                default:
+                    break;
+            }
+        }
+    }, [preloadedComponents]);
 
     const navLinkClasses = "flex items-center px-4 py-3 text-gray-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors duration-200";
     const activeNavLinkClasses = "bg-slate-900 text-white";
@@ -75,6 +137,7 @@ const SideBar = () => {
                                         to="/admin/store-management"
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                                        onMouseEnter={() => preloadComponent('store')}
                                     >
                                         <img src={storeIcon} alt="Store Management Icon" className="mr-3 w-6 h-6" />
                                         Store
@@ -85,6 +148,7 @@ const SideBar = () => {
                                         to="/admin/table-management"
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                                        onMouseEnter={() => preloadComponent('table')}
                                     >
                                         <img src={tableIcon} alt="Table Management Icon" className="mr-3 w-6 h-6" />
                                         Table
@@ -95,6 +159,7 @@ const SideBar = () => {
                                         to="/admin/mode-management"
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                                        onMouseEnter={() => preloadComponent('mode')}
                                     >
                                         <img src={modeIcon} alt="Mode Management Icon" className="mr-3 w-6 h-6" />
                                         Mode
@@ -105,6 +170,7 @@ const SideBar = () => {
                                         to="/admin/staff-management"
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                                        onMouseEnter={() => preloadComponent('staff')}
                                     >
                                         <img src={userIcon} alt="Staff Management Icon" className="mr-3 w-6 h-6" />
                                         Staff
@@ -116,6 +182,7 @@ const SideBar = () => {
                                         to="/admin/customer-management"
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                                        onMouseEnter={() => preloadComponent('customer')}
                                     >
                                         <img src={userIcon} alt="Customer Management Icon" className="mr-3 w-6 h-6" />
                                         Customer
@@ -127,6 +194,7 @@ const SideBar = () => {
                                         to="/admin/permission-management"
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                                        onMouseEnter={() => preloadComponent('permission')}
                                     >
                                         <img src={permissionIcon} alt="Permission Management Icon" className="mr-3 w-6 h-6" />
                                         Permission
@@ -138,6 +206,7 @@ const SideBar = () => {
                                         to="/admin/role-management"
                                         state={{ userInfo: loc.state?.userInfo }}
                                         className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : ''}`}
+                                        onMouseEnter={() => preloadComponent('role')}
                                     >
                                         <img src={editIcon} alt="Role Management Icon" className="mr-3 w-6 h-6" />
                                         Role
