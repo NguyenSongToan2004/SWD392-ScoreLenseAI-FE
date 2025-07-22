@@ -40,7 +40,7 @@ const GameResultPopup: React.FC<GameResultPopupProps> = ({ winner, playerArray }
             setSelectedPlayerId(playerOptions[0].value);
             setStep('selectPlayer');
         } else {
-            console.warn("Không có người chơi nào để lựa chọn.");
+            console.warn("No player to select !");
         }
     };
 
