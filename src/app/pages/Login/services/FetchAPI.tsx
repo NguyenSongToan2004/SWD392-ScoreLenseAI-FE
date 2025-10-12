@@ -6,10 +6,10 @@ import axiosDefault from "axios";
 
 // const DOMAIN_API = import.meta.env.VITE_API_URL;
 
-export const loginAPI = async (email: string, password: string): Promise<ResponseAPI> => {
+export const loginAPI = async (userName: string, password: string): Promise<ResponseAPI> => {
 
-    const response = await axios.post(`/v2/auth/login`,
-        { email, password },
+    const response = await axios.post(`/identity/api/login`,
+        { userName, password },
     );
 
     const result: ResponseAPI = {

@@ -249,8 +249,8 @@ import KeepAlivePing from "../components/KeepAlivePing";
 import PageNotFound from "../layouts/PageNotFound";
 import PrivateRoute from "./PrivateRoute";
 import LayoutRoute from "./LayoutRoute";
-import Admin from "../pages/Admin";
-import RequireRole from "./RequireRole";
+// import Admin from "../pages/Admin";
+// import RequireRole from "./RequireRole";
 
 // Lazy load các trang
 const Login = React.lazy(() => import('../pages/Login'));
@@ -265,42 +265,42 @@ const User = React.lazy(() => import('../pages/User'));
 const Unauthorized = React.lazy(() => import("../layouts/Unauthorized"));
 
 // Lazy load các trang Admin
-const DashBoard = React.lazy(() => import("../pages/Admin/usecases/DashBoard"));
-const TableDetails = React.lazy(() => import("../pages/Admin/usecases/TableDetails"));
-const TableHome = React.lazy(() => import("../pages/Admin/usecases/TableManagement/TableHome"));
-const TableManagement = React.lazy(() => import("../pages/Admin/usecases/TableManagement/TableManagement"));
-const TableView = React.lazy(() => import("../pages/Admin/usecases/TableManagement/TableView"));
-const TableEdit = React.lazy(() => import("../pages/Admin/usecases/TableManagement/TableEdit"));
-const TableCreate = React.lazy(() => import("../pages/Admin/usecases/TableManagement/TableCreate"));
-const ModeHome = React.lazy(() => import("../pages/Admin/usecases/Mode/ModeHome"));
-const ModeManagement = React.lazy(() => import("../pages/Admin/usecases/Mode/ModeManagement"));
-const ModeView = React.lazy(() => import("../pages/Admin/usecases/Mode/ModeView"));
-const ModeEdit = React.lazy(() => import("../pages/Admin/usecases/Mode/ModeEdit"));
-const ModeCreate = React.lazy(() => import("../pages/Admin/usecases/Mode/ModeCreate"));
-const StaffHome = React.lazy(() => import("../pages/Admin/usecases/StaffManagement/StaffHome"));
-const StaffManagement = React.lazy(() => import("../pages/Admin/usecases/StaffManagement/StaffManagement"));
-const StaffView = React.lazy(() => import("../pages/Admin/usecases/StaffManagement/StaffView"));
-const StaffEdit = React.lazy(() => import("../pages/Admin/usecases/StaffManagement/StaffEdit"));
-const StaffCreate = React.lazy(() => import("../pages/Admin/usecases/StaffManagement/StaffCreate"));
-const CustomerHome = React.lazy(() => import("../pages/Admin/usecases/CustomerManagement/CustomerHome"));
-const CustomerManagement = React.lazy(() => import("../pages/Admin/usecases/CustomerManagement/CustomerManagement"));
-const CustomerView = React.lazy(() => import("../pages/Admin/usecases/CustomerManagement/CustomerView"));
-const PermissionHome = React.lazy(() => import("../pages/Admin/usecases/PermissionManagement/PermissionHome"));
-const PermissionManagement = React.lazy(() => import("../pages/Admin/usecases/PermissionManagement/PermissionManagement"));
-const PermissionView = React.lazy(() => import("../pages/Admin/usecases/PermissionManagement/PermissionView"));
-const PermissionCreate = React.lazy(() => import("../pages/Admin/usecases/PermissionManagement/PermissionCreate"));
-const RoleHome = React.lazy(() => import("../pages/Admin/usecases/Role/RoleHome"));
-const RoleManagement = React.lazy(() => import("../pages/Admin/usecases/Role/RoleManagement"));
-const RoleCreate = React.lazy(() => import("../pages/Admin/usecases/Role/RoleCreate"));
-const RoleView = React.lazy(() => import("../pages/Admin/usecases/Role/RoleView"));
-const PermissionAdd = React.lazy(() => import("../pages/Admin/usecases/Role/PermissionAdd"));
+// const DashBoard = React.lazy(() => import("../pages/Admin/usecases/DashBoard"));
+// const TableDetails = React.lazy(() => import("../pages/Admin/usecases/TableDetails"));
+// const TableHome = React.lazy(() => import("../pages/Admin/usecases/TableManagement/TableHome"));
+// const TableManagement = React.lazy(() => import("../pages/Admin/usecases/TableManagement/TableManagement"));
+// const TableView = React.lazy(() => import("../pages/Admin/usecases/TableManagement/TableView"));
+// const TableEdit = React.lazy(() => import("../pages/Admin/usecases/TableManagement/TableEdit"));
+// const TableCreate = React.lazy(() => import("../pages/Admin/usecases/TableManagement/TableCreate"));
+// const ModeHome = React.lazy(() => import("../pages/Admin/usecases/Mode/ModeHome"));
+// const ModeManagement = React.lazy(() => import("../pages/Admin/usecases/Mode/ModeManagement"));
+// const ModeView = React.lazy(() => import("../pages/Admin/usecases/Mode/ModeView"));
+// const ModeEdit = React.lazy(() => import("../pages/Admin/usecases/Mode/ModeEdit"));
+// const ModeCreate = React.lazy(() => import("../pages/Admin/usecases/Mode/ModeCreate"));
+// const StaffHome = React.lazy(() => import("../pages/Admin/usecases/StaffManagement/StaffHome"));
+// const StaffManagement = React.lazy(() => import("../pages/Admin/usecases/StaffManagement/StaffManagement"));
+// const StaffView = React.lazy(() => import("../pages/Admin/usecases/StaffManagement/StaffView"));
+// const StaffEdit = React.lazy(() => import("../pages/Admin/usecases/StaffManagement/StaffEdit"));
+// const StaffCreate = React.lazy(() => import("../pages/Admin/usecases/StaffManagement/StaffCreate"));
+// const CustomerHome = React.lazy(() => import("../pages/Admin/usecases/CustomerManagement/CustomerHome"));
+// const CustomerManagement = React.lazy(() => import("../pages/Admin/usecases/CustomerManagement/CustomerManagement"));
+// const CustomerView = React.lazy(() => import("../pages/Admin/usecases/CustomerManagement/CustomerView"));
+// const PermissionHome = React.lazy(() => import("../pages/Admin/usecases/PermissionManagement/PermissionHome"));
+// const PermissionManagement = React.lazy(() => import("../pages/Admin/usecases/PermissionManagement/PermissionManagement"));
+// const PermissionView = React.lazy(() => import("../pages/Admin/usecases/PermissionManagement/PermissionView"));
+// const PermissionCreate = React.lazy(() => import("../pages/Admin/usecases/PermissionManagement/PermissionCreate"));
+// const RoleHome = React.lazy(() => import("../pages/Admin/usecases/Role/RoleHome"));
+// const RoleManagement = React.lazy(() => import("../pages/Admin/usecases/Role/RoleManagement"));
+// const RoleCreate = React.lazy(() => import("../pages/Admin/usecases/Role/RoleCreate"));
+// const RoleView = React.lazy(() => import("../pages/Admin/usecases/Role/RoleView"));
+// const PermissionAdd = React.lazy(() => import("../pages/Admin/usecases/Role/PermissionAdd"));
 
 // Lazy load Store Management components
-const StoreHome = React.lazy(() => import("../pages/Admin/StoreManagement/StoreHome"));
-const StoreManagement = React.lazy(() => import("../pages/Admin/StoreManagement/StoreManagement"));
-const StoreView = React.lazy(() => import("../pages/Admin/StoreManagement/StoreView"));
-const StoreEdit = React.lazy(() => import("../pages/Admin/StoreManagement/StoreEdit"));
-const StoreCreate = React.lazy(() => import("../pages/Admin/StoreManagement/StoreCreate"));
+// const StoreHome = React.lazy(() => import("../pages/Admin/StoreManagement/StoreHome"));
+// const StoreManagement = React.lazy(() => import("../pages/Admin/StoreManagement/StoreManagement"));
+// const StoreView = React.lazy(() => import("../pages/Admin/StoreManagement/StoreView"));
+// const StoreEdit = React.lazy(() => import("../pages/Admin/StoreManagement/StoreEdit"));
+// const StoreCreate = React.lazy(() => import("../pages/Admin/StoreManagement/StoreCreate"));
 
 export default function MainRoutes() {
     return (
@@ -324,7 +324,7 @@ export default function MainRoutes() {
 
                         <Route element={<LayoutRoute />}>
                             <Route path="/user" element={<User />} />
-                            <Route element={<RequireRole allowedRoles={['STAFF']} />}>
+                            {/* <Route element={<RequireRole allowedRoles={['STAFF']} />}>
                                 <Route path="/admin" element={<Admin />}>
                                     <Route index path="dashboard" element={<DashBoard />} />
                                     <Route path="table" element={<TableDetails />} />
@@ -377,7 +377,7 @@ export default function MainRoutes() {
                                         <Route path="create" element={<StoreCreate />} />
                                     </Route>
                                 </Route>
-                            </Route>
+                            </Route> */}
                         </Route>
                     </Route>
 
