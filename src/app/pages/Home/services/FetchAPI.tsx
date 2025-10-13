@@ -2,9 +2,12 @@ import axios from "../../../../settings/AxiosClient";
 import type ResponseAPI from "../../../models/ResponseAPI";
 import type { MatchSetup } from "../models/DataObject";
 
+const BILLIARD_BASE_PATH = import.meta.env.VITE_BILLIARD_BASE_PATH;
+const IDENTITY_BASE_PATH = import.meta.env.VITE_IDENTITY_BASE_PATH;
+
 export const fetchModeAPI = async (): Promise<ResponseAPI> => {
     try {
-        const response = await axios.get('/v1/modes');
+        const response = await axios.get(`${BILLIARD_BASE_PATH}/modes`);
 
         const result: ResponseAPI = {
             status: response.status,
@@ -32,7 +35,7 @@ export const fetchModeAPI = async (): Promise<ResponseAPI> => {
 
 export const fetchModeTestAPI = async (id: number): Promise<ResponseAPI> => {
     try {
-        const response = await axios.get(`/v1/modes/${id}`);
+        const response = await axios.get(`${BILLIARD_BASE_PATH}/modes/${id}`);
 
         const result: ResponseAPI = {
             status: response.status,
@@ -60,7 +63,7 @@ export const fetchModeTestAPI = async (id: number): Promise<ResponseAPI> => {
 export const createBillardMatchAPI = async (matchSetUp: MatchSetup): Promise<ResponseAPI> => {
     try {
         // Sửa lỗi: Truyền thẳng object `matchSetUp` làm body cho request.
-        const response = await axios.post('/v3/billiard-matches', matchSetUp);
+        const response = await axios.post(`${BILLIARD_BASE_PATH}/billiard-matches`, matchSetUp);
 
         const result: ResponseAPI = {
             status: response.status,
@@ -90,7 +93,7 @@ export const createBillardMatchAPI = async (matchSetUp: MatchSetup): Promise<Res
 
 export const fetchTableAPI = async (tableID: string): Promise<ResponseAPI> => {
     try {
-        const response = await axios.get(`/v2/tables/${tableID}`);
+        const response = await axios.get(`${BILLIARD_BASE_PATH}/tables/${tableID}`);
 
         const result: ResponseAPI = {
             status: response.status,
@@ -112,7 +115,7 @@ export const fetchTableAPI = async (tableID: string): Promise<ResponseAPI> => {
 
 export const logoutAPI = async (): Promise<ResponseAPI> => {
     try {
-        const response = await axios.post("/v2/auth/logout");
+        const response = await axios.post(`${IDENTITY_BASE_PATH}/logout`);
 
         const result: ResponseAPI = {
             status: response.status,

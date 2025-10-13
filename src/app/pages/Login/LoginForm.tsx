@@ -5,9 +5,9 @@ import { FaLock, FaUser } from "react-icons/fa";
 import { RiLoginCircleLine } from "react-icons/ri";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { requestNotificationPermission, sendTokenToServer } from "../../../services/fcmService";
+// import { requestNotificationPermission, sendTokenToServer } from "../../../services/fcmService";
 import NInputLabel from "../../components/basicUI/NInputLabel";
-import type { AuthResponse, TableOperationRequest } from "../../models/DataObject";
+import type { AuthResponse } from "../../models/DataObject";
 import type { LoginFormData } from "./models/auth";
 import GoogleButton from "./partials/GoogleButton";
 import { loginAPI } from "./services/FetchAPI";
@@ -31,20 +31,20 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
                 toast.error(response.message);
             }
 
-            const fcmToken = await requestNotificationPermission();
+            // const fcmToken = await requestNotificationPermission();
 
-            if (fcmToken) {
-                const data = response.data as AuthResponse;
-                const userID = data.user.customerID || data.user.staffID;
-                const form: TableOperationRequest = {
-                    operationType: "register",
-                    tableID: "23374e21-2391-41b0-b275-651df88b3b04",
-                    token: fcmToken
-                }
-                if (userID) {
-                    await sendTokenToServer(form);
-                } 
-            }
+            // if (fcmToken) {
+            //     const data = response.data as AuthResponse;
+            //     const userID = data.user.customerID || data.user.staffID;
+            //     const form: TableOperationRequest = {
+            //         operationType: "register",
+            //         tableID: "23374e21-2391-41b0-b275-651df88b3b04",
+            //         token: fcmToken
+            //     }
+            //     if (userID) {
+            //         await sendTokenToServer(form);
+            //     } 
+            // }
 
             return response;
         };

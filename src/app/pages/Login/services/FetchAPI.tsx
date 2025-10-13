@@ -5,10 +5,11 @@ import type { GoogleUserData, RegisterResponse } from "../models/auth";
 import axiosDefault from "axios";
 
 // const DOMAIN_API = import.meta.env.VITE_API_URL;
+const IDENTITY_BASE_PATH = import.meta.env.VITE_IDENTITY_BASE_PATH; 
 
 export const loginAPI = async (userName: string, password: string): Promise<ResponseAPI> => {
 
-    const response = await axios.post(`/identity/api/login`,
+    const response = await axios.post(`${IDENTITY_BASE_PATH}/login`,
         { userName, password },
     );
 
@@ -38,7 +39,7 @@ export const loginAPI = async (userName: string, password: string): Promise<Resp
 
 export const registerAPI = async (email: string, password: string): Promise<ResponseAPI> => {
 
-    const response = await axios.post(`/v2/auth/register`,
+    const response = await axios.post(`${IDENTITY_BASE_PATH}/register`,
         { email, password },
     );
 
@@ -57,7 +58,7 @@ export const loginGoogleAPI = async (email: string, name: string, picture: strin
     console.log(name)
     console.log(picture)
 
-    const response = await axios.post(`/v2/auth/login-google`,
+    const response = await axios.post(`${IDENTITY_BASE_PATH}/login-google`,
         {
             email,
             name,
@@ -104,7 +105,7 @@ export const decodeAccessToken = async (access_token: string): Promise<GoogleUse
 };
 
 export const resetPasswordAPI = async (resetToken: string, newPassword: string, confirmPassword: string): Promise<ResponseAPI> => {
-    const response = await axios.post(`/v2/auth/password-reset`, {
+    const response = await axios.post(`${IDENTITY_BASE_PATH}/password-reset`, {
         resetToken,
         newPassword,
         confirmPassword
@@ -122,7 +123,7 @@ export const resetPasswordAPI = async (resetToken: string, newPassword: string, 
 
 export const forgotPasswordAPI = async (email: string): Promise<ResponseAPI> => {
 
-    const response = await axios.post(`/v2/auth/password-forgot`, {
+    const response = await axios.post(`${IDENTITY_BASE_PATH}/password-forgot`, {
         email
     });
 

@@ -89,9 +89,14 @@ api.interceptors.response.use(
                 case 409:
                     toast.warning(conflictMessage);
                     break;
+                case 429:
+                    toast.warning("The server is overloading ! Please try again in few minutes");
+                    break;
                 case 500:
+                    toast.warning("Has something wrong in server ! Please try again in few minutes")
                     break;
                 case 502:
+                    toast.warning("The gateway has an error ! Please try again in few minutes")
                     break;
                 case 503:
                     toast.warning("Server system is experiencing issues.");
