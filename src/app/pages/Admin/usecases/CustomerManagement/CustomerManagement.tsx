@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import type { Customer } from '../../../../models/DataObject';
 import { getNavigationState, navigateWithState } from '../../../../Utils/navigationUtils';
-import { fetchCustomersAPI, updateCustomerStatusAPI, deleteCustomerAPI } from '../../services/FetchAPI';
+import { fetchCustomersAPI, updateCustomerStatusAPI, deleteCustomerAPI } from '../../services/FetchMock/CustomerAPI';
 
 const CustomerManagement = () => {
     const [customerList, setCustomerList] = useState<Customer[]>([]);
@@ -16,7 +16,7 @@ const CustomerManagement = () => {
         first: true,
         empty: false,
         sortBy: 'createAt',
-        sortDirection: 'desc'
+        sortDirection: 'desc' 
     });
     const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -56,18 +56,18 @@ const CustomerManagement = () => {
                     setCustomerList(response.data);
                     setPagination(prev => ({
                         ...prev,
-                        totalElements: response.data.length,
-                        totalPages: Math.ceil(response.data.length / pagination.size),
-                        last: pagination.page >= Math.ceil(response.data.length / pagination.size) - 1,
+                        totalElements: response.data.totalElements,
+                        totalPages: Math.ceil(response.data.totalPages / pagination.size),
+                        last: pagination.page >= Math.ceil(response.data.totalPages / pagination.size) - 1,
                         first: pagination.page === 0,
-                        empty: response.data.length === 0
+                        empty: response.data.totalPages === 0
                     }));
                 } else {
                     setCustomerList([]);
                     toast.error('Invalid response format');
                 }
             } else {
-                toast.error(response.message || 'Failed to fetch customer data.');
+                toast.error(response.status || 'Failed to fetch customer data.');
                 setCustomerList([]);
             }
         } catch (error) {

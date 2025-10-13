@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Mode } from "../../../Home/models/DataObject";
 import { useLocation, useNavigate } from "react-router-dom";
-import { deleteModeAPI, fetchModesAPI } from "../../services/FetchAPI";
+import { deleteModeAPI, fetchModesAPI } from "../../services/FetchMock/ModeAPI";
 import { toast } from "sonner";
 
 const ModeManagement = () => {

@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { deleteRoleAPI, fetchRolesAPI } from "../../services/FetchAPI";
+// import { deleteRoleAPI, fetchRolesAPI } from "../../services/FetchAPI";
+import { deleteRoleAPI, fetchRolesAPI } from "../../services/FetchMock/RoleAPI";
 import { getNavigationState, navigateWithState } from "../../../../Utils/navigationUtils";
 import type { Role } from "../../../../models/DataObject";
 

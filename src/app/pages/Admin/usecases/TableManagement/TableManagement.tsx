@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import type { BilliardTable } from "../../../Home/models/DataObject";
 import { toast } from "sonner";
-import { deleteTablesAPI, fetchTablesAPI } from "../../services/FetchAPI";
+// import { deleteTablesAPI, fetchTablesAPI } from "../../services/FetchAPI";
+import { deleteTablesAPI, fetchTablesAPI } from "../../services/FetchMock/TableAPI";
 import type { User } from "../../../../models/DataObject";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getNavigationState, navigateWithState } from "../../../../Utils/navigationUtils";
@@ -17,9 +18,9 @@ const TableManagement = () => {
     useEffect(() => {
         const fetchTables = async () => {
             try {
-                let store: User | undefined = loc.state?.userInfo as User | undefined;
-                const storeId = store?.store?.storeID || localStorage.getItem("storeID");
-
+                // let store: User | undefined = loc.state?.userInfo as User | undefined;
+                // const storeId = store?.store?.storeID || localStorage.getItem("storeID") || "King Pool Center";
+                const storeId = "King Pool Center";
                 if (!storeId) {
                     toast.error("Store ID not found. Cannot fetch tables.");
                     return;

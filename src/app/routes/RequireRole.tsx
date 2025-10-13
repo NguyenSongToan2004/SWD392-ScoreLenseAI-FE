@@ -11,11 +11,11 @@ function RequireRole({ allowedRoles }: RequireRoleProps) {
 
     const isAllowed = userRole && allowedRoles.includes(userRole);
 
-    if (!isAllowed) {
-        toast.error("You do not have permission to access this page.");
-        const destination = location.pathname;
-        return <Navigate to={`${destination}`} replace />;
-    }
+    // if (!isAllowed) {
+    //     toast.error("You do not have permission to access this page.");
+    //     const destination = location.pathname;
+    //     return <Navigate to={`${destination}`} replace />;
+    // }
     
     return <Outlet />;
 }

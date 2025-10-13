@@ -24,12 +24,13 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
 
     const handleLogin = async (values: LoginFormData) => {
         onLogin(values);
+        nav("/admin")
 
         const loginPromise = async () => {
-            const response = await loginAPI(values.username, values.password);
-            if (response.status !== 200) {
-                toast.error(response.message);
-            }
+            // const response = await loginAPI(values.username, values.password);
+            // if (response.status !== 200) {
+            //     toast.error(response.message);
+            // }
 
             // const fcmToken = await requestNotificationPermission();
 
@@ -46,34 +47,34 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
             //     } 
             // }
 
-            return response;
+            // return response;
         };
 
-        const returnURL = location.state?.from;
-        console.log(returnURL);
-        toast.promise(loginPromise(), {
-            loading: 'Logging in... Please wait!',
-            success: (response) => {
-                const data = response.data as AuthResponse;
+        // const returnURL = location.state?.from;
+        // console.log(returnURL);
+        // toast.promise(loginPromise(), {
+        //     loading: 'Logging in... Please wait!',
+        //     success: (response) => {
+        //         const data = response.data as AuthResponse;
 
-                if (data.userType === "CUSTOMER") {
-                    const destination = returnURL || '/23374e21-2391-41b0-b275-651df88b3b04';
-                    nav(destination, { replace: true });
-                } else { 
-                    const destination = returnURL || '/admin';
-                    nav(destination, {
-                        state : {
-                            userInfo: data.user
-                        },
-                        replace: true
-                    });
-                }
-                return response.message;
-            },
-            error: (error) => {
-                return error.message;
-            },
-        });
+        //         if (data.userType === "CUSTOMER") {
+        //             const destination = returnURL || '/23374e21-2391-41b0-b275-651df88b3b04';
+        //             nav(destination, { replace: true });
+        //         } else { 
+        //             const destination = returnURL || '/admin';
+        //             nav(destination, {
+        //                 state : {
+        //                     userInfo: data.user
+        //                 },
+        //                 replace: true
+        //             });
+        //         }
+        //         return response.message;
+        //     },
+        //     error: (error) => {
+        //         return error.message;
+        //     },
+        // });
     };
 
     return (

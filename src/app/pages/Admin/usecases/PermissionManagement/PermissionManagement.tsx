@@ -3,7 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { getNavigationState, navigateWithState } from "../../../../Utils/navigationUtils";
 import type { Permission } from "../../models/ResponseObject";
-import { fetchPermissionAPI } from "../../services/FetchAPI";
+// import { fetchPermissionAPI } from "../../services/FetchAPI";
+import { fetchPermissionAPI } from "../../services/FetchMock/PermissionAPI";
 
 const PermissionManagement = () => {
     const [permissionList, setPermissionList] = useState<Permission[]>([]);

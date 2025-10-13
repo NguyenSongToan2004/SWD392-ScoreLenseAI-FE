@@ -3,7 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { getNavigationState } from "../../../../Utils/navigationUtils";
 import type { Store } from "../../models/ResponseObject";
-import { fetchStoreAPI, updateStoreStatusAPI } from "../../services/FetchAPI";
+// import { fetchStoreAPI, updateStoreStatusAPI } from "../../services/FetchAPI";
+import { fetchStoreAPI, updateStoreStatusAPI } from "../../services/FetchMock/StoreAPI";
+
 
 const StoreManagement = () => {
     const [storeList, setStoreList] = useState<Store[]>([]);
