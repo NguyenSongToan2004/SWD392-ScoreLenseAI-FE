@@ -11,6 +11,7 @@ interface NInputLabelProps {
   disabled?: boolean;
   type?: string;
   prefix?: React.ReactNode;
+  maxLength? : number
 }
 
 const NInputLabel: React.FC<NInputLabelProps> = ({
@@ -20,6 +21,7 @@ const NInputLabel: React.FC<NInputLabelProps> = ({
   onChange,
   disabled,
   type = "text",
+  maxLength,
   ...inputProps
 }) => {
   const [hasFocus, setHasFocus] = useState(false);
@@ -74,6 +76,7 @@ const NInputLabel: React.FC<NInputLabelProps> = ({
             {...inputProps}
             value={inputValue}
             disabled={disabled}
+            maxLength = {maxLength}
             onChange={handleInputChange}
             onFocus={() => setHasFocus(true)}
             onBlur={() => setHasFocus(false)}

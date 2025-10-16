@@ -6,10 +6,9 @@ export const ModeEnum = {
 } as const;
 
 export const ModeDisplayMap: Record<number, string> = {
+  1 :"9 ball pool",
   2: "8 ball pool",
-  3: "9 ball pool",
-  5: "One-Cushion Carom",
-  6: "Three-Cushion Carom"
+  3: "One-Cushion Carom",
 };
 
 export type ModeEnumType = typeof ModeEnum[keyof typeof ModeEnum];

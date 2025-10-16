@@ -73,6 +73,16 @@ export interface User {
     store?: Store
 }
 
+export interface CustomerProfileResponse {
+    customerId : string,
+    customerName : string,
+    email : string,
+    phone : string,
+    customerType : string,
+    status : "active" | "inactive";
+    imageUrl : null;
+}
+
 export interface Staff {
     staffID?: string;
     customerID?: string;

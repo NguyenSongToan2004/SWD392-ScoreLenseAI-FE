@@ -93,11 +93,11 @@ export const decodeAccessToken = async (access_token: string): Promise<GoogleUse
 
 };
 
-export const resetPasswordAPI = async (resetToken: string, newPassword: string, confirmPassword: string): Promise<ResponseAPI> => {
-    const response = await axios.post(`${IDENTITY_BASE_PATH}/password-reset`, {
-        resetToken,
+export const resetPasswordAPI = async (email: string, otp: string, newPassword: string): Promise<ResponseAPI> => {
+    const response = await axios.post(`${IDENTITY_BASE_PATH}/forgot-password`, {
+        email,
         newPassword,
-        confirmPassword
+        otp
     });
 
     const result: ResponseAPI = {
@@ -112,7 +112,7 @@ export const resetPasswordAPI = async (resetToken: string, newPassword: string, 
 
 export const forgotPasswordAPI = async (email: string): Promise<ResponseAPI> => {
 
-    const response = await axios.post(`${IDENTITY_BASE_PATH}/password-forgot`, {
+    const response = await axios.post(`${IDENTITY_BASE_PATH}/sent-otp`, {
         email
     });
 

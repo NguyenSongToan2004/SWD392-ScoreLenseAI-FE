@@ -7,6 +7,7 @@ import { HiOutlineShieldCheck } from "react-icons/hi";
 import { toast } from "sonner";
 import NInputLabel from "../../../components/basicUI/NInputLabel";
 import { forgotPasswordAPI } from "../services/FetchAPI";
+import { useNavigate } from "react-router-dom";
 
 // Custom CSS để đè lên styles của Ant Design
 const customButtonStyles = `
@@ -54,6 +55,7 @@ const customButtonStyles = `
 const ForgetPassword = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const nav = useNavigate();
 
   const handleSubmit = async (values: { email: string }) => {
     setLoading(true);
@@ -63,6 +65,11 @@ const ForgetPassword = () => {
         toast.error(apiResponse.message);
       }
       toast.success("Email reset password sent!");
+      nav("/reset-password", {
+        state : {
+          emailSended : values.email
+        }
+      })
     } catch (error) {
       toast.error("Something errors, please try again !");
       console.log(error);

@@ -1,8 +1,10 @@
 import axios from "../../../../settings/AxiosClient";
 import type ResponseAPI from "../../../models/ResponseAPI";
 
+const IDENTITY_BASE_PATH = import.meta.env.VITE_IDENTITY_BASE_PATH;
+
 export const fetchCustomerInfoAPI = async (): Promise<ResponseAPI> => {
-    const response: ResponseAPI = await axios.get(`/v1/customers/my-profile`);
+    const response: ResponseAPI = await axios.get(`${IDENTITY_BASE_PATH}/profile`);
 
     const result: ResponseAPI = {
         status: response.status,
@@ -13,17 +15,17 @@ export const fetchCustomerInfoAPI = async (): Promise<ResponseAPI> => {
     return result;
 }
 
-export const fetchStaffInfoAPI = async (): Promise<ResponseAPI> => {
-    const response: ResponseAPI = await axios.get(`/v1/staffs/my-profile`);
+// export const fetchStaffInfoAPI = async (): Promise<ResponseAPI> => {
+//     const response: ResponseAPI = await axios.get(`/v1/staffs/my-profile`);
 
-    const result: ResponseAPI = {
-        status: response.status,
-        message: response.data.message,
-        data: response.data.data,
-    }
+//     const result: ResponseAPI = {
+//         status: response.status,
+//         message: response.data.message,
+//         data: response.data.data,
+//     }
 
-    return result;
-}
+//     return result;
+// }
 
 export const uploadAvatarAPI = async (userId: string, file: File, role: "CUSTOMER" | "STAFF"): Promise<ResponseAPI> => {
     // FormData is the standard way to send files via HTTP.

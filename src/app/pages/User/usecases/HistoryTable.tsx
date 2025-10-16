@@ -8,6 +8,7 @@ import type { BilliardMatch } from "../../../models/DataObject";
 import { isOpacityStore } from "../homeStore";
 import MatchDetailModal from "../partials/MatchDetailModal";
 import { fetchHistoryMatchAPI } from "../services/FetchAPI";
+import type { PaginationResult } from "../../../models/ModelExtensions/SearchExtensions";
 
 export default function HistoryTable() {
     // State để quản lý bộ lọc ngày
@@ -44,12 +45,13 @@ export default function HistoryTable() {
             setIsLoading(true);
             try {
                 // TODO: Thay thế customerID tĩnh bằng ID của người dùng đang đăng nhập
-                const customerID = localStorage.getItem('userID');
+                const customerID = localStorage.getItem('customerID');
                 if (customerID) {
                     const response = await fetchHistoryMatchAPI(customerID);
 
                     if (response.status === 200) {
-                        setHistoryMatchs(response.data);
+                        let matchPagi = response.data as PaginationResult<BilliardMatch>
+                        setHistoryMatchs(matchPagi.content);
                     } else {
                         toast.warning(response.message || "Không thể tải lịch sử trận đấu.");
                     }
@@ -77,6 +79,7 @@ export default function HistoryTable() {
     const modeForDisplay = (modeID: number): string => {
         return ModeDisplayMap[modeID] || "Unknown Mode";
     };
+    
     const filteredData = historyMatchs;
 
     if (isLoading) {
