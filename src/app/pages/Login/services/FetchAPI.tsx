@@ -5,12 +5,12 @@ import type { GoogleUserData, RegisterResponse } from "../models/auth";
 import axiosDefault from "axios";
 
 // const DOMAIN_API = import.meta.env.VITE_API_URL;
-const IDENTITY_BASE_PATH = import.meta.env.VITE_IDENTITY_BASE_PATH; 
+const IDENTITY_BASE_PATH = import.meta.env.VITE_IDENTITY_BASE_PATH;
 
-export const loginAPI = async (userName: string, password: string): Promise<ResponseAPI> => {
+export const loginAPI = async (email: string, password: string): Promise<ResponseAPI> => {
 
-    const response = await axios.post(`${IDENTITY_BASE_PATH}/login`,
-        { userName, password },
+    const response = await axios.post(`${IDENTITY_BASE_PATH}/login-customer`,
+        { email, password },
     );
 
     const result: ResponseAPI = {
@@ -21,16 +21,10 @@ export const loginAPI = async (userName: string, password: string): Promise<Resp
 
     if (response.status === 200) {
         let authResponse: AuthResponse = result.data;
-        localStorage.setItem('role', authResponse.userType);
-        localStorage.setItem('isAuth', authResponse.authenticated + '');
-        if (authResponse.user.customerID != null)
-            localStorage.setItem('userID', authResponse.user.customerID);
-        if (authResponse.user.staffID != null)
-            localStorage.setItem('userID', authResponse.user.staffID);
-        localStorage.setItem('customerName', authResponse.user.name);
-        if (authResponse.user.store) {
-            localStorage.setItem('storeID', authResponse.user.store.storeID);
-        }
+        localStorage.setItem("accessToken", authResponse.accessToken);
+        localStorage.setItem('isAuth', "true");
+        localStorage.setItem("customerID", authResponse.customerDto.customerId);
+        localStorage.setItem('customerName', authResponse.customerDto.customerName);
         // localStorage.setItem('user', authResponse.user);
     }
 
@@ -74,13 +68,8 @@ export const loginGoogleAPI = async (email: string, name: string, picture: strin
 
     if (response.status === 200) {
         let authResponse: AuthResponse = result.data;
-        localStorage.setItem('role', authResponse.userType);
-        localStorage.setItem('isAuth', authResponse.authenticated + '');
-        if (authResponse.user.customerID != null)
-            localStorage.setItem('userID', authResponse.user.customerID);
-        if (authResponse.user.staffID != null)
-            localStorage.setItem('userID', authResponse.user.staffID);
-        localStorage.setItem('customerName', authResponse.user.name);
+        localStorage.setItem('isAuth', "true");
+        localStorage.setItem('customerName', authResponse.customerDto.customerName);
         // localStorage.setItem('user', authResponse.user);
     } else {
         console.warn(`Unexpected response status: ${response.status}`);

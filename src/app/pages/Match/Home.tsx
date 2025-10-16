@@ -10,6 +10,7 @@ import Header from "./partials/Header";
 import TableScore from "./partials/TableScore";
 import { fetchMatchAPI, setManualAPI, updateScoreAPI } from "./services/FetchAPI";
 import type { Loggoing } from "./models/WebSocketModel";
+import type { PaginationResult } from "../../models/ModelExtensions/SearchExtensions";
 
 // --- Components Placeholder ---
 const LoadingComponent = () => (
@@ -45,7 +46,8 @@ export default function Match() {
             setIsLoading(true);
             const response = await fetchMatchAPI(id as string);
             if (response.status === 200) {
-                setMatch(response.data);
+                const matchResult = response.data as PaginationResult<BilliardMatch>;
+                setMatch(matchResult.content[0]);
                 // Check nếu match completed thì show popup
                 if (response.data.status === 'completed') {
                     setShowPopup(true);
@@ -70,7 +72,7 @@ export default function Match() {
             if (response.status === 200) {
                 toast.success(response.message);
             } else {
-                toast.error(response.message);
+                toast.error("Has an error when set match into manual !!");
             }
         }
     }
@@ -148,7 +150,8 @@ export default function Match() {
             setError(null);
             const response = await fetchMatchAPI(id);
             if (response.status === 200) {
-                setMatch(response.data);
+                const matchResult = response.data as PaginationResult<BilliardMatch>;
+                setMatch(matchResult.content[0]);
                 if (response.data && response.data.status === "completed") {
                     setShowPopup(true);
                 }

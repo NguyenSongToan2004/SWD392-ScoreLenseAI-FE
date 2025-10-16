@@ -1,12 +1,15 @@
 export interface PaginationResult<T> {
-  totalItems: number;
-  totalPages: number;
-  pageSizes: number;
-  currentPages: number;
-  items: T;
+    currentPage : number,
+    pageSizes : number,
+    totalItems : number,
+    totalPages : number,
+    empty : boolean
+    content : T[]
 }
 
 export interface SearchRequest {
-  currentPage?: number | 0; 
-  pageSize?: number | 5;
+    page : number,
+    size : number,
+    sortBy : string,
+    sortDirection : string
 }

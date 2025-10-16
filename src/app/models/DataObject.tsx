@@ -59,13 +59,11 @@ export interface Role {
 }
 
 export interface User {
-    staffID?: string;
-    customerID?: string;
+    customerId?: string;
     name: string;
     email: string;
     phoneNumber: string;
     dob: string;
-    address: string;
     role: string | null;
     createAt: string;
     updateAt: string | null;
@@ -82,22 +80,18 @@ export interface Staff {
     email: string;
     phoneNumber: string;
     dob: string;
-    address: string;
-    role: string | null;
     createAt: string;
     updateAt: string | null;
-    status: "active" | "inActive";
+    status: "active" | "inactive";
     manager: string | null;
     imageUrl: string | null;
     store?: Store
 }
 
 export interface AuthResponse {
-    authenticated: boolean;
     accessToken: string;
     refreshToken: string;
-    user: User;
-    userType: string;
+    customerDto: CustomerLoginResponse;
 }
 
 export interface Store {
@@ -128,17 +122,26 @@ export interface TableOperationRequest {
 }
 
 export interface Customer {
-    customerID: string;
+    customerId: string;
     name: string;
     email: string;
     phoneNumber: string | null;
     dob: string;
-    address: string;
     createAt: string;
     updateAt: string | null;
     type: "normal" | "vip" | string;
     status: "active" | "inactive" | string;
-    imageUrl: string | null;
+    imageURL: string | null;
+}
+
+export interface CustomerLoginResponse {
+    customerId : string,
+    customerName : string,
+    email : string,
+    phone : string,
+    customerType : string,
+    status : "active" | "inactive",
+    imageUrl : string | null
 }
 
 

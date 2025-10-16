@@ -115,7 +115,7 @@ const CustomerManagement = () => {
     const handleAction = useCallback(async (actionType: 'detail' | 'toggle-status' | 'delete', customer: Customer) => {
         switch (actionType) {
             case 'detail':
-                navigateWithState(nav, `/admin/customer-management/detail/${customer.customerID}`, {
+                navigateWithState(nav, `/admin/customer-management/detail/${customer.customerId}`, {
                     customer,
                     ...navigationState
                 });
@@ -124,7 +124,7 @@ const CustomerManagement = () => {
                 const newStatus = customer.status === 'active' ? 'inactive' : 'active';
                 if (window.confirm(`Are you sure you want to ${newStatus === 'active' ? 'activate' : 'deactivate'} customer ${customer.name || customer.email}?`)) {
                     try {
-                        const response = await updateCustomerStatusAPI(customer.customerID, newStatus);
+                        const response = await updateCustomerStatusAPI(customer.customerId, newStatus);
                         if (response.status === 200 || response.status === 1000) {
                             toast.success(`Customer ${newStatus === 'active' ? 'activated' : 'deactivated'} successfully`);
                             setIsLoad(!isLoad);
@@ -139,7 +139,7 @@ const CustomerManagement = () => {
             case 'delete':
                 if (window.confirm(`Are you sure you want to delete customer ${customer.name || customer.email}?`)) {
                     try {
-                        const response = await deleteCustomerAPI(customer.customerID);
+                        const response = await deleteCustomerAPI(customer.customerId);
                         if (response.status === 200 || response.status === 1000) {
                             toast.success('Customer deleted successfully');
                             setIsLoad(!isLoad);
@@ -276,15 +276,15 @@ const CustomerManagement = () => {
                             </thead>
                             <tbody>
                                 {customerList.map((customer) => (
-                                    <tr key={customer.customerID} className="bg-white border-b hover:bg-gray-50 text-base">
+                                    <tr key={customer.customerId} className="bg-white border-b hover:bg-gray-50 text-base">
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                            {customer.customerID.slice(0, 8)}...
+                                            {customer.customerId.slice(0, 8)}...
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
-                                                {customer.imageUrl ? (
+                                                {customer.imageURL ? (
                                                     <img
-                                                        src={customer.imageUrl}
+                                                        src={customer.imageURL}
                                                         alt={customer.name || 'Customer'}
                                                         className="w-10 h-10 rounded-full object-cover"
                                                     />

@@ -1,6 +1,7 @@
 import { getToken, onMessage } from 'firebase/messaging';
 import { messaging } from '../firebase/config';
 import type { TableOperationRequest } from '../app/models/DataObject';
+import axios from "../settings/AxiosClient";
 
 const VAPID_KEY = import.meta.env.VITE_FIREBASE_VAPID_KEY;
 
@@ -42,16 +43,14 @@ export const onMessageListener = (callback: (payload: any) => void) => {
 };
 
 const API_URL = import.meta.env.VITE_API_URL;
+const BILLIARD_BASE_PATH = import.meta.env.VITE_BILLIARD_BASE_PATH;
 
 // Gửi token lên server
 export const sendTokenToServer = async (form: TableOperationRequest) => {
   try {
-    const response = await fetch(`${API_URL}/v3/fcm/operation`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form)
-    });
-    return response.ok;
+    const response = await axios.post(`${API_URL}${BILLIARD_BASE_PATH}/fcm/operation`, form);
+    console.log(response.status);
+    return response.data;
   } catch (error) {
     console.error('Error sending token to server:', error);
     return false;

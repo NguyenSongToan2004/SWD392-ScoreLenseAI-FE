@@ -12,6 +12,7 @@ import { setDefaultMatchSetUp } from "./services/Function";
 import HomeSkeleton from "./partials/HomeSkeleton"; // <-- 1. Import HomeSkeleton
 import type { BilliardTable } from "../../models/DataObject";
 import { toast } from "sonner";
+import type { PaginationResult } from "../../models/ModelExtensions/SearchExtensions";
 
 export default function Home() {
     const isOpacity = isOpacityStore.use();
@@ -24,7 +25,9 @@ export default function Home() {
             const response: ResponseAPI = await fetchTableAPI(id as string) as ResponseAPI;
             console.log(response);
             if (response.status === 200) {
-                let table = response.data as BilliardTable;
+                let result = response.data as PaginationResult<BilliardTable>;
+                let table = result.content[0] as BilliardTable;
+                console.log(table)
                 if (table.status === "inUse" && table.matchResponse) {
                     nav(`/match/${table.matchResponse.billiardMatchID}`,
                         {
@@ -40,7 +43,7 @@ export default function Home() {
                 matchSetUpStore.set((prev) => {
                     prev.value.billiardTableID = table.billardTableID as string;
                 });
-                setTable(response.data);
+                setTable(table);
             } else {
                 toast.error(response.message);
             }

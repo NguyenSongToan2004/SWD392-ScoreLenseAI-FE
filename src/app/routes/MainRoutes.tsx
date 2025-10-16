@@ -245,10 +245,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
 
 // Components & Layouts
-import KeepAlivePing from "../components/KeepAlivePing";
 import PageNotFound from "../layouts/PageNotFound";
-import PrivateRoute from "./PrivateRoute";
 import LayoutRoute from "./LayoutRoute";
+import PrivateRoute from "./PrivateRoute";
 // import Admin from "../pages/Admin";
 // import RequireRole from "./RequireRole";
 
@@ -305,7 +304,7 @@ const Unauthorized = React.lazy(() => import("../layouts/Unauthorized"));
 export default function MainRoutes() {
     return (
         <BrowserRouter>
-            <KeepAlivePing />
+            {/* <KeepAlivePing /> */}
             <Suspense fallback={<div className="flex h-screen w-full items-center justify-center">Loading...</div>}>
                 <Routes>
                     <Route path="/login" element={<Login />} />

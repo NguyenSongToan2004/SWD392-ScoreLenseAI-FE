@@ -49,7 +49,7 @@ const SelectStaff = memo(({ value, onChange, placeholder = "Select a manager (op
         >
             <option value="">{loading ? 'Loading...' : placeholder}</option>
             {staffList.map((staff) => (
-                <option key={staff.staffID} value={staff.staffID}>
+                <option key={staff.customerId} value={staff.customerId}>
                     {staff.name} - {staff.email}
                 </option>
             ))}

@@ -84,9 +84,9 @@ const CustomerView = () => {
             <div className="max-w-4xl mx-auto">
                 <div className="bg-gray-50 rounded-lg p-6 mb-6">
                     <div className="flex items-center gap-6 mb-6">
-                        {customer.imageUrl ? (
+                        {customer.imageURL ? (
                             <img
-                                src={customer.imageUrl}
+                                src={customer.imageURL}
                                 alt={customer.name || 'Customer'}
                                 className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
                             />
@@ -117,7 +117,7 @@ const CustomerView = () => {
                         <div className="space-y-3">
                             <div>
                                 <label className="block text-sm font-medium text-gray-600">Customer ID</label>
-                                <p className="text-gray-900 font-mono text-sm">{customer.customerID}</p>
+                                <p className="text-gray-900 font-mono text-sm">{customer.customerId}</p>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-600">Full Name</label>

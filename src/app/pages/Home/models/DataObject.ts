@@ -70,7 +70,6 @@ export interface TeamConfig {
 export interface MatchSetup {
     billiardTableID: string;
     modeID: number | null;
-    staffID: string | null; // Có thể là null
     customerID: string | null;
     setUp: string;
     totalSet: number;

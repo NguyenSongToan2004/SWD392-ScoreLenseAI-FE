@@ -527,9 +527,9 @@ const Header = () => {
                             {/* === KHU VỰC AVATAR ĐÃ ĐƯỢC THAY THẾ === */}
                             <div className="flex flex-col items-center p-6 border-b border-gray-200 bg-gray-50">
                                 <AvatarUploader
-                                    userId={userInfo?.customerID || userInfo?.staffID}
+                                    userId={userInfo?.customerId}
                                     initialAvatarUrl={userInfo?.imageUrl || userCircleIcon}
-                                    role={userInfo?.customerID ? "CUSTOMER" : "STAFF"}
+                                    role={"CUSTOMER"}
                                     onUploadSuccess={handleAvatarUpdate}
                                 />
                                 <h3 className="text-xl font-bold text-gray-900 mt-4">{userInfo?.name || 'User Name'}</h3>
@@ -546,10 +546,10 @@ const Header = () => {
                                     <p className="text-sm text-gray-500">Date of Birth</p>
                                     <p className="text-lg font-medium text-gray-900">{userInfo?.dob || 'Not provided'}</p>
                                 </div>
-                                <div className="pb-3 border-b border-gray-200">
+                                {/* <div className="pb-3 border-b border-gray-200">
                                     <p className="text-sm text-gray-500">Address</p>
-                                    <p className="text-lg font-medium text-gray-900 break-words">{userInfo?.address || 'Not provided'}</p>
-                                </div>
+                                    <p className="text-lg font-medium text-gray-900 break-words">{userInfo?.ad || 'Not provided'}</p>
+                                </div> */}
                                 <div className="pb-3 border-b border-gray-200">
                                     <p className="text-sm text-gray-500">Roles</p>
                                     <p className="text-lg font-medium text-gray-900 capitalize">{userInfo?.role || 'No roles assigned'}</p>

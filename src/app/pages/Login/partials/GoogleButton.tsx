@@ -1,10 +1,10 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import type { AuthResponse, TableOperationRequest } from '../../../models/DataObject';
+import { requestNotificationPermission, sendTokenToServer } from '../../../../services/fcmService';
+import type { TableOperationRequest } from '../../../models/DataObject';
 import type { GoogleUserData } from '../models/auth';
 import { decodeAccessToken, loginGoogleAPI } from '../services/FetchAPI';
-import { requestNotificationPermission, sendTokenToServer } from '../../../../services/fcmService';
 
 const GoogleButton = () => {
     const nav = useNavigate()
@@ -20,43 +20,31 @@ const GoogleButton = () => {
                         throw new Error(response.message || 'Đăng nhập thất bại. Vui lòng thử lại.');
                     }
 
-                    // Request notification permission
-                    const fcmToken = await requestNotificationPermission();
-                    if (fcmToken) {
-                        const data = response.data as AuthResponse;
-                        const userID = data.user.customerID || data.user.staffID;
-                        const form: TableOperationRequest = {
-                            operationType: "register",
-                            tableID: "e8602f47-b5f3-4bea-ad82-93dbc408171b",
-                            token: fcmToken
-                        }
-
-                        if (userID) {
-                            await sendTokenToServer(form);
-                        }
-                    }
-
                     return response;
                 };
                 const returnURL = location.state?.from;
 
-                toast.promise(loginPromise(), {
-                    loading: 'Đang đăng nhập...',
-                    success: (response) => {
-                        const data = response.data as AuthResponse;
+                const sendToken = async () => {
+                    const fcmToken = await requestNotificationPermission();
 
-                        if (data.userType === "CUSTOMER") {
-                            const destination = returnURL || '/23374e21-2391-41b0-b275-651df88b3b04';
-                            nav(destination, { replace: true });
-                        } else {
-                            const destination = returnURL || '/admin';
-                            nav(destination, {
-                                state: {
-                                    userInfo: data.user
-                                },
-                                replace: true
-                            });
+                    if (fcmToken) {
+                        // const userID = data.customerDto.customerID
+                        const form: TableOperationRequest = {
+                            operationType: "register",
+                            tableID: "4c0307d1-6116-4950-9149-f02af06b623b",
+                            token: fcmToken
                         }
+                        await sendTokenToServer(form);
+                    }
+                }
+
+                toast.promise(loginPromise(), {
+                    loading: 'Logging in... Please wait!',
+                    success: async (response) => {
+                        await sendToken()
+
+                        const destination = returnURL || '/4c0307d1-6116-4950-9149-f02af06b623b';
+                        nav(destination, { replace: true });
                         return response.message;
                     },
                     error: (error) => {

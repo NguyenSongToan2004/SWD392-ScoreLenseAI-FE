@@ -16,10 +16,14 @@ export const useStomp = () => {
 
     useEffect(() => {
         // Chỉ chạy một lần khi component mount
-
-        // 1. Tạo instance của Stomp Client
+        const token = localStorage.getItem("accessToken"); // 🔑 Lấy JWT token từ localStorage
+        console.log(token);
+        // 1. Tạo instance của Stomp Client 
         const stompClient = new Client({
             webSocketFactory: () => new SockJS(STOMP_ENDPOINT),
+            connectHeaders : {
+                Authorization: token ? `Bearer ${token}` : "",
+            },
             debug: (str) => {
                 console.log(`STOMP DEBUG: ${str}`);
             },

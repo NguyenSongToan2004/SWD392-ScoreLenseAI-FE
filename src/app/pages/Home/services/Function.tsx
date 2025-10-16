@@ -1,14 +1,12 @@
 import type { MatchSetup, TeamConfig } from "../models/DataObject"
 
 export const setDefaultMatchSetUp = (): MatchSetup => {
-    let role = localStorage.getItem('role');
-    let creatorID = localStorage.getItem('userID');
+    let creatorID = localStorage.getItem('customerID');
 
     const matchSetUp: MatchSetup = {
         billiardTableID: "1",
         modeID: null,
-        staffID: role !== "CUSTOMER" ? creatorID : null, // Gán staffID khi role không phải CUSTOMER
-        customerID: role === "CUSTOMER" ? creatorID : null, // Gán customerID khi role là CUSTOMER
+        customerID: creatorID,
         setUp: "1vs1",
         totalSet: 1,
         raceTo: 3,

@@ -40,7 +40,7 @@ const StaffEdit = () => {
                         email: staffFromState.email || '',
                         phoneNumber: staffFromState.phoneNumber || '',
                         dob: staffFromState.dob || '',
-                        address: staffFromState.address || '',
+                        address:  '',
                         status: staffFromState.status?.toLowerCase() === 'active' ? 'active' : 'inActive',
                         role: staffFromState.role || '',
                         managerID: staffFromState.manager || '',
@@ -56,7 +56,7 @@ const StaffEdit = () => {
                             email: staffData.email || '',
                             phoneNumber: staffData.phoneNumber || '',
                             dob: staffData.dob || '',
-                            address: staffData.address || '',
+                            address:  '',
                             status: staffData.status?.toLowerCase() === 'active' ? 'active' : 'inActive',
                             role: staffData.role || '',
                             managerID: staffData.manager || '',
@@ -123,7 +123,7 @@ const StaffEdit = () => {
                 dob: form.dob ? formatDateForAPI(form.dob) : '',
             };
 
-            const response = await editStaffAPI(formattedData, staff?.staffID || id!);
+            const response = await editStaffAPI(formattedData, staff?.customerId || id!);
 
             if (response.status === 200) {
                 toast.success(response.message || 'Staff updated successfully');

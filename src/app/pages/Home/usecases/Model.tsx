@@ -9,6 +9,7 @@ import type { Mode } from '../models/DataObject';
 import { matchSetUpStore } from "../homeStore";
 import { toast } from 'sonner';
 import ModelSkeleton from '../partials/ModelSkeleton'; // <-- 1. Import skeleton component
+import type { PaginationResult } from '../../../models/ModelExtensions/SearchExtensions';
 
 const Model = () => {
     const nav = useNavigate();
@@ -43,7 +44,8 @@ const Model = () => {
         const loadMode = async () => {
             try {
                 const response: ResponseAPI = await fetchModeAPI();
-                setModeList(response.data);
+                let modeListResponse = response.data as PaginationResult<Mode>
+                setModeList(modeListResponse.content);
             } catch (error) {
                 console.error("Failed to fetch modes:", error);
                 toast.error("Failed to load game modes.");

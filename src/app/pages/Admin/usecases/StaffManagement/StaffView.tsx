@@ -54,7 +54,7 @@ const StaffView = () => {
         if (staff) {
             const userInfo = getNavigationState(loc, 'userInfo');
             const store = getNavigationState(loc, 'store');
-            navigateWithState(nav, `/admin/staff-management/edit/${staff.staffID}`, {
+            navigateWithState(nav, `/admin/staff-management/edit/${staff.customerId}`, {
                 staff,
                 userInfo,
                 store
@@ -171,7 +171,7 @@ const StaffView = () => {
                             </div>
                             <div className='mt-4'>
                                 <h4 className='text-lg font-semibold text-gray-700'>Address</h4>
-                                <p className='text-gray-600'>{staff.address}</p>
+                                {/* <p className='text-gray-600'>{staff.address}</p> */}
                             </div>
                         </div>
                     </div>
@@ -183,7 +183,7 @@ const StaffView = () => {
                             <div className='mt-4'>
                                 <h4 className='text-lg font-semibold text-gray-700'>Basic Information</h4>
                                 <div className='mt-2'>
-                                    <p className='text-gray-600'><strong>Staff ID:</strong> {staff.staffID}</p>
+                                    <p className='text-gray-600'><strong>Staff ID:</strong> {staff.customerId}</p>
                                     <p className='text-gray-600'><strong>Join Date:</strong> {formatDate(staff.createAt)}</p>
                                 </div>
                             </div>
