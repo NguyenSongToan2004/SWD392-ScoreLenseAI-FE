@@ -46,15 +46,6 @@ const Header = () => {
             const fetchUserInfo = async () => {
                 console.log('fetch customer');
                 let response = await fetchCustomerInfoAPI();
-                // if (role === "CUSTOMER") {
-                    
-                //     response = 
-                // } else if (role === "STAFF") {
-                //     console.log('fetch staff');
-                //     response = await fetchStaffInfoAPI();
-                //     console.log("TODO: Implement API fetch for Staff information");
-                // }
-
                 if (response && response.status === 200) {
                     setUserInfo(response.data as CustomerProfileResponse);
                 }
@@ -180,6 +171,8 @@ const Header = () => {
 
                             {/* === OTHER DETAILS SECTION === */}
                             <div className="p-6 space-y-5">
+                               
+
                                 <div className="pb-3 border-b border-gray-200">
                                     <p className="text-sm text-gray-500">Phone Number</p>
                                     <p className="text-lg font-medium text-gray-900">{userInfo?.phone || 'Not provided'}</p>
@@ -192,16 +185,16 @@ const Header = () => {
                                     <p className="text-sm text-gray-500">Address</p>
                                     <p className="text-lg font-medium text-gray-900 break-words">{userInfo?.ad || 'Not provided'}</p>
                                 </div> */}
-                                <div className="pb-3 border-b border-gray-200">
-                                    <p className="text-sm text-gray-500">Status</p>
-                                    <p className="text-lg font-medium text-gray-900 capitalize">{userInfo?.phone || 'No roles assigned'}</p>
-                                </div>
-                                <div>
+                                {/* <div className="pb-3 border-b border-gray-200">
+                                    <p className="text-sm text-gray-500">Phone</p>
+                                    <p className="text-lg font-medium text-gray-900 capitalize">{userInfo?. || 'No roles assigned'}</p>
+                                </div> */}
+                                {/* <div>
                                     <p className="text-sm text-gray-500">Status</p>
                                     <p className="text-lg font-medium text-gray-900 capitalize">{userInfo?.status || 'Unknown'}</p>
-                                </div>
+                                </div> */}
                             </div>
-                        </div>
+                        </div>  
                     </aside>
                 </>
             )}

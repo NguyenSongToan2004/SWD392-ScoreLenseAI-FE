@@ -38,7 +38,6 @@ const Header = ({ setArray, tableID, matchID, teamID }: CustomHeaderProps) => {
 
                 <h3
                     className="flex-auto flex flex-col text-3xl md:text-4xl lg:text-4xl font-bold cursor-pointer hover:opacity-80 transition"
-                    onClick={handleHeaderClick}
                 >
                     <span className="text-black">{tableID.toUpperCase()}</span>
                     <span className="text-white text-xl md:text-2xl lg:text-3xl">

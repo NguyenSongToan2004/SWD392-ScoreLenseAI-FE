@@ -43,7 +43,7 @@ const GoogleButton = () => {
                     success: async (response) => {
                         await sendToken()
 
-                        const destination = returnURL || '/4c0307d1-6116-4950-9149-f02af06b623b';
+                        const destination =  (returnURL && returnURL !== "/") ? returnURL : '/4c0307d1-6116-4950-9149-f02af06b623b';
                         nav(destination, { replace: true });
                         return response.message;
                     },

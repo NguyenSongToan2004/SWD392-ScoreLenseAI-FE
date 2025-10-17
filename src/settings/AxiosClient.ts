@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 // State variables to handle concurrent requests
 let isRefreshing = false;
 let failedQueue: Array<{ resolve: (value?: any) => void, reject: (reason?: any) => void }> = [];
+let IDENTITY_BASE_PATH = import.meta.env.VITE_IDENTITY_BASE_PATH;
 
 const processQueue = (error: AxiosError | null) => {
     failedQueue.forEach(prom => {
@@ -27,7 +28,7 @@ api.interceptors.response.use(
         const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
         // Only handle 401 errors
-        if (error.response?.status === 401 && originalRequest.url !== '/v2/auth/refresh') {
+        if (error.response?.status === 401 && originalRequest.url !== `${IDENTITY_BASE_PATH}/api/refesh-token`) {
 
             if (isRefreshing) {
                 // If refreshing, push request to queue
@@ -51,7 +52,7 @@ api.interceptors.response.use(
                 // Call refresh token API.
                 // We don't need to receive data because new token is set in httpOnly cookie
                 // through 'Set-Cookie' header from server.
-                await api.post("/v2/auth/refresh");
+                await api.post("/auth/refresh");
 
                 processQueue(null);
 

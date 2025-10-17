@@ -15,10 +15,10 @@ const AuthButton = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('isAuth');
-        localStorage.removeItem('userID');
-        localStorage.removeItem('staffID');
-        localStorage.removeItem('role');
-        localStorage.removeItem('customerName');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('customerID');
+        localStorage.removeItem('auth');
+        localStorage.removeItem('fcmToken');
 
         setIsAuth(false);
 
