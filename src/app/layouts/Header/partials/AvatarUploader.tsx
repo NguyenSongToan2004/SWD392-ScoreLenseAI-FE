@@ -10,7 +10,7 @@ interface AvatarUploaderProps {
     onUploadSuccess: (newImageUrl: string) => void;
 }
 
-const AvatarUploader: React.FC<AvatarUploaderProps> = ({ initialAvatarUrl, userId, role, onUploadSuccess }) => {
+const AvatarUploader: React.FC<AvatarUploaderProps> = ({ initialAvatarUrl, onUploadSuccess }) => {
     const [isLoading, setIsLoading] = useState(false);
     // State nội bộ để quản lý URL avatar, được khởi tạo từ prop
     const [avatarUrl, setAvatarUrl] = useState<string>(initialAvatarUrl);
@@ -35,22 +35,18 @@ const AvatarUploader: React.FC<AvatarUploaderProps> = ({ initialAvatarUrl, userI
     };
 
     const handleUpload = async (file: File) => {
-        if (!userId) {
-            toast.error("Cannot upload: Customer ID is missing.");
-            return;
-        }
-
+        
         setIsLoading(true);
 
         try {
 
-            const result = await uploadAvatarAPI(userId, file, role);
+            const result = await uploadAvatarAPI(file);
 
             if (result.status === 200 || result.status === 201) {
                 toast.success(result.message || "Avatar updated successfully!");
 
                 // Giả sử API trả về URL ảnh mới trong result.data.imageUrl
-                const newImageUrl = result.data || initialAvatarUrl;
+                const newImageUrl = result.data.result || initialAvatarUrl;
 
                 // 1. Cập nhật state nội bộ để thay đổi avatar trên UI ngay lập tức
                 setAvatarUrl(newImageUrl);
