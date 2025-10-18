@@ -25,6 +25,7 @@ export const loginAPI = async (email: string, password: string): Promise<Respons
         localStorage.setItem('isAuth', "true");
         localStorage.setItem("customerID", authResponse.customerDto.customerId);
         localStorage.setItem('customerName', authResponse.customerDto.customerName);
+        localStorage.setItem("email", authResponse.customerDto.email);
         // localStorage.setItem('user', authResponse.user);
     }
 
@@ -68,8 +69,11 @@ export const loginGoogleAPI = async (email: string, name: string, picture: strin
 
     if (response.status === 200) {
         let authResponse: AuthResponse = result.data;
+        localStorage.setItem("accessToken", authResponse.accessToken);
         localStorage.setItem('isAuth', "true");
+        localStorage.setItem("customerID", authResponse.customerDto.customerId);
         localStorage.setItem('customerName', authResponse.customerDto.customerName);
+        localStorage.setItem("email", authResponse.customerDto.email);
         // localStorage.setItem('user', authResponse.user);
     } else {
         console.warn(`Unexpected response status: ${response.status}`);

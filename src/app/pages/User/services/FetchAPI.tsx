@@ -42,10 +42,9 @@ export class DefaultBilliardMatchSearchRequest implements BilliardMatchSearchReq
 
 export const fetchHistoryMatchAPI = async (userID: string): Promise<ResponseAPI> => {
     const req = new DefaultBilliardMatchSearchRequest;
+    let id = localStorage.getItem("email");
     req.customerId = userID;
-    const response = await axios.get(`${BILLIARD_BASE_PATH}/billiard-matches`, {
-        params : req
-    });
+    const response = await axios.get(`${BILLIARD_BASE_PATH}/billiard-matches/byEmail/${id}`);
 
     const result: ResponseAPI = {
         status: response.status,

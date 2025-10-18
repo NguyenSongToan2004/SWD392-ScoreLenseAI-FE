@@ -8,7 +8,6 @@ import type { BilliardMatch } from "../../../models/DataObject";
 import { isOpacityStore } from "../homeStore";
 import MatchDetailModal from "../partials/MatchDetailModal";
 import { fetchHistoryMatchAPI } from "../services/FetchAPI";
-import type { PaginationResult } from "../../../models/ModelExtensions/SearchExtensions";
 
 export default function HistoryTable() {
     // State để quản lý bộ lọc ngày
@@ -50,8 +49,10 @@ export default function HistoryTable() {
                     const response = await fetchHistoryMatchAPI(customerID);
 
                     if (response.status === 200) {
-                        let matchPagi = response.data as PaginationResult<BilliardMatch>
-                        setHistoryMatchs(matchPagi.content);
+                        // let matchPagi = response.data as PaginationResult<BilliardMatch>
+                        let matchPagi = response.data as BilliardMatch[]
+
+                        setHistoryMatchs(matchPagi);
                     } else {
                         toast.warning(response.message || "Không thể tải lịch sử trận đấu.");
                     }
